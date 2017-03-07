@@ -145,3 +145,98 @@ sort() 리스트 자체를 내부적으로 정렬
 
 sorted() 리스트의 정렬된 복사본을 반환
 
+- 리스트의 항목이 숫자인 경우 기본적으로 오름차순으로 정렬
+- 문자열인 경우 알파벳순으로 정렬
+- 내림차순으로 정렬하고 싶다면 `LIST_NAME.sort(reverse=True)`
+
+참조 vs 복사
+- 리스트를 `=`로 대입할 경우 참조가 발생한다.
+- 리스트를 새로운 리스트에 복사하려면 다음과 같이 처리한다.
+ 1. copy() 함수 `b = a.copy()`
+ 2. list() 변환 함수 `b = list(a)`
+ 3. 슬라이스 [:] `b = a[:]`
+
+ ## ● 튜플
+
+ 튜플은 immutable 하다.
+
+ 요소가 한 개인 튜플을 만들려면 콤마`(,)`를 붙인다.
+ 
+ `TUPLE_NAME = 'ELEMENT',`
+
+ 두 개 이상의 요소가 있을 경우 마지막 요소에는 콤마를 붙이지 않는다.
+
+`TUPLE_NAME = 'ONE', 'TWO'`
+
+값들을 괄호로 묶어서 튜플을 정의하는 것이 더 구분하기 좋다.
+
+튜플은 한 번여 여러 변수를 할당할 수 있다. 이것을 tuple unpacking이라고 한다.
+
+`a, b = TUPLE_NAME`
+
+한 line에서 튜플을 사용해 swap을 할 수 있다.
+
+```
+a = 'abc'
+b = 'def'
+a, b = b, a
+```
+
+`tuple()`은 다른 객체를 튜플로 만든다.
+
+`tuple(LIST_NAME)`
+
+왜 튜플을 사용할까
+
+1. 튜플은 리스트보다 더 적은 공간을 사용한다.
+2. 데이터가 손상될 염려가 없다.
+3. 튜플을 딕셔너리 키로 사용할 수 있다.
+4. `named tuple`은 객체의 단순한 대안이 될 수 있다.
+5. 함수의 인자들은 튜플로 전달된다.
+
+## ● 딕셔너리
+
+딕셔너리의 키들은 반드시 유일해야 한다. 
+
+만약 같은 키를 두 번 이상 사용하면 마지막 값이 저장된다.
+
+update() : 딕셔너리 결합
+
+`DICTIONARY_NAME.update(OTHER_DIC)`
+
+del : 딕셔너리 키로 항목을 삭제
+
+`del DICTIONARY_NAME[DIC_KEY]`
+
+모든 항목 삭제하기
+
+`DICTIONARY_NAME.clear()`
+
+`DICTIONARY_NAME = {}`
+
+in : 키 멤버십 확인-> `return True or False`
+
+`KEY_NAME in DICTIONARY_NAME`
+
+딕셔너리에 키가 존재하지 않으면 `KeyError` 예외가 발생한다.
+
+get() : `KeyError` 방지
+
+* 키가 존재하면 값을 반환한다.
+* 키가 존재하지 않으면 옵션 값을 지정하여 출력한다.
+    * `DICTIONARY_NAME.get(DIC_KEY, 'Not Exist')`
+* 옵션값을 지정하지 않으면 `None`이 반환된다.
+
+keys() : 모든 키 얻기
+
+* 파이썬 2의 `keys()`는 리스트를 반환한다.
+* 파이썬 3의 `keys()`는 iterable한 `dict_keys()`를 반환한다.
+* 사용되지 않을 리스트를 생성하고 저장하기 위한 메모리와 시간을 소비하지 않기 때문에 아주 큰 딕셔너리에 유용하다.
+* 리스트로 만들려면 `list(DICTION_NAME.keys())`를 이용한다.
+
+values() : 모든 값 얻기
+
+items() : 모든 쌍의 키-값 얻기
+
+* 각 키와 값은 튜플로 반환된다.
+

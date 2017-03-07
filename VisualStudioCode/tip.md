@@ -3,6 +3,9 @@
 ## ● markdown 미리보기
 확장자 md 파일을 수정 한 후 ```Ctrl + Shift + V```
 
+## ● markdown 화면분할하여 동시에 보기
+```Ctrl + k, v```
+
 ## ● terminal에서 code 실행하기
 Command Palette에서 `shell command`
 
@@ -25,3 +28,11 @@ Command Palette에서 `shell command`
 ```
 
 `setting.json` 변경 후 반드시 vscode를 재시작한다.
+
+## ● UI 언어 변경
+Command Palette > conf lang 입력
+
+`"locale":"ko"` -> `"locale":"en"` 변경
+
+## 참조사이트
+Python Extension : <https://github.com/DonJayamanne/pythonVSCode>

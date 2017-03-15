@@ -377,5 +377,40 @@ duck.about()
 
 그리고 일반적으로 모듈은 클래스보다 더 간단하다.
 
+## named tuple
 
+네임드 튜플은 튜플의 서브클래스다.
 
+이름(.name)과 위치(offset)로 값에 접근할 수 있다.
+
+```
+from collections import namedtuple
+Duck = namedtuple('Duck', 'bill tail')
+duck = Duck('wide orange', 'long')
+print(duck) # Duck(bill='wide orange', tail='long')
+print(duck.bill) # wide orange
+print(duck.tail) # long
+
+parts = {'bill': 'wide red', 'tail': 'short'}
+duck2 = Duck(**parts)
+print(duck2) # Duck(bill='wide red', tail='short')
+```
+* namedtuple은 이름과 스페이스로 구분된 필드 이름의 문자열을 매개변수로 받는다.
+
+* 위 예제에서 `'Duck'`는 namedtuple의 이름이고
+
+* `'bill tail'`은 namedtuple의 속성처럼 사용할 수 있다.
+
+* duck2 처럼 딕셔너리를 네임드 튜플로 변환할 수 있다.
+
+* **parts는 키워드 인자다. parts 딕셔너리에서 키와 값을 추출하여 Duck()의 인지로 제공한다.
+
+* 네임드 튜플은 immutable이다. 
+
+* 하지만 필드를 바꿔서 다른 네임드 튜플을 반환할 수 있다.
+
+네임드 튜플의 특징
+
+* 불변하는 객체처럼 행동한다.
+
+* 객체보다 공간 시간 효율성이 더 좋다.

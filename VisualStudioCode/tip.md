@@ -18,7 +18,7 @@ Command Palette에서 `shell command`
 
 현재 설정은 다음과 같다.
 
-```
+```json
 {
     "editor.rulers": [80,100],
     "python.pythonPath":"VIRTUAL_ENV_PATH/bin/python",
@@ -33,6 +33,27 @@ Command Palette에서 `shell command`
 Command Palette > conf lang 입력
 
 `"locale":"ko"` -> `"locale":"en"` 변경
+
+## ● task runner 설정(python)
+
+`ctrl+shift+p` 를 눌러서 task를 입력하면 `Tasks: Configure Task Runner` 항목이 나온다.
+
+이것을 실행하면 현재 디렉토리에 `.vscode` 디렉토리와 `task.json` 파일이 생성된다.
+
+```json
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "python",
+    "isShellCommand": true,
+    "args": ["${file}"],
+    "showOutput": "always"
+}
+```
+자동으로 생성된 json 형식의 내용에서 `command`와 `args`를 위와 같이 수정한다.
+
+저장한 후 `ctrl+shift+b`를 입력하면 결과를 확인할 수 있다.
 
 ## 참조사이트
 Python Extension : <https://github.com/DonJayamanne/pythonVSCode>

@@ -161,4 +161,46 @@ fin.close()
 print(len(poem))
 ```
 
-236p
+`readlines()` 함수는 한 번에 모든 라인을 읽고, 한 라인으로 된 문자열들의 리스트를 반환한다.
+
+```py
+fin = open('FileName.txt', 'r')
+lines = fin.readlines()
+fin.close()
+print(len(lines), 'lines read')
+for line in lines:
+    print(line, end='')
+```
+
+모드에 `'b'`를 포함시키면 파일을 이진 모드로 연다.
+
+이 경우 문자열 대신 파이트를 읽고 쓸 수 있다.
+
+파이썬에는 context manager가 있다.
+
+context manager를 실행하면 코드 블록의 코드가 실행되고 나서(잘 수행되거나, 문제가 있는 경우 예외를 발생하고 나서) 자동으로 파일을 닫아준다.
+
+## CSV
+
+```py
+import csv
+bond = [['KRYZMBD67V05', '20181026'],
+        ['KRYZMBD67V06', '20181026'],
+        ['KRYZMBD67V07', '20181026'],
+        ['KRYZMBD67V08', '20191026'],
+        ['KRYZMBD67V09', '20191026']]
+
+with open('bond', 'w', newline='') as fout:
+    csvout = csv.writer(fout)
+    csvout.writerows(bond)
+
+with open('bond', 'r') as fin:
+    cin = csv.reader(fin)
+    bonds = [row for row in cin]
+print(bonds)
+```
+
+중첩 리스트 구조로 되어 있는 문자열들을 csv 형식으로 출력할 수 있다.
+
+그리고 csv 형식의 텍스트 파일을 읽어 중첩 리스트 구조로도 변환할 수 있다.
+

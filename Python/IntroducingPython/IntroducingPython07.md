@@ -8,8 +8,8 @@
 
 ```python
 blist = [1, 2, 3, 255]
-the_bytes = bytes(blist)
 print(the_bytes)
+the_bytes = bytes(blist)
 # b'\x01\x02\x03\xff'
 
 the_byte_array = bytearray(blist)

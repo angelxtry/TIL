@@ -42,8 +42,6 @@ Command Palette > conf lang 입력
 
 ```json
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "0.1.0",
     "command": "python",
     "isShellCommand": true,

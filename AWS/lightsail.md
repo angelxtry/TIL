@@ -22,6 +22,7 @@ AWS에서 bitnami를 이용한 wordpress instance가 존재한다.
 
 ----
 
+<<<<<<< HEAD
 ## 20170331
 
 아침에 출근하자마자 OS Only AMI 512M로 instance를 만들었다.
@@ -78,3 +79,12 @@ total 60
 ...
 
 일단 여기까지.
+
+
+## 20170412
+
+nginx, php, mysql 등을 수동으로 설치해서 Wordpress를 구축하려고 시도했으나 결국 실패.
+
+그래서 그냥 bitnami로 설치했다.
+
+나중에 서버 자원이 더 좋은 곳으로 옮기게 되면 다시 시도해보자.

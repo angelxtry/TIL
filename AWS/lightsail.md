@@ -22,5 +22,59 @@ AWS에서 bitnami를 이용한 wordpress instance가 존재한다.
 
 ----
 
-일정 계획
+## 20170331
 
+아침에 출근하자마자 OS Only AMI 512M로 instance를 만들었다.
+
+## 20170407
+
+지난 주 금요일에 instance를 생성해 두고 한번도 못 봤다. 후우.
+
+다시 시작해보자.
+
+AWS에 접속해서 Account 계정으로 들어가 Download default key를 이용해 *.pem 파일을 다운받았다.
+
+puttygen으로 ppk 파일을 생성하고 putty로 접속 성공
+
+## 20170410
+
+접속하자마자 sudo yum update로 업데이트
+
+sudo yum install zsh
+
+sudo su
+
+chsh -s /bin/zsh
+
+여기까지 진행하고 exit로 완전히 창을 닫은 후 다시 접속
+
+echo $SHELL 로 shell을 확인했더니 /bin/bash가 나왔다.
+
+음? 왜 변경이 안됐지?
+
+그래서 sudo vi /etc/passwd 로 ec2-user의 shell을 직접 zsh로 변경
+
+다시 접속하니 zsh로 설정은 됐는데 complete:13: command not found: compdef 이런 메시지가 보인다.
+
+이건 뭘까?
+
+검색해보니 /etc/profile.d/aws-cli.sh 권한 문제라고 하는데...
+
+sudo chmod a-r /etc/profile.d/aws-cli.sh
+
+이 명령어로 aws-cli.sh 파일의 권한을 축소했다. 그랬더니 complete:13: command not found: compdef 메시지가 안보인다.
+
+/etc/profile.d% ls -la
+total 60
+...
+-rw-r--r--  1 root root   95 Dec 16 22:01 aws-cli.sh
+...
+
+/etc/profile.d% sudo chmod a-r /etc/profile.d/aws-cli.sh
+/etc/profile.d% ls -la
+total 60
+...
+--w-------  1 root root   95 Dec 16 22:01 aws-cli.sh
+...
+
+일단 여기까지.

@@ -4,19 +4,19 @@
 
 최대 3자리 숫자
 
-"[0=9]{1, 3}" 또는 "\d{1, 3}"
+`"[0=9]{1, 3}" 또는 "\d{1, 3}"`
 
 휴대폰 번호
 
-"010[1-9]\d{7}"
+`"010[1-9]\d{7}"`
 
 한글이름 2글자 혹은 3글자
 
-"[ㄱ-힣]{2, 3}"
+`"[ㄱ-힣]{2, 3}"`
 
 성이 "이"인 이름
 
-"이[ㄱ-힣]{1, 2}"
+`"이[ㄱ-힣]{1, 2}"`
 
 정규표현식의 대괄호'[]'
 
@@ -24,39 +24,39 @@
 
 숫자 1글자
 
-"[0123456789]" 또는 "[0-9]" 또는 "\d"
+`"[0123456789]" 또는 "[0-9]" 또는 "\d"`
 
-알파벳 소문자 1글자 : "[a-z]"
+알파벳 소문자 1글자 : `"[a-z]"`
 
-알파벳 대문자 1글자 : "[A-Z]"
+알파벳 대문자 1글자 : `"[A-Z]"`
 
-알파벳 대/소문자 1글자 : "[a-zA-Z]"
+알파벳 대/소문자 1글자 : `"[a-zA-Z]"`
 
-16진수 1글자 : "[0-9a-fA-F]"
+16진수 1글자 : `"[0-9a-fA-F]"`
 
-한글 1글자 : "[ㄱ-힣]"
+한글 1글자 : `"[ㄱ-힣]"`
 
 "힣"의 의미는 한글 1글자에서 가장 큰 유니코드 값을 가진 문자다.
 
-문자열의 시작을 지정 : "^"
+문자열의 시작을 지정 : `"^"`
 
-문자열의 끝을 지정 : "$"
+문자열의 끝을 지정 : `"$"`
 
 반복횟수 지정
 
-"\d?" : 숫자 0회 또는 1회
+`"\d?"` : 숫자 0회 또는 1회
 
-"\d*" : 숫자 0회 이상
+`"\d*"` : 숫자 0회 이상
 
-"\d+" : 숫자 1회 이상
+`"\d+"` : 숫자 1회 이상
 
-"\d{m}" : 숫자 m개
+`"\d{m}"` : 숫자 m개
 
-"\d{m,n}" : 숫자 m개 이상, n개 이하 (,이후에 띄어쓰기가 있으면 안된다.)
+`"\d{m,n}"` : 숫자 m개 이상, n개 이하 (,이후에 띄어쓰기가 있으면 안된다.)
 
 ----
 
-pip install "ipython[notebook]"
+`pip install "ipython[notebook]"`
 
 ipython과 쥬피터 노트북이 같이 설치된다.
 
@@ -64,9 +64,9 @@ ipython과 쥬피터 노트북이 같이 설치된다.
 
 URLConf : URL라우팅
 
-프로젝트/settings.py에 최상위 URLConf 모듈을 지정
+`프로젝트/settings.py`에 최상위 URLConf 모듈을 지정
 
-ROOT_URLCONF = '프로젝트.urls' # 프로젝트/urls.py 파일을 의미한다.
+`ROOT_URLCONF = '프로젝트.urls'` # 프로젝트/urls.py 파일을 의미한다.
 
 특정 URL과 뷰 매핑 List
 
@@ -74,11 +74,11 @@ Django 서버로 http 요청이 들어올 때마다, URLConf 매핑 List를 처�
 
 매칭되는 URL Rule을 찾지 못했을 경우 404 Page Not Found 응답을 발생시킨다.
 
-(?P) : 이 영역의 문자열에 정규표현식을 적용한다.(P는 대문자)
+`(?P)` : 이 영역의 문자열에 정규표현식을 적용한다.(P는 대문자)
 
-\d+ : \d+ 패턴에 부합한다면
+`\d+` : \d+ 패턴에 부합한다면
 
-<x> : x라는 변수명으로 인자를 넘긴다.
+`<x>` : x라는 변수명으로 인자를 넘긴다.
 
 뷰의 인자로 넘겨받은 값들은 모두 문자열 타입이다.
 
@@ -92,9 +92,80 @@ askdjangowin/settings.py의 INSTALLED_APPS에 추가
 
 dojo에 urls.py 파일 추가 및 수정
 
+```py
+# dojo/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^sum/(?P<x>\d+)/$', views.mysum),
+]
+```
+url에서 숫자 하나를 받아 x 변수에 담아 mysum으로 넘겨준다.
+
 askdjangowin/urls.py에 dojo.urls 등록
 
+
+dojo/views.py 파일에 mysum 함수를 생성한다.
+
+```py
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def mysum(request, x):
+    return HttpResponse(x)
+```
+
+view의 모든 함수는 `request`가 필요하다.
+
+`HttpResponse`를 이용하여 x를 출력한다.
+
+
 매개변수를 하나 이상 처리할 수도 있다.
+
+일단 mysum 함수를 수정한다.
+
+```py
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def mysum(request, x, y):
+    return HttpResponse(x + y)
+```
+
+그리고 dogo/urls.py 파일을 수정한다.
+
+```py
+# dojo/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^sum/(?P<x>\d+)/(?P<y>\d+)/$', views.mysum),
+]
+```
+
+위와 같이 작성하면 `/sum/100/200/` 형식으로 된 url을 처리할 수 있다.
+
+하지만 `/sum/100/` 과 같은 형식을 처리할 수 없게 된다.
+
+url을 `/sum/100/200/` 이렇게 입력하면 결과값은 `100200`이 나온다.
+
+의도한 결과는 sum 이었지만 두 개의 숫자가 단순하게 붙어서 출력된다.
+
+이것은 url에서 넘겨받은 변수는 모두 문자열로 처리되기 때문이다.
+
+mysum 함수를 수정하여 문자열을 int로 변환한다.
+
+```py
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def mysum(request, x, y):
+    return HttpResponse(int(x) + int(y))
+```
+
+url을 `/sum/100/200/` 이렇게 입력하면 결과값은 `300`이 나오는 것을 확인할 수 있다.
 
 ----
 

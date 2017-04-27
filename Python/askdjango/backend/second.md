@@ -105,3 +105,34 @@ Secure tunnels to localhost
 
 `ALLOWED_HOSTS = ['*']` 라고 입력하면 모든 도메인을 다 허용한다.
 
+## 간단한 모바일 최적화
+
+휴대폰으로 접속해보면 화면이 좀 어색해보인다.
+
+크게 나이지지는 않지만 meta 태그를 이용하여 간단한 모바일 최적화를 해보자.
+
+`blog/templates/blog/post_view.html` 파일을 수정한다.
+
+```html
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,
+        minium-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Django Study</title>
+    </head>
+    <body>
+        <h1>AskDjango Test</h1>
+
+        <p>
+            Django 열심히 하자.
+        </p>
+
+        <ul>
+            <li>리스트 하나</li>
+            <li>리스트 둘</li>
+        </ul>
+    </body>
+</html>
+```

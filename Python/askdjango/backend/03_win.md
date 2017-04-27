@@ -129,8 +129,8 @@ view의 모든 함수는 `request`가 필요하다.
 from django.http import HttpResponse
 from django.shortcuts import render
 
-def mysum(request, x, y):
-    return HttpResponse(x + y)
+def mysum(request, x, y, z):
+    return HttpResponse(x + y + z)
 ```
 
 그리고 dogo/urls.py 파일을 수정한다.
@@ -141,17 +141,17 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^sum/(?P<x>\d+)/(?P<y>\d+)/$', views.mysum),
+    url(r'^sum/(?P<x>\d+)/(?P<y>\d+)/(?P<z>\d+)/$', views.mysum),
 ]
 ```
 
-위와 같이 작성하면 `/sum/100/200/` 형식으로 된 url을 처리할 수 있다.
+위와 같이 작성하면 `/sum/100/200/300/` 형식으로 된 url을 처리할 수 있다.
 
 하지만 `/sum/100/` 과 같은 형식을 처리할 수 없게 된다.
 
-url을 `/sum/100/200/` 이렇게 입력하면 결과값은 `100200`이 나온다.
+url을 `/sum/100/200/300/` 이렇게 입력하면 결과값은 `100200300`이 나온다.
 
-의도한 결과는 sum 이었지만 두 개의 숫자가 단순하게 붙어서 출력된다.
+의도한 결과는 sum 이었지만 세 개의 숫자가 단순하게 붙어서 출력된다.
 
 이것은 url에서 넘겨받은 변수는 모두 문자열로 처리되기 때문이다.
 
@@ -165,46 +165,135 @@ def mysum(request, x, y):
     return HttpResponse(int(x) + int(y))
 ```
 
-url을 `/sum/100/200/` 이렇게 입력하면 결과값은 `300`이 나오는 것을 확인할 수 있다.
+url을 `/sum/100/200/300/` 이렇게 입력하면 결과값은 `600`이 나오는 것을 확인할 수 있다.
+
+지금 상태는 꼭 숫자 3개를 넘겨야만 실행이 된다.
+
+숫자 1개나 2개는 `dojo/urls.py`에 등록하지 않았으므로 `404 Page not found`가 발생한다.
+
+이것을 해결하려면 다음과 같이 수정한다.
+
+```py
+# dojo/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^sum/(?P<x>\d+)/$', views.mysum),
+    url(r'^sum/(?P<x>\d+)/(?P<y>\d+)/$', views.mysum),
+    url(r'^sum/(?P<x>\d+)/(?P<y>\d+)/(?P<z>\d+)/$', views.mysum),
+]
+```
+
+```py
+# dojo/views.py
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def mysum(request, x, y=0, z=0):
+    return HttpResponse(int(x) + int(y) + int(z))
+```
+`mysum` 함수에  default param을 지정하지 않으면 `Type Error`가 발생한다.
+
+`dojo/urls.py`에 비슷한 url을 세 번이나 반복하는 것은 중복이다.
+
+이것을 깔끔하게 고쳐보자.
+
+```py
+# dojo/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^sum/(?P<numbers>[\d/]+)/$', views.mysum),
+]
+```
+`\d+` 는 숫자가 한 개 이상 나올 수 있다는 의미다.
+
+이것을 `[\d/]+` 이렇게 바꾸면 숫자와 `/`가 한개 이상 나올 수 있다는 의미가 된다.
+
+즉, `123/123/123/123` 같은 문자열이 처리가능해졌다.
 
 ----
 
-123/123/123/14/123/1234/135
+`123/123/123/14/123/1234/135`
 
 이렇게 받은 문자열에서 숫자만 파싱하여 합을 구해보자.
 
 ipython에서 실행한다.
 
-numbers = "123/123/123/14/123/1234/135"
+`numbers = "123/123/123/14/123/1234/135"`
 
 split함수를 이용하여 / 를 기준으로 나누어 리스트를 만든다.
 
-numbers.split("/")
+`numbers.split("/")`
 
-['123', '123', '123', '14', '123', '1234', '135']
+`['123', '123', '123', '14', '123', '1234', '135']`
 
 리스트의 엘리먼트가 모두 문자열이므로 map을 이용하여 숫자로 변환한다.
 
-map(int, numbers.split("/"))
+`map(int, numbers.split("/"))`
 
 결과를 리스트로 변환한다.
 
-list(map(int, numbers.split("/")))
+`list(map(int, numbers.split("/")))`
 
-[123, 123, 123, 14, 123, 1234, 135]
+`[123, 123, 123, 14, 123, 1234, 135]`
 
 숫자로 잘 변환된 것을 확인했으므로 sum을 구한다.
 
-sum(map(int, numbers.split("/")))
+`sum(map(int, numbers.split("/")))`
 
 이 식은 /가 연속으로 2번 입력이 들어오는 것을 처리하지 못한다.
 
 //는 split에 의해 빈 문자열로 처리된다.
 
-빈 문자열 즉 ''을 int로 변환하면 ValueError가 리턴된다.
+빈 문자열 즉 ''을 int로 변환하면 `ValueError`가 리턴된다.
 
 이 경우 다음과 같이 처리한다.
 
-sum(map(lambda s: int(s or 0), number.split("/")))
+`sum(map(lambda s: int(s or 0), number.split("/")))`
 
 s or 0은 s가 False일때 0으로 치환된다.
+
+이 내용을 `dojo/views.py`에 적용한다.
+
+```py
+# dojo/views.py
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def mysum(request, numbers):
+    result = sum(map(lambda s: int(s or 0) , numbers.split('/')))
+    return HttpResponse(result)
+```
+
+-----
+
+이제 한글을 param으로 처리하는 작업을 해보자.
+
+```py
+# dojo/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^sum/(?P<numbers>[\d/]+)/$', views.mysum),
+    url(r'^hello/(?P<name>[ㄱ-힣]+)/(?P<age>\d+)/$', views.hello),
+]
+```
+
+```py
+# dojo/views.py
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def mysum(request, numbers):
+    result = sum(map(lambda s: int(s or 0) , numbers.split('/')))
+    return HttpResponse(result)
+
+def hello(request, name, age):
+    return HttpResponse("안녕하세요. {}. {}살 이시군요.".format(name, age))
+```
+
+이렇게 처리하면 url에 한글이름/나이/를 입력하면 그대로 출력이 된다.

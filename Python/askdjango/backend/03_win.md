@@ -161,8 +161,8 @@ mysum 함수를 수정하여 문자열을 int로 변환한다.
 from django.http import HttpResponse
 from django.shortcuts import render
 
-def mysum(request, x, y):
-    return HttpResponse(int(x) + int(y))
+def mysum(request, x, y, z):
+    return HttpResponse(int(x) + int(y) + int(z))
 ```
 
 url을 `/sum/100/200/300/` 이렇게 입력하면 결과값은 `600`이 나오는 것을 확인할 수 있다.

@@ -18,3 +18,12 @@ settings.json 파일에 추가
 settings.json 파일의 python.pythonPath 확인
 
 가상환경에서 `pip install pylint`
+
+## 빈 리스트 empty list 확인
+
+```py
+if not empty_list:
+    pass
+```
+
+* empty dictionary도 동일하다.

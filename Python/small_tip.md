@@ -27,3 +27,9 @@ if not empty_list:
 ```
 
 * empty dictionary도 동일하다.
+
+## windows에서 출력데이터에 unicode 또는 cp949에 없는 문자열이 포함되어 있을 경우
+
+`print(html.encode('cp949', 'ignore'))`
+
+encode함수에 ignore 옵션을 활용한다.

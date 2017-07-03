@@ -1,20 +1,20 @@
 # branch
 
-git init
+`git init`
 
-vi 1.txt
+`vi 1.txt`
 
 a 입력
 
-git add 1.txt
+`git add 1.txt`
 
-git commit -m "1"
+`git commit -m "1"`
 
 vi 1.txt
 
 b 입력
 
-git commit -a -m 1.txt
+`git commit -a -m 1.txt`
 
 git log
 

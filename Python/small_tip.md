@@ -33,3 +33,15 @@ if not empty_list:
 `print(html.encode('cp949', 'ignore'))`
 
 encode함수에 ignore 옵션을 활용한다.
+
+## pip freeze > requirements.txt
+
+현재 사용중인 환경에 설치된 패키지와 버전을 확인하여 requirements.txt 파일을 생성
+
+동일하게 환경을 설정하려면
+
+```py
+pip freeze > requirements.txt
+
+pip install -r requirements.txt
+```

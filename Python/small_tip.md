@@ -45,3 +45,15 @@ pip freeze > requirements.txt
 
 pip install -r requirements.txt
 ```
+
+## 문자열에서 특정 단어 제거하기
+
+```py
+import re
+
+TO_REMOVE = ['python', 'ruby']
+re_remove = re.compile('|'.join(TO_REMOVE))
+re_remove.sub('', 'python scala ruby')
+
+# ' scala '
+```

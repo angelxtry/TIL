@@ -189,3 +189,97 @@ iss53 branch가 분기한 이후에 master branch에 commit이 발생했다.
 추가적으로 commit을 진행하여 master와 iss53을 병합한다.
 
 이것을 merge commit이라고 부른다.
+
+----
+
+## stash
+
+감추다. 숨겨두다.
+
+특정 branch에서 작업을 하던 도중 다른 branch로 checkout하여 작업을 해야 할 경우
+
+commit 하기는 애매하고 commit을 하지 않으면 checkout을 할 수도 없다.
+
+`git init`
+
+`vim f1.txt`
+
+a 입력 후 저장
+
+add -> commit
+
+`git checkout -b exp`
+
+`vim f2.txt`
+
+b 입력 후 저장
+
+add나 commit을 하지 않고 master로 checkout을 하면 수정하던 내용이 master에도 영향을 준다.
+
+exp branch에서 commit 하기 전이라면 stash를 이용한다.
+
+`git stash`
+
+Saved working directory ... 같은 메시지가 출력된다.
+
+`git status`
+
+commit할 내용이 없다고 출력된다.
+
+f1.txt를 확인해보면 작업했던 내용들이 사라져있다.
+
+`git checkout master`
+
+master branch로 정상적으로 checkout 된다.
+
+master에서 작업을 마치고 다시 exp로 checkout 한다.
+
+`git checkout exp`
+
+stash에 저장했던 내용들을 불러온다.
+
+`git stash apply`
+
+f1.txt 파일에서 작업하던 내용이 다시 나타난다.
+
+`git stash list`
+
+위와 같이 입력하면 stash에 저장했던 이력이 출력된다.
+
+`git reset --head HEAD`
+
+위와 같이 입력하면 작업하던 내용이 삭제되고 HEAD의 내용으로 복구된다.
+
+`git stash apply` 를 다시 입력하면 저장했던 내용이 다시 복구되면서
+
+exp branch에서 작업하던 내용이 나타난다.
+
+즉 stash list에 존재하는 내용은 명시적으로 삭제하지 않으면 계속 불러올 수 있다.
+
+`vim f2.txt` -> 내용입력
+
+`git stash` (save 가 생략되어 있다.)
+
+f2.txt의 내용이 stash에 저장된다.
+
+`git stash list`로 확인해보면 0번, 1번이 존재한다.
+
+마지막에 저장한 f2.txt에 대한 stash가 0번이다.
+
+`git stash apply`라고 입력하면 가장 최근에 저장한 stash가 복구된다.
+
+stash에 저장된 것을 지우려먼 `git stash drop`이라고 입력한다.
+
+drop을 하면 최근에 저장된 것부터 삭제된다.
+
+`git stash apply; git stash drop;`
+
+stash의 가장 최근 작업 1개를 복구하고 삭제한다.
+
+`git stash pop`을 이용하면 `git stash apply; git stash drop;`과 동일하다.
+
+stash를 적용할 수 있는 파일은 최소한 add 상태이어야 한다.
+
+즉, Untracked file은 stash되지 않는다.
+
+

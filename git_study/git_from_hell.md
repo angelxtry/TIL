@@ -214,7 +214,7 @@ add -> commit
 
 b 입력 후 저장
 
-add나 commit을 하지 않고 master로 checkout을 하면 수정하던 내용이 master에도 영향을 준다.
+add 한 후 commit을 하지 않고 master로 checkout을 하면 수정하던 내용이 master에도 영향을 준다.
 
 exp branch에서 commit 하기 전이라면 stash를 이용한다.
 

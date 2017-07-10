@@ -57,3 +57,15 @@ re_remove.sub('', 'python scala ruby')
 
 # ' scala '
 ```
+
+## windows에 cx_Oracle 설치
+
+현재 pip로 설치가능한 버전은
+
+5.1.3, 5.2, 5.2.1, 5.3, 6.0b1, 6.0b2, 6.0rc1
+
+5.3 부터는 Oracle 11.2 이상의 client가 필요하다.
+
+5.2.1 설치
+
+`pip install cx_Oracle==5.2.1`

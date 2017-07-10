@@ -64,3 +64,19 @@
 전체를 취소하려면 `git reset`
 
 하나씩 취소하려면 `git reset 파일명`
+
+## author name/email 변경
+
+global 설정 변경
+
+```
+git config --global user.name "USERNAME"
+git config --global user.email "USERNAME"
+```
+
+특정 dir만 변경하려면 `--global` 제거
+
+```
+git config user.name "USERNAME"
+git config user.email "USERNAME"
+```

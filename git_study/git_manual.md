@@ -80,3 +80,7 @@ git config --global user.email "USERNAME"
 git config user.name "USERNAME"
 git config user.email "USERNAME"
 ```
+
+## 마지막 commit message 수정하기
+
+`git commit --amend`

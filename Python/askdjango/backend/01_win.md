@@ -61,6 +61,14 @@ http://127.0.0.1:8000/admin/ 에 접속하면 제대로 연결이 되지 않는�
 
 http://127.0.0.1:8000/admin/ 에 다시 접속하면 admin login page를 볼 수 있다.
 
+## superuser 생성
+
+admin page를 사용하기 위해서는 superuser 계정이 필요하다.
+
+`python manage.py createsuperuser`
+
+이 명령을 실행하기 전에 migrate가 선행되어야 한다.
+
 ## app 생성
 
 `python manage.py startapp blog`

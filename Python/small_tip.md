@@ -125,3 +125,29 @@ python.exe는 프로그램이 실행되는 동안 cmd창이 떠 있다.
 파일을 생성하는 프로그램을 실행했는데 절대경로를 사용했는데도 불구하고 
 
 시작위치가 없으면 파일이 제대로 생성되지 않았다.
+
+## DB Select
+
+```py
+    query = "QUERY"
+    db_con = db_connection.connect_db()
+    cursor = db_con.cursor()
+    cursor.prepare(query)
+    cursor.execute(None, {'PARAM': target_date})
+    row = cursor.fetchone()
+    cursor.close()
+    db_con.close()
+```
+
+## DB Select 2
+
+```py
+    query = "QUERY"
+    db_con = db_connection.connect_db()
+    cursor = db_con.cursor()
+    cursor.prepare(query)
+    cursor.execute(None, {'PARAM': param})
+    rows = cursor.fetchall()
+    cursor.close()
+    db_con.close()
+```

@@ -84,3 +84,15 @@ git config user.email "USERNAME"
 ## 마지막 commit message 수정하기
 
 `git commit --amend`
+
+## 수정한 내용을 add전에 되돌리기
+
+`git checkout .`
+
+`git checkout DIR_NAME`
+
+`git checkout FILE_NAME`
+
+## commit log 중 HEAD 변경 이력만 보기
+
+`git reflog`

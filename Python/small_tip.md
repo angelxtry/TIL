@@ -151,3 +151,19 @@ python.exe는 프로그램이 실행되는 동안 cmd창이 떠 있다.
     cursor.close()
     db_con.close()
 ```
+
+## DB Select 3
+
+```py
+    query = "QUERY"
+    db_con = db_connection.connect_db()
+    cursor = db_con.cursor()
+    cursor.prepare(query)
+    cursor.execute(None)
+    colnames = [i[0] for i in cursor.description]
+    dic_grade = {}
+    for row in cursor:
+        dic_grade[row[0], row[2]] = dict(zip(colnames, row))
+    cursor.close()
+    db_con.close()
+```

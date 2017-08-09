@@ -57,9 +57,7 @@
 - push, pull request 등의 내용을 더 적어야 하는데 fetch도 잘 이해가 안되는 부분이 많다.
 - 계속 공부하면서 천천히 적어보자.
 
-## reset
-
-실수로 add 한 것을 취소
+## reset: 실수로 add 한 것을 취소
 
 전체를 취소하려면 `git reset`
 

@@ -1,149 +1,960 @@
 <html>
-    <head></head>
+    <head>
+        <title>HTML&CSS</title>
+        <meta charset="UTF-8">
+    </head>
     <body>
-        
         <h1>HTML&CSS 캠프 두 번째 수업 20170819</h1>
 
         <h2>공통 인프라구조</h2>
+        <h3>1. 공백문자(white space)</h3>
+        <h3>2. ASCII대문자</h3>
+        <h3>3. ASCII소문자</h3>
+        <h3>4. ASCII숫자</h3>
+        <h3>5. ASCII 16진수</h3>
+        <h3>6. 불리언 속성</h3>
         <div>
-            <p>속성이 존재하면 true, 존재하지 않으면 false</p>
+            속성이 존재하면 true, 존재하지 않으면 false
         </div>
+        <h3>7. 숫자</h3>
+        <ul class="ulstyle">
+            <li>정수</li>
+            <li>양수</li>
+            <li>실수</li>
+            <li>
+                퍼센테이지와 길이
+                <ul class="innerulstyle">
+                    <li>0% ~ 100%</li>
+                    <li>퍼센테이지: 상대값</li>
+                    <li>최소0, 최대 300 -> 100% == 300 -> -100% == -300</li>
+                    <li>모바일 작업, 해상도에 따라 사이즈가 변경되어야 할 때</li>
+                </ul>
+            </li>
+            <li>0이 아닌 퍼센테이지와 길이</li>
+            <li>실수 목록</li>
+            <li>좌표 목록</li>
+        </ul>
 
         <h2>Elements</h2>
-        <h3>1) basic</h3>
+        <h3>1. basic</h3>
         <div>
             <!-- HTML은 문서를 작성하기 위한 언어다.
                 "<"를 보여주기 위해 &lt;를 쓰는게 맞을까?-->
-            tag: "<"태그명">" "<"/태그명">"<br>
-            open tag: "<"태그명">"<br>
-            close tag: "<"태그명">"<br> 
-            elements: 내용을 좀 더 찾아보자<br>
-            attributes: "<"div class="hello"">"안녕"<"/div">"<br>
-            boolean attribute: "<"input disabled /">"<br>
+            tag: &lt;태그명&gt; &lt;/태그명&gt;<br>
+            open tag: &lt;태그명&gt;<br>
+            close tag: &lt;태그명&gt;<br> 
+            elements: 
+            attributes: &lt;div class="hello"&gt;안녕&lt;/div&gt;<br>
+            boolean attribute: &lt;input disabled /&gt;<br>
             문법이 엄격하지 않아서 attribute에 ""를 붙이지 않아도 된다.<br>
             하지만 항상 붙이자.<br>
         </div>
 
-        <h3>Semantics</h3>
+        <h3>2. Semantics</h3>
         <div>
-            <!-- "문서를 작성"을 강조하고 싶다.
-                강조를 위해서 어떤 tag를 사용해야 할지 좀 더 고민해보자.-->
-            HTML은 문서를 작성하기 위한 언어다.<br><br>
+            <p>
+                HTML은 <strong>문서를 작성</strong>하기 위한 언어다.<br><br>
 
-            HTML 5.2 스펙에서 정의하는 HTML 내의 Elements, Attributes, Attribute value 들을 특정한 의미를 가지고 있으며, 이를 semantics라고 부른다.
-            예를 들어 ol element는 순서있는 목록을 의미하고 lang 속성은 콘텐츠의 언어를 의미한다.<br><br>
+                HTML 5.2 스펙에서 정의하는 HTML 내의 Elements, Attributes, Attribute value 들은 
+                특정한 의미를 가지고 있으며, 이를 semantics라고 부른다. 
+                예를 들어 ol element는 순서있는 목록을 의미하고 lang 속성은 콘텐츠의 언어를 의미한다.<br>
 
-            이 정의는 웹브라우저, 검색 엔진과 같은 HTML 프로세서에서 허용하며, 부모 문서 및 어플리케이션에 따라 다른 컨텍스트로 제공한다.<br><br>
+                이 정의는 웹브라우저, 검색 엔진과 같은 HTML 프로세서에서 허용하며, 
+                부모 문서 및 어플리케이션에 따라 다른 컨텍스트로 제공한다.<br>
 
-            다른 컨텍스트의 예시로 article이란 요소를 예로 들 수 있다.<br>
-            이 요소는 문서 의미로 사용될 때는 주로 다른 콘텐츠와 독립적인 콘텐츠로 사용되지만 어플리케이션 의미로 사용될 때는 widget 같은 의미로 사용된다.<br><br>
+                다른 컨텍스트의 예시로 article이란 요소를 예로 들 수 있다.<br>
+                이 요소는 문서 의미로 사용될 때는 주로 다른 콘텐츠와 독립적인 콘텐츠로 사용되지만 
+                어플리케이션 의미로 사용될 때는 widget 같은 의미로 사용된다.<br>
+            </p>
+        </div>
+
+        <h3>3. Element Definition</h3>
+        <div>
+            element는 다음의 정보를 포함한다. <br>
+            <ul class="ulstyle">
+                <li>
+                    카테고리
+                    <ul class="innerulstyle">
+                        <li>
+                            요소의 하위 요소 및 하위 요소로 포함되어야 하는 것의 일반적 설명
+                        </li>
+                        <li>
+                            카테로리를 다 외우는 것은 불가능에 가깝다.
+                        </li>
+                        <li>
+                            HTML 유효성 검사기를 활용할 수 있다.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    이 요소를 사용할 수 있는 컨텍스트 
+                    <ul class="innerulstyle">
+                        <li>
+                            이 요소를 어디서 사용할 수 있는가에 대한 정보. 
+                        </li>
+                        <li>
+                            이 정보는 이 요소를 자식으로 허용하는 요소의 콘텐츠 모델과 중복되며 편의상 제공된다. 
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    콘텐츠 모델 
+                </li>
+                <li>
+                    HTML에서 태그 생략: <strong>생략하지 않는다.</strong>
+                </li>
+                <li>
+                    콘텐츠 속성 
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Contents Model</h2>
+        <div>
+            Element가 가지고 있는 또는 가질 수 있는 콘텐츠의 형태<br>
+            Contents: 텍스트, 이미지, 비디오 등등 HTML 내에서 작성자가 표현하고 싶은 모든 것
+        </div>
+
+        <h3>1. Metadata</h3>
+        <div>
+            로봇에게 전해주고 싶은 모든 요소
+            <ul class="ulstyle">
+                <li>base</li>
+                <li>link</li>
+                <li>meta</li>
+                <li>noscript</li>
+                <li>script</li>
+                <li>style</li>
+                <li>template</li>
+                <li>title</li>
+            </ul>
+        </div>
+
+        <h3>2. Flow</h3>
+        <div>
+            BODY element안에 있는 모든 element<br>
+            유저에게 보이는 elements
+        </div>
+
+        <h3>3. Sectioning</h3>
+        <div>
+            섹션, Heading과 Footer의 범위(Scope)를 지정한다.<br>
+            outline 과 연관성이 있다.<br>
+            <ul class="ulstyle">
+                <li>article</li>
+                <li>aside</li>
+                <li>nav</li>
+                <li>section</li>
+            </ul>
+        </div>
+
+        <h3>4. Heading</h3>
+        <div>
+            섹션의 제목. 1부터 6까지 사용한다.
+        </div>
+
+        <h3>5. Embedded</h3>
+        <div>
+            외부에서 가져오는 모든 것(HTML이 아닌 것)<br>
+            Embedded Contents는 거의 대부분 Fallback element를 가질 수 있다. <br>
+            Fallback: 해당 콘텐츠를 불러오는 것을 실패했을때 대신 표시하는 것 <br>
+            <ul class="ulstyle">
+                <li>img</li>
+                <li>audio</li>
+                <li>video</li>
+                <li>picture</li>
+                <li>svg</li>
+                <li>iframe</li>
+                <li>canvas</li>
+                <li>embed</li>
+                <li>object</li>
+                <li>math</li>
+            </ul>
+        </div>
+
+        <h3>6. Phrasing Content</h3>
+        <div>
+            문서의 텍스트 레벨의 요소를 전부 포함
+        </div>
+
+        <h3>7. Interactive</h3>
+        <div>
+            유저와 상호작용하는 모든 elements
+        </div>
+
+        <h3>9.Palpable</h3>
+        <div>
+            내부에 Flow 콘텐츠 혹은 Phrasing 콘텐츠를 허용하는 모든 콘텐츠
+        </div>
+
+        <h3>10. Script-supporting</h3>
+        <div>
+            스크립트를 지원하는 모든 elements<br>
+            자기 스스로 무언가를 렌더링 하지는 않는다.<br>
+            <ul class="ulstyle">
+                <li>script</li>
+                <li>template</li>
+            </ul>
         </div>
 
         <h2>Global Attributes</h2>
+        <div>
+            모든 elements에서 사용할 수 있는 attributes<br>
+            <br>
+            <table border=1>
+                <tr>
+                    <td>class</td>
+                    <td>중복 가능한 이름을 붙이는 속성</td>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td>중복 불가능한 이름을 붙이는 속성</td>
+                </tr>
+                <tr>
+                    <td>contextmenu</td>
+                    <td>
+                        menu element를 설명할 때<br>
+                        지원하는 브라우저가 제한적이다.(FF만 지원)
+                    </td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>
+                        툴팁, element에 추가 정보를 설명하고 싶을 때<br>
+                        "<"a href="http://naver.com" target="_blank" title="새창으로 이동"">"네이버"<"/a">"
+                    </td>
+                </tr>
+                <tr>
+                    <td>lang</td>
+                    <td>
+                        elements의 언어 <br>
+                        한국어: ko <br>
+                        일본어: ja <br>
+                        영어: en, en-US, en-UK <br>
+                        중국어: zh
+                    </td>
+                </tr>
+                <tr>
+                    <td>translate</td>
+                    <td>
+                        boolean <br>
+                        elements의 번역 여부를 결정 <br>
+                        attribute value를 no로 설정하면 번역하지 않음 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>dir</td>
+                    <td>
+                        아마 평생 안쓰일듯? <br>
+                        문자의 흐름을 바꿈 <br>
+                        ltr: left to right <br>
+                        rtl: right to left ex) 아랍어는 글자를 오른쪽에서 왼쪽으로 쓴다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>style</td>
+                    <td>
+                        CSS를 INLINE으로 넣을 때 사용 <br>
+                        권장하지 않는다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>draggable</td>
+                    <td>
+                        element를 드래그 가능하게 해준다. <br>
+                        dropzone: 드래그 앤 드랍 <br>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API">
+                            HTML Drag and Drop API
+                        </a> <br>
+                        원한다면 추후에 다룰 수도 있음. <strong>원해요!</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <h3>class/id</h3>
+        <div>
+            <h4>class</h4>
+            <p>
+                막 써도 됨/중복도 가능/연속된 값을 넣는 것도 가능<br>
+                id보다 훨씬 더 많이 쓰인다.<br>
+                <br>
+                중복 사용 가능<br> 
+                "<"div class="hell"">""<"/div">"<br>
+                "<"div class="hell"">""<"/div">"<br>
+                <br>
+                공백으로 분리하여 2개 이상의 class 설정가능<br>
+                "<"div class="hell heaven"">""<"/div">"<br>
+            </p>
+            <h4>id</h4>
+            <p>
+                Identifier(식별자) <br>
+                이 요소가 어떤 것인지 식별할 수 있게 해준다.
+                Unique하기 때문에 한번만 쓸 수 있다.
+                <br><br>
+                JAVASCRIPT <br>
+                var popupButton = document.getElementById('button-popup'); <br>
+                <br>
+                HTML <br>
+                고대 <br>
+                "<"button type="button" onclick="popupon"">"클릭하면 팝업이 뜬다."<"/button">"<br>
+                근현대<br>
+                "<"button type="button" id="button-popup"">"클릭하면 팝업이 뜬다."<"/button">"<br>
+                현대(프론트앤드 프레임워크/라이브러리를 사용하는 경우) <br>
+                <pre><code>
+                    class PopipButton extends React.Component { 
+                        constructor() {
+                            this.super();
+                        }
+                    }
+                </code></pre>
+
+            </p>
+        </div>
 
         <h2>The Elements of HTML</h2>
 
         <h3>Document Element</h3>
+        <div>
+            html<br>
+            문서의 HTML을 내타낸다. <br>
+            모든 HTML elements의 Root Element로 활용된다. <br>
+            html element에 lang attribute를 정의하면 접근성에 좋다. 
+        </div>
 
         <h3>Document metadata</h3>
+        <div>
+            로봇에게 전달하는 콘텐츠. Metadata Content에 속하는 element. <br><br>
+            <table border=1>
+                <tr>
+                    <td>head</td>
+                    <td>로봇에게 전달한 콘텐츠를 포함하는 부모</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>
+                        페이지의 제목 <br>
+                        "<"head">" eleemnt의 child로만 사용 가능
+                    </td>
+                </tr>
+                <tr>
+                    <td>base</td>
+                    <td>
+                        잘 안쓰임 -> 쓰지 마세요 -> <strong>BAD</strong> <br>
+                        피싱사이트를 만들 때 많이 사용함.
+                        path를 속인다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>link</td>
+                    <td>
+                        리소스(CSS, 파비콘)와 HTML 페이지를 연결(Link)한다. <br>
+                        주소 CSS를 불러올 때 많이 사용한다. <br>
+                        "<"link rel="stylesheet" href="style.css" /">"
+                    </td>
+                </tr>
+                <tr>
+                    <td>meta</td>
+                    <td>
+                        메타 데이터를 표현하기 위한 요소 <br>
+                        메타 데이터: 다른 데이터를 설명하는 데이터 <br>
+                        다른 데이터: 현재 HTML 페이지 <br>
+                        자주 쓰이는 element <br>
+                        <ul class="ulstyle">
+                            <li>
+                                charset <br>
+                                이 사이트에서 사용되는 유니코드 문자열을 지정 <br>
+                                대부분의 브라우저는 영어권 국가에서 제작 <br>
+                                브라우저의 기본 언어가 LATIN으로 설정되어있음 <br>
+                                LATIN에는 한국어 표현이 없기때문에 Unicode로 설정을 변경해야함 <br>
+                                charset을 UTF-8로 변경해야 한국어가 깨지지 않음 <br>
+                            </li>
+                            <li>og:title 페이스북에 공유할 때 사용할 타이틀</li>
+                            <li>og:description 페이스북에 공유할 때 사용할 설명</li>
+                            <li>og:image 페이스북에 공유할 때 사용할 이미지</li>
+                            <li>og:url 페이스북에 공유할 때 사용할 URL</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>style</td>
+                    <td>
+                        CSS를 해당 HTML 페이지 내에서 작성할 수 있게 하는 element
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <aside>
+                    페이지 vs. 사이트 <br>
+                    페이지: 단일 HTML 파일 혹은 단일 웹 페이지 <br>
+                    사이트: 페이지를 엮어놓은 것
+                </aside>
+            </p>
+       </div>
 
+        <!-- 예제가 포함되어 있는 것들은 pemerlink를 작성하자. -->
         <h3>Sections</h3>
+        <div>
+            여러 콘텐츠들이 한 섹션안에 감싸져 있을 때, 문서 전체의 개요(아웃라인)을 그리는 것 <br>
+            아웃라인(outline) : 출판용어. 개요/대강/기안. <br>
+            하나의 Heading의 범위를 나타내는 elements <br>
+            <br>
+            <table border=1>
+                <tr>
+                    <td>body</td>
+                    <td>
+                        HTML 내에서 사용자에게 보이는 모든 것들 <br>
+                        body 안에 없는 것들은 유저에게 보이지 않는 것들이 더 많다. <br>
+                        body 에는 기본적으로 margin:8px 이 들어가 있다.(표준)
+                    </td>
+                </tr>
+                <tr>
+                    <td>article</td>
+                    <td>
+                        자기 자신만으로도 완벽한 콘텐츠를 나타낼 때 사용한다. <br>
+                        매거진, 뉴스 등의 개별 Article들 <br>
+                        Article에도 반드시 제목이 있어야 한다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>section</td>
+                    <td>
+                        문서 내에서 일반적인 섹션 <br>
+                        제목을 붙일 수 있는 콘텐츠 블록 <br>
+                        제목을 붙일 수 없는 콘텐츠 블록 -> div 같은 걸로 처리한다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>nav</td>
+                    <td>
+                        네비게이션 <br>
+                        유저가 탐색할 수 있게 하는 무언가 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>aside</td>
+                    <td>
+                        본문의 내용을 꾸미는 용도 <br>
+                        이 내용을 봐도 되고 안봐도 되는 것 <br>
+                        곁을임 or 광고
+                    </td>
+                </tr>
+                <tr>
+                    <td>h1 ~ h6</td>
+                    <td>
+                        섹션의 제목 <br>
+                        h1: 가장 큰 제목, 한 페이지 내에서 1번만 쓰자. <br>
+                        한 사이트의 제목 or 이 콘텐츠의 제목 <br>
+                        NAVER 메인의 h1: NAVER <br>
+                        h1 부터 h6까지 반드시 1단계씩 내려가야 한다. <br>
+                        h7은 절대로 사용하지 않는다. <br>
+                        heading 단계를 낮추는 것 만으로도 outline이 그려진다.
+                    </td>
+                </tr>
+                <tr>
+                    <td>header</td>
+                    <td>
+                        콘텐츠를 시작하는 element <br>
+                        header 중첩이 가능함(HTML 5.2 부터) <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>footer</td>
+                    <td>
+                        콘텐츠를 끝내는 요소 <br>
+                        footer 중첩이 가능함(HTML 5.2 부터) <br>
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <aside>
+                    로봇 vs. 유저 <br>
+                    HTML은 유저를 위한 것이 아니라 로봇을 위한 것 <br>
+                    로봇: 검색엔진, 브라우저, 크롤러 같은 것들 <br>
+                    유저: 사용자, 사이트를 방문하여 이용하는 사람 <br>
+                    유저는 절대 유저 스스로 HTML을 해석하여 웹사이트에 뿌릴 수 없다. <br>
+                    로봇(브라우저)에 의해 해석된 콘텐츠를 유저가 접근하여 사용한다. <br>
+                    접근성: 스크린 리더와 같은 Assistant Technology(AT)가 접근 가능하게 하는 것 <br>
+                    HTML을 잘 작성한다는 의미는 로봇이 잘 이해할 수 있게 한다는 의미다.
+                </aside>
+            </p>
+        </div>
 
+        <!-- 모든 상황에서 div를 사용했는데 semantics에 맞지 않는 것 같다.
+            다른 더 좋은 방안이 뭐가 있을까? -->
         <h3>Grouping content</h3>
+        <div>
+            <table border=1>
+                <tr>
+                    <td>p</td>
+                    <td>문장? 문단?</td>
+                </tr>
+                <tr>
+                    <td>address</td>
+                    <td>
+                        실제주소 <br>
+                        이 웹사이트를 운영하는 사람의 실제 주소 <br>
+                        이 웹사이트의 운영주체와 만날 수 있는 무언가를 제공 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>hr</td>
+                    <td>
+                        horizontal rule <br>
+                        문맥 커터 <br>
+                        자주 쓰이지는 않는다. <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>pre</td>
+                    <td>
+                        preformatted text <br>
+                        작성한 그래도 화면에 뿌려주는 역할 <br>
+                        코드 작성한 것을 직접적으로 보여주고 싶을 때 많이 사용한다. <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>blockquote</td>
+                    <td>
+                        인용문
+                    </td>
+                </tr>
+                <tr>
+                    <td>cite</td>
+                    <td>
+                        출처
+                    </td>
+                </tr>
+                <tr>
+                    <td>ol</td>
+                    <td>
+                        Ordered List <br>
+                        순서있는 목록 <br>
+                        "<"li">" 리스트 아이템 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ul</td>
+                    <td>
+                        Unordered List <br>
+                        순서없는 목록 <br>
+                        "<"li">" 리스트 아이템 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>dl</td>
+                    <td>
+                        Definition List <br>
+                        설명하고자 하는 대상(dt)이 있고 그것을 설명하는 콘텐츠(dd)로 이루어진 것 <br>
+                        "<"dt">": Definition Term 설명하고자 하는 대상 <br>
+                        "<"dd">": Definition Description 설명하고자 하는 내용 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>figure</td>
+                    <td>
+                        콘텐츠를 포함하고 있는 설명 <br>
+                        본문에 있는 내용을 부가적으로 설명할 때, 콘텐츠가 텍스트, 테이블, 코드, 이미지를 가지고 있는 경우 사용한다. <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>figcaption</td>
+                    <td>
+                        figure 컨텐츠의 caption <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>main</td>
+                    <td>
+                        이 페이지의 메인 콘텐츠 <br>
+                        한 페이지 내에서 여러개 쓰일 수 있으나(HTML 5.2) 하나만 노출되어야 한다. <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>div</td>
+                    <td>
+                        특별한 의미가 없는 element <br>
+                        CSS를 반영하여야 하나 마땅히 사용할 만한 요소가 없을 때 사용한다. <br>
+                        콘템츠를 그룹하여 그 콘텐츠에 무언가 영향을 주고 싶을 때 <br>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
         <h3>Text-level semantics</h3>
+        <p>
+            모두 텍스트로 취급되는 elements
+        </p>
+        <div>
+            <table border=1>
+                <tr>
+                    <td>a</td>
+                    <td>
+                        하이퍼링크 <br>
+                        href attribute가 존재해야만 하이퍼링크로써 동작한다. <br>
+                        Hash Link(#): 프론트엔드개발(React, Angular)을 하면 Hash를 이용하여 Router를 구축하기도 한다. <br>
+                        링크(https://naver.com) <br>
+                        본인의 사이트 내를 탐색할 때는 Path/File <br>
+                        Conditional Link: 특정 상황에서만 활성화되는 링크, href attribute를 toggle하여 구현한다. <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>em</td>
+                    <td>
+                        강조: 다른 텍스트보다 좀 더 중요함
+                    </td>
+                </tr>
+                <tr>
+                    <td>strong</td>
+                    <td>
+                        미친 강조: 아주 중요하고, 심각한 내용을 다루고, 경고에 가까운 수준
+                    </td>
+                </tr>
+                <tr>
+                    <td>small</td>
+                    <td>
+                        덜 강조되는 콘텐츠
+                    </td>
+                </tr>
+                <tr>
+                    <td>s</td>
+                    <td>
+                        더 이상 사용되지 않는 콘텐츠(쇼핑몰에서 할인정보)
+                    </td>
+                </tr>
+                <tr>
+                    <td>cite</td>
+                    <td>출처</td>
+                </tr>
+                <tr>
+                    <td>q</td>
+                    <td>인용, 인용구</td>
+                </tr>
+                <tr>
+                    <td>dfn</td>
+                    <td>이 페이지 내에서 정의하는 용어</td>
+                </tr>
+                <tr>
+                    <td>abbr</td>
+                    <td>약어</td>
+                </tr>
+                <tr>
+                    <td>ruby</td>
+                    <td>
+                        rb: 설명하고자 하는 베이스 <br>
+                        rt: 설명하고자 하는 내용 <br>
+                        rtc: 아래쪽에 설명하고자 하는 내용을 넣고 싶을 때 <br>
+                        rp: 콘텐츠에 포함되지 않지만 꾸밈말을 쓰고 싶을 때 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>data</td>
+                    <td>
+                        데이터를 표현하는 HTML element <br>
+                        인간이 읽기 위한건 아니고 기계를 위한 데이터 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>time</td>
+                    <td>
+                        시간
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>datetime</td>
+                    <td>
+                        time element 내에서 다른 포멧의 콘텐츠를 사용하고 싶을 때 <br>
+                        datetime 속성을 이용하여 원래 포멧의 시간을 나타낸다. <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>code</td>
+                    <td>
+                        유저가 작상한 코드
+                    </td>
+                </tr>
+                <tr>
+                    <td>var</td>
+                    <td>
+                        명시적변수 (자바스크립트 등의 언어의 변수)
+                    </td>
+                </tr>
+                <tr>
+                    <td>samp</td>
+                    <td>특정한 코드가 있을 때, 그 코드의 결과값으로 기대할 수 있는 값</td>
+                </tr>
+                <tr>
+                    <td>kbd</td>
+                    <td>
+                        유저가 직접 키보드로 입력해야 하는 것을 명시
+                    </td>
+                </tr>
+                <tr>
+                    <td>sub, sup</td>
+                    <td>
+                        subscript <br>
+                        superscript <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>i</td>
+                    <td>
+                        이탤릭(Italic) <br>
+                        목소리나 무드가 바뀌어야하는 텍스트, 관용구, 기술용어 등에 사용한다. <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>b</td>
+                    <td>
+                        볼드(bold) <br>
+                        특별히 중요하지는 않은데 실용적인 목적을 위해 주목을 끌고 싶을 때 사용한다. <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>u</td>
+                    <td>
+                        underline <br>
+                        텍스트에 레이블을 지정하고 싶거나 혹은 틀린 부분을 지적하고 싶을 때 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>mark</td>
+                    <td>
+                        HTML 5.1에 추가 <br>
+                        다른 텍스트에 비해 특정한 무언가를 마크하고 싶을 때 <br>
+                        형광펜으로 밑줄 긋는 UI <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>bdi</td>
+                    <td>
+                        bdi 요소 내에 있는 콘텐츠를 다른 콘텐츠의 문맥상 격리 <br>
+                        잘 안쓰임 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>bdo</td>
+                    <td>
+                        포멧을 분리 <br>
+                        잘 안쓰임 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>span</td>
+                    <td>
+                        div와 동일하나 특정한 텍스트에만 의미를 주고 싶을 때 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>br</td>
+                    <td>
+                        줄바꿈 <br>
+                        CSS를 이용하여 display: none을 주면 줄바꿈이 사라짐 <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>wbr</td>
+                    <td>
+                        word break <br>
+                        줄바꿈을 단어 단위로 바꾸어주는 요소 <br>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
         <h3>Edits</h3>
+        <div>
+            <table border=1>
+                <tr>
+                    <td>ins</td>
+                    <td>추가된 콘텐츠</td>
+                </tr>
+                <tr>
+                    <td>del</td>
+                    <td>제거된 콘텐츠</td>
+                </tr>
+            </table>
+        </div>
 
         <h3>Embedded content</h3>
+        <div>
+            <ul class="ulstyle">
+                <li>picture</li>
+                <li>img</li>
+                <li>iframe</li>
+                <li>embed</li>
+                <li>object</li>
+                <li>video</li>
+                <li>audio</li>
+                <li>map</li>
+            </ul>
+        </div>
 
         <h3>Tabular data</h3>
+        <div>
+            <ul class="ulstyle">
+                <li>table</li>
+                <li>caption</li>
+                <li>colgroup</li>
+                <li>col</li>
+                <li>tbody</li>
+                <li>thead</li>
+                <li>tfoot</li>
+                <li>tr</li>
+                <li>td</li>
+                <li>th</li>
+            </ul>
+        </div>
 
         <h3>Forms</h3>
-            <table>
-                <tr>
-                    <td>&lt;form">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>&lt;label">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"input">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"button">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"select">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"datalist">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"optgroup">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"output">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"progress">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"meter">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"fieldsetu">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>"<"legend">"</td>
-                    <td></td>
-                </tr>
-            </table>
-
+            <ul class="ulstyle">
+                <li>form</li>
+                <li>
+                    label
+                    <ul class="innerulstyle">
+                        <li>for</li>
+                    </ul>
+                </li>
+                
+                <li>
+                    input
+                    <ul class="innerulstyle">
+                        <li>
+                            type=hidden
+                        </li>
+                        <li>
+                            type=tel
+                        </li>
+                        <li>
+                            type=url
+                        </li>
+                        <li>
+                            type=email
+                        </li>
+                        <li>
+                            type=password
+                        </li>
+                        <li>
+                            type=datetime
+                        </li>
+                        <li>
+                            type=date
+                        </li>
+                        <li>
+                            type=month
+                        </li>
+                        <li>
+                            type=week
+                        </li>
+                        <li>
+                            type=time
+                        </li>
+                        <li>
+                            type=datetime-local
+                        </li>
+                        <li>
+                            type=number
+                        </li>
+                        <li>
+                            type=range
+                        </li>
+                        <li>
+                            type=color
+                        </li>
+                        <li>
+                            type=radio
+                        </li>
+                        <li>
+                            type=file
+                        </li>
+                        <li>
+                            type=submit
+                        </li>
+                        <li>
+                            type=image
+                        </li>
+                        <li>
+                            type=reset
+                        </li>
+                        <li>
+                            type=button
+                        </li>
+                        <li>
+                            maxlength
+                        </li>
+                        <li>
+                            minlength
+                        </li>
+                        <li>
+                            size
+                        </li>
+                        <li>
+                            readonly
+                        </li>
+                        <li>
+                            required
+                        </li>
+                        <li>
+                            multiple
+                        </li>
+                        <li>
+                            pattern
+                        </li>
+                        <li>
+                            min
+                        </li>
+                        <li>
+                            max
+                        </li>
+                        <li>
+                            step
+                        </li>
+                        <li>
+                            list
+                        </li>
+                        <li>
+                            placeholder
+                        </li>
+                    </ul>
+                </li>
+                <li>button</li>
+                    <ul class="innerulstyle">
+                        <li>
+                            type=submit
+                        </li>
+                        <li>
+                            type=reset
+                        </li>
+                        <li>
+                            type=button
+                        </li>
+                    </ul>
+                <li>select</li>
+                <li>datalist</li>
+                <li>optgroup</li>
+                <li>option</li>
+                <li>textarea</li>
+                <li>output</li>
+                <li>progress</li>
+                <li>meter</li>
+                <li>fielset</li>
+                <li>legend</li>
+            </ul>
+           
         <h3>Interactive Elements</h3>
-            <table>
-                <tr>
-                    <td>&lt;detail">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>&lt;summary">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>&lt;menu">"</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>&lt;menuitem">"</td>
-                    <td></td>
-                </tr>
-            </table>
+            <ul class="ulstyle">
+                <li>details</li>
+                <li>summary</li>
+                <li>menu</li>
+                <li>menuitem</li>
+            </ul>
 
         <h3>Scripting</h3>
             <!-- table border를 css로 처리하자. -->
             <table border="1">
                 <tr>
-                    <td>&lt;script&gt;</td>
+                    <td>script</td>
                     <td>html페이지에 자바스크립트를 삽입</td>
                 </tr>
                 <tr>
@@ -152,7 +963,7 @@
                 </tr>
                 <tr>
                     <td>template</td>
-                    <!-- 정의를 좀 더 찾아보자 -->
+                    <td></td>
                 </tr>
                 <tr>
                     <td>canvas</td>

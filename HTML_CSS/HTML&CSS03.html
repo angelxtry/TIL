@@ -1,0 +1,143 @@
+<html>
+  <head>
+    <title>HTML&CSS CAMP</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <h1>HTML&CSS CAMP 세 번째 수업 20170823 - CSS</h1>
+
+    <h2>HTML Tree</h2>
+    <ul>
+      <li>모든 HTML은 Tree 구조</li>
+      <li>HTML이 내가 그릴 대상(Structure), CSS가 디테일(Graphics)</li>
+      <li>HTML elements는 parent 또는 child를 가질 수 있다.</li>
+      <li>만약 child element를 가질 수 없다면 -> void elements(단는 태그가 없는 아이들)</li>
+    </ul>
+    
+    <h2>문법</h2>
+    <h3>1. Selector</h3>
+    <p>
+      <pre>
+        Selector {
+          Property-name:: porperty-value;
+        }
+      </pre>
+    </p>
+
+    <p>
+      Example 1: P elements의 색상을 red
+      <pre>
+        p {
+          color: red;
+        }
+
+        p {
+          color: rgb(255, 0, 0);
+        }
+
+        p {
+          color: #ff0000;
+        }
+      </pre>
+    </p>
+
+    <p>
+      미리 사전에 정의되어 있는 값을 키워드라고 부른다. <br>
+      CSS는 미리 정의된 키워드를 이용하여 스타일을 지정할 수 있다. <br>
+      CSS를 사용할 때 가장 많이 하는 행위가 키워드를 외우는 것이다. <br>
+    </p>
+
+    <h3>2. CSS는 대소문자 구분을 할까?</h3>
+    <p>
+      답: Case By Case <br>
+      정확한 답: 매칭 알고리즘을 사용하는 경우에는 대소문자 구분을 하고, <br>
+      매칭 알고리즘을 사용하지 않는 경우(HTML 태그에 바로 접속)에는
+      대소문자 구분을 하지 않는다.
+    </p>
+
+    <h3>3. @rule</h3>
+    <p>
+      CSS에서 특수한 문법을 표현하고자 할 때 사용하는 rule
+
+      <ul>
+        <li>웹폰트: @font-face</li>
+        <li>미디어쿼리: @media</li>
+        <li>애니메이션: @keyframes</li>
+        <li>다른 CSS가져오기: @import(성능저하 때문에 비추)</li>
+      </ul>
+
+      <pre>
+        @media (min-width:360px) {
+
+        }
+      </pre>
+    </p>
+
+    <h3>4. BLOCKS</h3>
+    <p>
+      여는 중괄호와 닫는 중괄호 내부를 BLOCKS라고 부른다.
+      <pre>
+        p {
+
+        }
+      </pre>
+    </p>
+
+    <h3>5. Rule Set</h3>
+    <p>
+      <pre>
+        /* as-is */
+        h1 { color: red }
+        h2 { color: red }
+
+        /* to-be (rele set) */
+        h1, h2 { color: red }
+      </pre>
+    </p>
+
+    <h3>6. Declaration</h3>
+    <p>
+      <pre>
+        h1 { color: red }
+        h1 { font-size: 16px }
+        h1 { line-height: 24px }
+
+        /* 마지막 라인에는 세미콜론이 없어도 된다. */
+        h1 {
+          color: red;
+          font-size: 16px;
+          line-height: 24px
+        }
+      </pre>
+
+      white space를 모두 제거하여도  동일하게 동작한다.
+      이전에는 white space를 최대한 제거하고 한 줄로 작성하는 것을 권장하기도 했지만
+      현재는 gulp 등의 빌드 혹은 후처리 도구를 사용하여 white space를 한번에 제거한다.
+    </p>
+
+    <h3>7. comment</h3>
+    <p>
+      개발자에게는 보여야 하지만 일반인게는 보이지 않아도 되는 것 
+      프로덕트 빌드 전에 제거하는 것이 좋다.
+    </p>
+
+    <h2>데이터 타입</h2>
+
+    <h2>Selector</h2>
+
+    <h2>Inheritance</h2>
+
+    <h2>Cascade</h2>
+
+    <h2>Media types</h2>
+
+    <h2>Box model</h2>
+
+    <h2>Visual formatting model</h2>
+    <section>
+      <p>
+        주말에 다시 만나요~
+      </p>
+    </section>
+  </body>
+</html>

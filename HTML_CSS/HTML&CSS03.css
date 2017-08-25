@@ -1,0 +1,39 @@
+h1 {
+  font-size: 30px;
+  color: #263238
+}
+h2 {
+  font-size: 25px;
+  margin-left: 10px;
+  color: #37474F
+}
+h3 {
+  font-size: 20px;
+  margin-left: 20px;
+  color: #455A64
+}
+h4 {
+  font-size: 15px;
+  margin-left: 30px;
+  color: #546E7A
+}
+.textcontent {
+  font-size: 15px;
+  margin-left: 40px;
+  color: #607D8B
+}
+pre {
+  font-size: 15px;
+}
+strong {
+  color: orange;
+}
+table {
+  border-collapse: collapse;
+  border: 1px solid #263238
+}
+td {
+  padding: 10px;
+  border: 1px solid #263238;
+  color: #607D8B
+}

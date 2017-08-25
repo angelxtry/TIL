@@ -2,30 +2,33 @@
   <head>
     <title>HTML&CSS CAMP</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="HTML&CSS03.css">
   </head>
   <body>
     <h1>HTML&CSS CAMP 세 번째 수업 20170823 - CSS</h1>
 
     <h2>HTML Tree</h2>
-    <ul>
-      <li>모든 HTML은 Tree 구조</li>
-      <li>HTML이 내가 그릴 대상(Structure), CSS가 디테일(Graphics)</li>
-      <li>HTML elements는 parent 또는 child를 가질 수 있다.</li>
-      <li>만약 child element를 가질 수 없다면 -> void elements(단는 태그가 없는 아이들)</li>
-    </ul>
+    <div class="textcontent">
+      <ul>
+        <li>모든 HTML은 Tree 구조</li>
+        <li>HTML이 내가 그릴 대상(Structure), CSS가 디테일(Graphics)</li>
+        <li>HTML elements는 parent 또는 child를 가질 수 있다.</li>
+        <li>만약 child element를 가질 수 없다면 -> void elements(단는 태그가 없는 아이들)</li>
+      </ul>
+    </div>
     
     <h2>문법</h2>
     <h3>1. Selector</h3>
-    <p>
+    <div class="textcontent">
       <pre>
         Selector {
           Property-name:: porperty-value;
         }
       </pre>
-    </p>
+    </div>
 
-    <p>
-      Example 1: P elements의 색상을 red
+    <h4>Example 1: P elements의 색상을 red</h4>
+    <div class="textcontent">
       <pre>
         p {
           color: red;
@@ -39,105 +42,657 @@
           color: #ff0000;
         }
       </pre>
-    </p>
+    </div>
 
-    <p>
-      미리 사전에 정의되어 있는 값을 키워드라고 부른다. <br>
-      CSS는 미리 정의된 키워드를 이용하여 스타일을 지정할 수 있다. <br>
-      CSS를 사용할 때 가장 많이 하는 행위가 키워드를 외우는 것이다. <br>
-    </p>
-
-    <h3>2. CSS는 대소문자 구분을 할까?</h3>
-    <p>
-      답: Case By Case <br>
-      정확한 답: 매칭 알고리즘을 사용하는 경우에는 대소문자 구분을 하고, <br>
-      매칭 알고리즘을 사용하지 않는 경우(HTML 태그에 바로 접속)에는
-      대소문자 구분을 하지 않는다.
-    </p>
-
-    <h3>3. @rule</h3>
-    <p>
-      CSS에서 특수한 문법을 표현하고자 할 때 사용하는 rule
-
-      <ul>
-        <li>웹폰트: @font-face</li>
-        <li>미디어쿼리: @media</li>
-        <li>애니메이션: @keyframes</li>
-        <li>다른 CSS가져오기: @import(성능저하 때문에 비추)</li>
-      </ul>
-
-      <pre>
-        @media (min-width:360px) {
-
-        }
-      </pre>
-    </p>
-
-    <h3>4. BLOCKS</h3>
-    <p>
-      여는 중괄호와 닫는 중괄호 내부를 BLOCKS라고 부른다.
+    <h4>Example2: 잘못된 사례</h4>
+    <div class="textcontent">
       <pre>
         p {
-
+          color: "red";
         }
       </pre>
-    </p>
+      <p>
+        미리 사전에 정의되어 있는 값을 키워드라고 부른다. <br>
+        CSS는 사전에 정의 된 키워드를 이용하여 스타일을 지정할 수 있다. <br>
+        CSS를 사용할 때 가장 많이 하는 행위가 키워드를 외우는 것이다. <br>
+      </p>
+    </div>
+
+    <h3>2. CSS는 대소문자 구분을 할까?</h3>
+    <div class="textcontent">
+      <p>
+        답: Case By Case <br>
+        정확한 답: 매칭 알고리즘을 사용하는 경우에는 대소문자 구분을 하고, <br>
+        매칭 알고리즘을 사용하지 않는 경우(HTML 태그에 바로 접속)에는
+        대소문자 구분을 하지 않는다.
+      </p>
+    </div>
+
+    <h3>3. @rule</h3>
+    <div class="textcontent">
+      <p>
+        CSS에서 특수한 문법을 표현하고자 할 때 사용하는 rule
+
+        <ul>
+          <li>웹폰트: @font-face</li>
+          <li>미디어쿼리: @media</li>
+          <li>애니메이션: @keyframes</li>
+          <li>다른 CSS가져오기: @import(성능저하 때문에 비추)</li>
+        </ul>
+
+        <pre>
+          @media (min-width:360px) {
+
+          }
+        </pre>
+      </p>
+    </div>
+
+    <h3>4. BLOCKS</h3>
+    <div class="textcontent">
+      <p>
+        여는 중괄호와 닫는 중괄호 내부를 BLOCKS라고 부른다.
+        <pre>
+          p {
+
+          }
+        </pre>
+      </p>
+    </div>
 
     <h3>5. Rule Set</h3>
-    <p>
-      <pre>
-        /* as-is */
-        h1 { color: red }
-        h2 { color: red }
+    <div class="textcontent">
+      <p>
+        <pre>
+          /* as-is */
+          h1 { color: red }
+          h2 { color: red }
 
-        /* to-be (rele set) */
-        h1, h2 { color: red }
-      </pre>
-    </p>
+          /* to-be (rele set) */
+          h1, h2 { color: red }
+        </pre>
+        위 두개는 동일하게 동작한다.
+      </p>
+    </div>
 
     <h3>6. Declaration</h3>
-    <p>
-      <pre>
-        h1 { color: red }
-        h1 { font-size: 16px }
-        h1 { line-height: 24px }
+    <div class="textcontent">
+      <p>
+        <pre>
+          h1 { color: red }
+          h1 { font-size: 16px }
+          h1 { line-height: 24px }
 
-        /* 마지막 라인에는 세미콜론이 없어도 된다. */
-        h1 {
-          color: red;
+          /* 마지막 라인에는 세미콜론이 없어도 된다. */
+          h1 {
+            color: red;
+            font-size: 16px;
+            line-height: 24px
+          }
+        </pre>
+
+        white space를 모두 제거하여도  동일하게 동작한다. <br>
+        이전에는 white space를 최대한 제거하고 한 줄로 작성하는 것을 권장하기도 했지만 <br>
+        현재는 gulp 등의 빌드 혹은 후처리 도구를 사용하여 white space를 한번에 제거한다. <br>
+      </p>
+    </div>
+
+    <h3>7. comment</h3>
+    <div class="textcontent">
+      <p>
+        개발자에게는 보여야 하지만 일반인게는 보이지 않아도 되는 것 <br>
+        프로덕트 빌드 전에 제거하는 것이 좋다. <br>
+        한 줄 주석은 /* 요렇게 */ <br>
+        여러 줄 주석은 <br>
+        /* <br>
+        * <br>
+        * <br>
+        */ <br>
+        이런식으로 사용한다.
+      </p>
+    </div>
+
+    <h2>데이터 타입</h2>
+    <h3>1. 정수, 실수</h3>
+    <div class="textcontent">
+      <p>
+        십진수, 소숫점 사용 가능 <br>
+        +, - 기호 사용 가능 <br>
+      </p>
+    </div>
+
+    <h3>2. Length</h3>
+    <div class="textcontent">
+      <p>
+        <strong>em</strong> <br>
+        해당 emlement의 폰트 사이즈에 비례하는 값 <br>
+        계산하기 어렵지만 자주 쓰인다. <br>
+        장점: 폰트 사이즈에 비례해서 모든 요소들이 늘거나 줄어야 할 때 굉장히 유용하다. <br>
+        단점: 계산하기 힘들다.
+      </p>
+        
+      <pre>
+        p {
+          font-size: 14px;
+          margin: 1em; /* =14px */
+        }
+
+        
+        body {
           font-size: 16px;
-          line-height: 24px
+        }
+        body p {
+          font-size: 1.2em; /* 19.2px */
+        }
+        body p {
+          font-size: 1.145em; /* 18.32px */
+        }
+
+
+        /* 자식에서 font-size를 재정의하면 재정의한 font-size에 영향을 받는다.*/
+        body{
+          font-size: 12px;
+          line-height: 1.8em; /* 21.6px */
+          text-indent: 3em; /* 36px */
+        }
+        p {
+          font-size: 12px;
+          line-height: 1em; /* 12px */
+          /* text-indent는? 그대로 36px */
         }
       </pre>
 
-      white space를 모두 제거하여도  동일하게 동작한다.
-      이전에는 white space를 최대한 제거하고 한 줄로 작성하는 것을 권장하기도 했지만
-      현재는 gulp 등의 빌드 혹은 후처리 도구를 사용하여 white space를 한번에 제거한다.
-    </p>
+      <p>
+        ex: 폰트의 x-height <br>
+        px: pixel <br>
+        in: 물리단위 2.54cm <br>
+        cm: 센티미터(프린트 용도) <br>
+        mm: 밀리미터(프린트 용도) <br>
+        pt: 포인트 1인치의 1/72 <br>
+        pc: 피카사 1pc는 12pt와 동일 <br>
+        12pt == 16px == 1em == 100% <br>
+      </p>
+    </div>
 
-    <h3>7. comment</h3>
-    <p>
-      개발자에게는 보여야 하지만 일반인게는 보이지 않아도 되는 것 
-      프로덕트 빌드 전에 제거하는 것이 좋다.
-    </p>
+    <h3>퍼센테이지</h3>
+    <div class="textcontent">
+      <p>
+        상대적 단위 <br>
+        HTML과 동일 <br>
+        attribute에 따라 상대적이라는 표현이 달라진다. <br>
+        <pre>
+          p {
+            font-size: 14px;
+            line-height: 120% /* 폰트 사이즈 기준 */
+            width: 50% /* 부모 요소의 가로 사이즈 기준 */
+          }
+        </pre>
+      </p>
+    </div>
 
-    <h2>데이터 타입</h2>
+    <h3>URL</h3>
+    <div class="textcontent">
+      <p>
+        리소스의 경로
+        <pre>
+          p { background: url("https://img.naver.com/image_name")}
+        </pre>
+      </p>
+    </div>
+
+    <h3>색상</h3>
+    <div class="textcontent">
+      <p>
+        해시코드로 표현(ex: #888888, #999999) <br>
+        해시코드가 앞 3자리와 뒤 3자리가 반복되는 경우에는 생략 가능 <br>
+        컬러 키워드: black, red, silver, gold, gray, green, lime, white, maroon, royalblue, crimson <br>
+        RGB 값으로도 표현 rgb(255, 255, 255) <br> 
+        <ul>
+          <li>RED, GREEN, BLUE</li>
+          <li>ALPHA 값도 표현 가능(CSS3)</li>
+          <li>rgb(255,255,255): white</li>
+          <li>rgb(0,0,0): black</li>
+          <li>rgb(0,128,0): green</li>
+          <li>rgb(0,255,0): lime</li>
+        </ul>
+      </p>
+    </div>
+
+    <h3>문자열</h3>
+    <div class="textcontent">
+      <p>
+        "문자", '문자' <br>
+        셀렉터[속성값 셀렉터] 사용 시 사용한다. <br>
+        가상 요소 셀렉터에도 사용한다. <br>
+        URL에서도 사용한다. 
+      </p>
+    </div>
+
+    <h3>CSS유니코드 지정법</h3>
+    <div class="textcontent">
+      <p>
+        <pre>
+          @charset "UTF-8";
+        </pre>
+        한국어로 주석을 달아도 웹사이트에서 잘 보인다.
+      </p>
+    </div>
 
     <h2>Selector</h2>
+    <div class="textcontent">
+      <p>
+        CSS의 표현력을 높여주는 아이 <br>
+        CSS가 HTML 개별 요소를 알아내서 스타일을 입힐 수 있게 도와준다. <br>
+        <br>
+        패턴 매칭
+        <table>
+          <tr>
+            <td>*</td>
+            <td>
+              universal selecotr <br>
+              HTML에 존재하는 모든 elements <br>
+              <pre>
+                * {
+
+                }
+              </pre>
+            </td>
+          </tr>
+
+          <tr>
+            <td>E(element)</td>
+            <td>
+              Type Selector: element와 매치 <br>
+              E는 모든 element로 변경하여 사용하여도 된다. <br>
+              단점: element가 여러개일 때 하나의 element만 선택하여 스타일 주는 것이 불가능하다.
+              <pre>
+                E {
+
+                }
+              </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>E F</td>
+            <td>
+              Descendant Selector <br>
+              element E의 child element F <br>
+              <pre>
+                html:
+                &lt;div&gt;
+                  &lt;p&gt;HELL&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;p&gt;WORLD&lt;/p&gt;
+
+                css:
+                p {
+                  color: red;
+                }
+                div p {
+                  color: blue;
+                }
+              </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>E:fitst-child</td>
+            <td>
+              첫 번째 child element
+              <pre>
+                html:
+                &lt;div&gt;
+                  &lt;p&gt;HELL&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;p&gt;WORLD&lt;/p&gt;
+                &lt;div&gt;
+                  &lt;p&gt;HEAVEN&lt;/p&gt;
+                &lt;/div&gt;
+  
+
+                css:
+                p:first-child {
+                  color: red;
+                }
+                p:last-child {
+                  color: blue;
+                }
+              </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>E.classname</td>
+            <td>
+              Class Selector
+              <strong>아주 자주 쓰임</strong> <br>
+              HTML element 중 class name을 기준으로 css 적용 <br>
+              E는 class selector, id selector, attribute 등에서 생략이 가능하다. <br>
+              생략할 경우 암묵적으로 universal selector로 변경된다. <br>
+              <pre>
+                html:
+                &lt;p class="dsc-red"&gt;요것은 레드&lt;/p&gt;
+                &lt;p class="dsc-blue"&gt;요것은 블루&lt;/p&gt;
+
+                css:
+                .dsc-red {
+                  color: red;
+                }
+
+                div.dsc-red {
+                  color: blue;
+                }
+              </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>E#myid</td>
+            <td>
+              id selector <br>
+              CSS에 id selecotr를 사용하는 것을 추천하지는 않는다. <br>
+              id는 변경될 가능성이 높다. <br>
+              <pre>
+                #warp {
+
+                }
+              </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Pseudo Class</td>
+            <td>
+              의사 클래스: 존재하지만 element로써는 존재하지 않는 것 <br>
+              유저는 도구를 이용하여 인터렉션 한다. <br>
+              Desktop: 마우스, 키보드 <br>
+              Mobile: 터치(손가락) <br>
+              인지 -> hover(Desktop) -> active -> leave(blur) -> 안녕 <br>
+              input(입력창)의 경우 <br>
+              인지 -> focus -> blur -> 안녕 <br>
+              <br>
+              hover
+              <ul>
+                <li>모바일 사파이에서 버그가 있다.</li>
+                <li>모바일에는 마우스가 없다.</li>
+                <li>그래서 마우스를 올렸다 라는 상태가 존재하지 않는다.</li>
+                <pre>
+                  div:hover {
+                    color: red;
+                  }
+                </pre>
+              </ul>
+              active: 클릭했다가 손가락 or 마우스를 떼면 원복
+              <pre>
+                div:active {
+                  color: black;
+                }
+              </pre>
+              focus
+              <ul>
+                <li>시각장애인들은 보통 웹사이트를 탭으로 이동하여 사용한다.</li>
+                <li>시작장애인은 전맹도 있지만 약시도 있다.</li>
+                <li>약시도 마우스를 잘 활용하지 못한다.(커서를 인지하지 못함)</li>
+                <li>만약 outline을 부득이한 사유로 없앴다면 다른 인지방법을 제공해야 한다.</li>
+                <li>이 때 focus를 사용하기도 한다.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>E[Attribute]</td>
+            <td>
+              Attribute Selector <br>
+              특정한 속성이 존재하거나, 속성값이 존재하거나, 속성값이 일치할 때 사용
+              <pre>
+                html:
+                &lt;input divabled /&gt;
+
+                css:
+                input[disabled] {
+
+                }
+              </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>Pseudo Element</td>
+            <td>
+              없는 element를 CSS로 생성하는 것: (3주차 때 배운다.)
+              <pre>
+                div:after {}
+                div:before {}
+              </pre>
+            </td>
+          </tr>
+        </table>
+      </p>
+    </div>
+
 
     <h2>Inheritance</h2>
+    <div class="textcontent">
+      <p>
+        html과 동일함 <br>
+        특정 element가 parent element의 무언가를 상속받고 싶을 때 사용 <br>
+        ex) input element가 parent element의 font를 상속받고 싶을 때 <br>
+        장점: 여러 elements의 스타일을 한번에 수정할 때 유용하다. 
+        <pre>
+          input {
+            font: inherit;
+          }
+
+
+          body {
+            font-size: 18px;
+          }
+          body p {
+            /* font-size 18px이 상속됨
+          }
+        </pre>
+      </p>
+    </div>
 
     <h2>Cascade</h2>
+    <div class="textcontent">
+      <p>
+        <strong>내용추가하자.</strong>
+      </p>
+    </div>
+
+    <h2>CSS 우선순위</h2>
+    <div class="textcontent">
+      <p>
+        스타일시트(CSS)는 크게 세 가지의 출처가 있다. <br>
+        이것은 우선순위가 있다. <br>
+        최우선 순위는 직접 작성한 CSS다.
+
+        <ol>
+          <li>개발자의 CSS</li>
+          <li>유저(font-size, font-family 등을 변경할 수 있다.)</li>
+          <li>
+            유저 에이전트(유저가 웹사이트에 접근할 때 사용하는 프로그램
+            <ul>
+              <li>웹 브라우저</li>
+              <li>웹 뷰</li>
+            </ul>
+          </li>
+        </ol>
+      </p>
+    </div>
+
+    <h2>셀렉터 우선순위</h2>
+    <div class="textcontent">
+      <p>
+        셀렉터를 조합하여 사용했을 때 어떤 CSS가 적용될 것인가에 대한 규칙 <br>
+        <br>
+        셀렉터 우선순위 계산법 <br>
+        a: HTML에서 style 속성을 이용해서 CSS를 넣을 갯수 <br>
+        b: id 셀렉터의 갯수 <br>
+        c: pseudo-class와 다른 셀렉터 전부 <br>
+        d: element와 pseudo-elements의 갯수 <br>
+
+        <pre>
+          li {}                   /* a=0, b=0, c=0, d=1 -> 0001 */
+          ul li {}                /* a=0, b=0, c=0, d=2 -> 0002 */
+          .red {}                 /* a=0, b=0, c=1, d=0 -> 0010 */
+          #red {}                 /* a=0, b=1, c=0, d=0 -> 0100 */
+          &lt;div style="color:red"&gt; /* a=1, b=0, c=0, d=0 -> 1000 */
+
+          li {}
+          li {} /* 같은 레벨이라면 CSS상에서 하단에 있는 것이 적용된다. */
+        </pre>
+      </p>
+    </div>
+
+
 
     <h2>Media types</h2>
+    <div class="textcontent">
+      <p>
+        유저 에이전트가 어떤 형태의 기기를 사용하여 접근하였는가? <br>
+        <br>
+        미디어 종류
+        <ul>
+          <li>screen: 화면</li>
+          <li>print: 인쇄</li>
+          <li>tv: 텔레비전</li>
+          <li>projection: 프로젝터</li>
+          <li>tty: tele type(AT(Accssibility Technology)로 활용되기도 한다.)</li>
+        </ul>
+      </p>
+    </div>
+
 
     <h2>Box model</h2>
+    <div class="textcontent">
+      <p>
+        웹상의 모든 elements는 사각형 박스로 나타난다. <br>
+        이 사각형 박스를 box model로 설명 <br>
+        visual formatting model을 이용하여 화면에 배치된다. <br>
+      </p>
+    </div>
+
+    <h3>box demension</h3>
+    <div class="textcontent">
+      <p>
+        박스는 콘텐츠 영역을 가지고 있다. <br>
+        여기서 콘텐츠는 이미지, 텍스트 등을 말한다. <br>
+        가장 안쪽 박스부터 content -> padding -> border -> margin으로 부른다. <br>
+      </p>
+    </div>
+
+    <h3>padding edge</h3>
+    <div class="textcontent">
+      <p>
+        콘텐츠 영역을 감싸고 있는 영역. <br>
+        padding은 width, height와 직접적으로 연관성을 가지고 있다. <br>
+        네 방향의 padding edge가 하나의 padding box를 정의한다. <br>
+        content box와 border 사이의 영역을 지정하고자 할 때 사용한다. <br>
+        배경이 투명하지 않다. <br>
+        box에 배경색을 넣으면 padding 영역까지 영향을 받는다. <br>
+        <pre>
+          p {
+            padding: 14px;
+          } /* 요런 작성법을 축약형이라고 한다. */
+
+          p {
+            padding-top: 14px;
+            padding-right: 14px;
+            padding-bottom: 14px;
+            padding-left: 14px;
+          } /* 풀어쓰면 요렇게 된다. */
+
+          p {
+            padding: 14px 15px 16px 17px; 
+          }
+          /* top부터 시작해서 시계방향으로.
+          * top right bottom left
+          */
+          
+          p {
+            padding: 14px 20px; /* 14px 20px 14px 20px */
+          }
+
+          p {
+            padding: 14px 20px 18px; /* 14 20 18 20 */
+          }
+        </pre>
+      </p>
+    </div>
+
+    <h3>border edge</h3>
+    <div class="textcontent">
+      <p>
+        border는 외곽선이다. <br>
+        border는 3가지를 지정해주어야 한다. <br>
+        <ol>
+          <li>width(선의 굵기)</li>
+          <li>style(선의 형태)</li>
+          <li>color(선의 색상)</li>
+        </ol>
+        border도 top, right, bottom, left가 존재한다. <br>
+      </p>
+
+      <pre>
+        p {
+          border: 1px solid #000000;
+          border-top: 1px solid #000000;
+          border-width: 1px;
+        }
+
+        p {
+          border-top-width: 1px;
+          border-right-width: 1px;
+          border-bottom-width: 1px;
+          border-left-width: 1px;
+
+          border-style: solid;
+
+          border-color: #000000;
+        }
+      </pre>
+    </div>
+
+
+    <h3>margin edge</h3>
+    <div class="textcontent">
+      <p>
+        배경색의 영향을 받지 않는다.(투명하다.) <br>
+        박스와 박스 사이의 간격을 나태낼 때 사용한다. <br>
+      </p>
+    </div>
+
+
+    <h3>collapsing margins</h3>
+    <div class="textcontent">
+      <p>
+        서로 인접해있는 A element와 B element가 존재할 때 <br>
+        또는 parent A element와 child B element가 존재할 때 <br>
+        A element가 margin-bottom 값을 가지고 있고 <br>
+        B element가 margin-top 값을 가지고 있다면 <br>
+        두 element는 큰 값으로 병합된다.
+      </p>
+
+        <pre>
+          html:
+          &lt;div class"A"&gt;Hell&lt;/div&gt;
+          &lt;div class"B"&gt;Heaven&lt;/div&gt;
+
+          css:
+          .A {
+            margin-bottom: 100px;
+          }
+          .B {
+            margin-bottom: 150px;
+          }
+        </pre>
+
+      <p>
+        이 때 A와 B사이의 간격은? 150px
+      </p>
+    </div>
 
     <h2>Visual formatting model</h2>
-    <section>
+    <div class="textcontent">
       <p>
         주말에 다시 만나요~
       </p>
-    </section>
+    </div>
   </body>
 </html>

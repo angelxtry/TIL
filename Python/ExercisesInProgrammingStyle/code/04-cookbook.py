@@ -66,6 +66,13 @@ def remove_stop_words():
         words.pop(i)
 
 
+"""
+python -m cProfile 04-cookbook.py ../pride-and-prejudice.txt
+프로파일링해보면 이 함수에서 가장 시간이 많이 소요된다.
+keys = [wd[0] for wd in word_freqs]
+특히 이 라인이 매번 리스트를 생성하기 때문에 오버헤드가 된다.
+04-cookbook.py는 약 12초, 05-pipeline.py는 약 0.238초가 걸린다.
+"""
 def frequencies():
     global words
     global word_freqs

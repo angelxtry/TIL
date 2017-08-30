@@ -1,0 +1,110 @@
+/*
+1. Fonts(Typography)
+웹 사이트 내의 타이포그래피를 정의
+font는 상속되기 때무에 HTML 요소나 BODy 요소에 먼저 선언
+*/
+
+body {
+  /*
+  1- 폰트의 크기
+  브라우저의 폰트 기본 사이즈: 16px
+  */
+  font-size:18px;
+  /*
+  행간: line-height
+  값으로 정수를 사용할 수 있음: 1.2(자기 자신의 폰트사이즈 * 값)
+  어떤 단위를 사용해도 무관
+  */
+  line-height: 1.5em;
+  /*
+  font-family
+  기본폰트(Original fonts: OS에 기본적으로 깔려있는 폰트)
+  MAX OS X: APPLE SD Gothic NEO, 애플명조 영문: San fransisco
+  Windows10: 맑은 고딕, Malgeun Gothic, 돋움, 굴림, 궁서, 바탕
+  iOS: APPLE SD Gothic NEO, 애플명조 영문: San fransisco
+  안드로이드 4.4이상: Noto Sans CJK(본고딕) 구글에서 Noto sans를 권장 / Roboto
+  안드로이드 4.3이하: Droid Sans Fallback / Roboto
+  웹폰트: 서버에 폰트를 저장해두고, 유저가 접속할 때마다 폰트를 다운
+    한국어는 무겁다. (Noto Sans CJK 용량 116mb)
+    한국어 웹폰트를 사용한다는 것은 큰 도전이다.
+    Noto sans는 11364자를 지원한다.
+    한국어 완성형은 2350자를 지원한다.
+    Noto sans를 2350가만 추리면 5m 정도 된다.
+  회사 서비스가 잘되서 일본에 진출했다면
+    일본어 기본 고딕 폰트: Kozka Gothic
+    태국어 기본 고딕 폰트: ?
+    그 언어의 특정 형태의 폰트
+      * Generic Fonts
+        * sans-serif:고딕
+        * serif:명조
+        * monospace: 삐침있는 문자:손글씨
+        * fantasy: 요상한 폰트:
+        * cursive: 손글씨
+    우리나라에서 가장 점유율이 높은 브라우저
+      * IE10, IE11(보통 기본 폰트 굴림)
+  */
+  font-family: "APPLE SD Gothic NEO", "Malgeun Gothuc", "맑은고딕", "sans-serif";
+  /*
+  정석대로라면 이쯤 color
+  */
+  height: 10000px;
+}
+
+/*
+header 구현
+  레이아웃 잡기
+  header의 tree
+    .header-wrap
+      .btn-menu
+      h1 position absolute
+        a
+      .etc
+        a
+        .btn-search
+    .nav
+      .nav-main
+        li
+          a
+      .nav-other
+        li
+          a
+*/
+button {
+  display:inline-block;
+
+}
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.header-wrap {
+  position: relative; /* 박스모델에 영향을 주지 않고 자기 기준으로 영역을 잡을 때 */
+  padding: 1.5em 2em;
+  border-bottom: 1px solid #ebebeb
+}
+.header .btn-menu {
+  position: absolute; /* .header-wrap에 relative가 없다면 .header를 상속받는다. */
+  left: 0;
+  bottom: 0; /* 나중에 뺄꺼다. 영역 확인을 위해 */
+  top: 5px;
+}
+.header h1 {
+  text-align: center;
+  margin: 0;
+}
+.header .etc {
+  position: absolute;
+  right: 0;
+  top: 5px;
+}
+a {
+
+}
+/* 
+right: 0;까지 주면 자신의 모든 영역
+width: 100%와 동일하다.
+left: 40px; right: 40px;을 하면 좌우로 40px씩 떨어진다.
+background color를 넣어놓고 하면 작업하기 편하다
+ */

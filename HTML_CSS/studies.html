@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BLOCK vs INLINE</title>
+    <style>
+        /*
+        div, span {
+            background: rosybrown;
+            padding: 15px;
+            border: 1px solid coral;
+            margin: 15px;
+        }
+        */
+        /*
+         * box model
+         * padding
+         * border
+         * margin
+         */
+         /*
+         span {
+             display: inline-block;
+         }
+
+         button {
+             display:inline-block;
+             padding:.2em 1em;
+             margin:1em;
+             border:1px solid #2ac1bc;
+             background:#2ac1bc;
+             font:inherit;
+             text-align:center;
+         }
+         */
+         img {
+            float:left;
+         }
+         .clearfix::after {
+            content:'';
+            display:block;
+            clear:both;
+        }
+        .row::after {
+            content:'';
+            display:block;
+            clear:both;
+        }
+        /*
+         * float를 CSS에서 사용할 때.
+         * width를 잘 계산하여야 합니다.
+         */
+         .row {
+             width:1080px;
+             margin: auto;
+             /* width를 특정 값으로 지정한 후에 margin을 auto로 넣으면 중앙정렬 */
+         }
+        .col {
+            float:left;
+            width:20%;
+        }
+        section {position:relative}
+        a {position:absolute;right:10px;top:10px;}
+        ul,li {padding:0;margin:0}
+        ul::after {content:'';display:block;clear:both}
+        li {float:left;width:20%}
+    </style>
+</head>
+<body>
+    <p>사전지식 : box dimension (box model)</p>
+    <!--
+        BLOCK Level은 영역 전체를 차지함
+        BLOCK Level은 box dimension의 영향을 받을 때,
+        height가 콘텐츠의 높이 + padding top + padding-bottom
+
+        box의 크기 계산법
+        가로너비 : width + padding-left + padding-right + border-left + border-right
+        세로높이 : height + padding-top + padding-bottom + border-top + border-bottom
+        margin은 별도
+    -->
+    <div>치킨 맛있음.</div>
+
+    <!--
+        INLINE LEVEL은 콘텐츠 만큼만 영역을 가짐
+        box의 크기 계산법
+        너비 : content width + padding-left + padding-right + border-left + border-right
+        높이 : line-height
+    -->
+    <span>치킨 맛있음.</span> 조은 밥 ㅗ멏엋이
+
+    <!--
+        INLINE BLOCK
+
+        box 자체는 inline처럼 배치
+        box의 크기 계산법은 block을 따라감
+        버튼 등을 만들 때 inline block을 활용
+    -->
+    <button>전송하기</button>
+    <button>취소</button>
+
+    <!--
+      - Positioning Schemes
+      - 브라우저에서 요소를 어떻게 배치할 지
+     -->
+     
+     <!-- Normal Flow -->
+    <p>블록 레벨 엘리먼트는 블록으로 쌓이고, 인라인 레벨 엘리먼트는 인라인으로 쌓인다.
+    CSS로 요소의 Flow를 바꾸지 않은 상태</p>
+    <p>블록 레벨 엘리먼트는 블록으로 쌓이고, 인라인 레벨 엘리먼트는 인라인으로 쌓인다.
+    CSS로 요소의 Flow를 바꾸지 않은 상태</p>
+    <p>블록 레벨 엘리먼트는 블록으로 쌓이고, 인라인 레벨 엘리먼트는 인라인으로 쌓인다.
+    CSS로 요소의 Flow를 바꾸지 않은 상태</p>
+    <p>블록 레벨 엘리먼트는 블록으로 쌓이고, 인라인 레벨 엘리먼트는 인라인으로 쌓인다.
+    CSS로 요소의 Flow를 바꾸지 않은 상태</p>
+    <p>블록 레벨 엘리먼트는 블록으로 쌓이고, 인라인 레벨 엘리먼트는 인라인으로 쌓인다.
+    CSS로 요소의 Flow를 바꾸지 않은 상태</p>
+     <!-- Floats -->
+    <p>요소를 배치하는 방법 중 하나. normal flow의 첫번째 위치로 레이아웃을 잡게하는 것.
+    그래서 float 속성을 넣게되는 경우 가능한 한 최대한의 left 혹은 right로 이동</p>
+     <!-- Absolute Positioning -->
+    <p>Position 속성을 사용하게 될 경우, Containing block을 기준으로
+    박스를 특정 위치에 배치시키는 것이 가능. 이 상태를 Absolute Positioning 상태라 지칭함</p>
+    
+    <p>위 케이스에서, Floats나 Absolute Positioning을 이용해서 Flow를 변경하는 상태
+        out-of-flow (flow에서 벗어났다)라고 지칭함. 그 외의 경우는 in-flow (flow 내에 있다)라고 지칭
+        out-of-flow 상태에서는 예기치 못할 일이 많이 발생</p>
+
+    <!-- Containing Block : 용어 -->
+    <p>어떤 블록들을 배치할 때 그 블록들을 감싸고있는 블록</p>
+    <p>어떤 블록들을 배치할 때 그 블록들의 루트요소(CSS기준)로써 활용되는 블록</p>
+
+    <div>
+        <p>
+            HELLO <strong>CHOEUN</strong>
+        </p>
+    </div>
+
+    <!-- Floats -->
+    <p>꽤 예전부터 있던 개념 => 1999년부터 있었던 개념</p>
+    <p>floating => 띄우는, 부양하는</p>
+    <p>floats라는 속성은 특정한 요소를 왼쪽 or 오른쪽으로 부양시키는 역할</p>
+    <p>속성값으로 left 혹은 right를 가지게 됨</p>
+
+    <div class="clearfix">
+        <img width="400" src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/21034376_1466965110053129_9192358307513930058_n.jpg?oh=219c476016ec880807fab56f17af8099&oe=5A148BE5" alt=""/>
+        <p>
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        커피볶는 김판다라는 커피숍에 있는 판다 인형들 목록 판다 인형 귀엽다 커피 판다
+        </p>
+    </div>
+
+    <!-- Grid System / 12 Grid System -->
+    <!-- 100%를 기준으로 12개의 Column이 들어갈 수 있다는 전제 하에 만든 Grid System -->
+    <div class="row">
+        <div class="col">
+            <strong>TITLE</strong>
+            <ul>
+                <li>내용</li>
+                <li>내용</li>
+                <li>내용</li>
+                <li>내용</li>
+                <li>내용</li>
+                <li>내용</li>
+                <li>내용</li>
+            </ul>
+        </div>
+        <div class="col">2</div>
+        <div class="col">3</div>
+        <div class="col">4</div>
+        <div class="col">5</div>
+    </div>
+
+<!-- clearfix -->
+<p>float요소의 containing block이 제대로 높이를 가질 수 있게 하는 테크닉</p>
+<pre>
+.clearfix::after {
+    content:'';
+    display:block;
+    clear:both;
+    /* 형제 요소 중에 float 요소가 있다면, 그 float의 영향을 해제시켜주는 속성 */
+    /* clear 속성을 넣어줌으로써 float의 영향을 받지 않게 된다 */
+}
+</pre>
+
+<!-- 
+    Position
+    Positioning Schemes
+
+    웹 페이지에서 특정한 요소를 배치하는 스킴 = Positioning Scheme
+    Position : 특정한 요소를 어떻게 배치할 것인가
+
+    지금까지 다뤘던 것 : static position
+    
+    Absolute Positioning
+    : 특정한 위치에 내가 해당 요소를 고정시키고 싶을 때
+    : 해당 요소를 containing block을 기준으로 특정 위치에 고정시킬 수 있음 (absolute)
+    : box offset 속성 : top, right, bottom, left
+    : Absolute Positing에서 containg block은 조상 요소 중 Position이 정적 Position이 아닌 요소
+    : out-of-flow 상태
+    : 콘텐츠 중첩 현상이 발생하기도 함
+    : 다른 콘텐츠의 변화에 유동적으로 대응하기가 힘들다. (남발하지 마세요)
+
+    Absolute Positioning : Fixed
+    : 브라우저를 기준으로 해당 요소를 고정시키고 싶을 때
+
+    Positioning: Relative
+    : 자기 자신을 기준으로 해당 요소를 이동시키고 싶을 때
+-->
+<section>
+    <header>
+        <h1>강력추천 최신영화</h1>
+    </header>
+    <ul>
+        <li>텏트ㅡ</li>
+        <li>텏트ㅡ</li>
+        <li>텏트ㅡ</li>
+        <li>텏트ㅡ</li>
+        <li>텏트ㅡ</li>
+    </ul>
+    <a href="#">최신영화 더보기</a>
+</section>
+
+
+    
+</body>
+</html>

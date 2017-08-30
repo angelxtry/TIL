@@ -1,0 +1,14 @@
+body {
+    font-size: 12px;
+    font-family: sans-serif;
+    line-height: 18px;
+}
+header {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100px;
+}
+header::after {
+
+}

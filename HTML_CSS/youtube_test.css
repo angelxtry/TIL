@@ -1,0 +1,47 @@
+body {
+  height: 10000px;
+}
+body header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+body header::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+h1 {
+  float: left;
+}
+.searchbox {
+  float: left;
+}
+.others {
+  float: left;
+}
+nav {
+
+}
+.category {
+
+}
+.popular-youtube {
+
+}
+.contents-header {
+
+}
+video {
+
+}
+.title-link {
+
+}
+.uploader {
+
+}
+.view-counter {
+
+}

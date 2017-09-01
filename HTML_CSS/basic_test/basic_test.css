@@ -1,0 +1,41 @@
+body {
+  font-size:18px;
+  line-height: 1.5em;
+  font-family: "APPLE SD Gothic NEO", "Malgeun Gothuc", "맑은고딕", "sans-serif";
+  /*
+  정석대로라면 이쯤 color
+  */
+  /* height: 10000px; */
+}
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  border: 1px solid #000000;
+  background-color: green;
+}
+.header-warp {
+  /* position: relative; */
+  padding: 1.5em 2em;
+  border-bottom: 1px solid #000000
+}
+.header .btn-menu {
+  position: absolute;
+  left: 0;
+  top: 5px;
+}
+.header h1 {
+  text-align: center;
+  margin: 0;
+}
+.header .etc {
+  position: absolute;
+  right: 0;
+  top: 5px;
+}
+
+main p {
+  /* height: 500px; */
+  background-color: goldenrod;
+}

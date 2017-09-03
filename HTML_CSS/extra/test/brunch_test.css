@@ -1,0 +1,22 @@
+.header {
+  position: absolute;
+  background: royalblue;
+  left: 0;
+  top: 0;
+}
+.header::after {
+  content:'';
+  display: block;
+  clear: both;
+}
+.header .logo-area {
+  float: left;
+}
+.header .logo-area a {
+}
+.header .tools-area {
+}
+
+.contents {}
+.contents .cover {}
+.contents .cover-text {}

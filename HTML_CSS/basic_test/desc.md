@@ -60,7 +60,7 @@ width: 100%를 넣으면 오른쪽은 끝까지 채워졌지만 위와 왼쪽은
 menu와 h1과 etc를 header-warp으로 감쌌다.
 
 ```css
-.header-warp {
+.header-wrap {
   border-bottom: 1px solid #000000
 }
 ```
@@ -102,5 +102,17 @@ margin: 0;을 이용하여 줄을 맞춘다.
 .header h1 {
   text-align: center;
   margin: 0;
+}
+```
+
+.btn-menu, .etc는 absolute이기 때문에 상위 element의 position에 영향을 받는다.
+
+따라서 .header-wrap에 position-relative를 추가한다.
+
+```css
+.header-wrap {
+  position: relative;
+  padding: 1.5em 2em;
+  border-bottom: 1px solid #000000
 }
 ```

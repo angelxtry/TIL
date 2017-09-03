@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Wired</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!--
+    - Phase 1. 큰 단위로 감싸기
+    - Phase 2. 공통으로 쓰이는 것을 구현 (Header, Footer)
+    - Phase 2.1. Outline먼저 그려보기
+    - Phase 2.2. HTML 작성
+    - Phase 2.3. CSS 작성
+    - Phase 3. TREE 그리기
+   -->
+  <header class="header">
+    <div class="header-wrap">
+      <!-- gnb : global navigation bar -->
+      <!-- 무언가를 감싸지만 의미로 애매할 때 => wrap, container -->
+      <button type="button" class="btn-menu">메뉴</button>
+      <h1><a href="#">Wired</a></h1>
+      <div class="etc">
+        <a href="#" class="lnk">SUBSCRIBE</a>
+        <button type="button" class="btn-search">검색</button>
+      </div>
+    </div>
+    <nav class="nav nav-open">
+      <!-- unfold 클래스로 변경할 경우, 메뉴가 활성화되거나 .... -->
+      <ul class="nav-main">
+        <li><a href="#">BUSINESS</a></li>
+        <li><a href="#">CULTURE</a></li>
+        <li><a href="#">DESIGN</a></li>
+        <li><a href="#">GEAR</a></li>
+        <li><a href="#">SCIENCE</a></li>
+        <li><a href="#">SECURITY</a></li>
+        <li><a href="#">TRANSPORTATION</a></li>
+      </ul>
+      <ul class="nav-others">
+        <li><a href="#">PHOTO</a></li>
+        <li><a href="#">VIDEO</a></li>
+        <li><a href="#">BACKCHANNEL</a></li>
+        <li><a href="#">MAGAZINE</a></li>
+        <li><a href="#">WIRED INSIDER</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="contents">
+    <div class="wrapper">
+      <div class="col">a</div>
+      <div class="col">b</div>
+      <div class="col">c</div>
+    </div>
+    <div class="wrapper">
+      <div class="col col-2x">asd</div>
+      <div class="col">asd</div>
+    </div>
+    <div class="wrapper">
+      <div class="col col-3x">asd</div>
+    </div>
+  </main>
+  <footer class="footer"></footer>
+</body>
+</html>

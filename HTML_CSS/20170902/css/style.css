@@ -1,0 +1,194 @@
+
+/*
+ * 1. Fonts (Typography)
+ * 웹 사이트 내의 타이포그래피를 정의
+ * font는 상속되기 때문에 HTML 요소나 BODY 요소에 먼저 선언
+ */
+
+ body {
+ /*
+  * 폰트의 크기 : font-size
+  * 브라우저의 폰트 기본 사이즈 : 16px
+  */
+  font-size: 14px;
+ /*
+  * 행간 : line-height
+  * 값으로 정수를 사용할 수 있음 : 1.2 (자기 자신의 폰트사이즈 * 값)
+  * 어떤 단위를 사용하여도 무관
+  */
+  line-height: 1.5em;
+ /*
+  * 폰트 패밀리 (font-family)
+  * 이 요소에서 사용할 폰트 (APPLE SD Gothic NEO, 맑은 고딕)
+  * 기본 폰트 (Original fonts : OS에 기본적으로 깔려있는 폰트)
+  * MAC OS X  : APPLE SD Gothic NEO, 애플명조, 영문: San fransisco
+  * Windows10 : 맑은 고딕, Malgeun Gothic, 돋움, 굴림, 궁서, 바탕 / 영문:
+  * iOS       : APPLE SD Gothic NEO, 애플명조 / 영문: San fransisco
+  * 안드로이드 4.4이상 : Noto Sans CJK (본고딕) (구글에서 Noto sans를 권장) / Roboto
+  * 안드로이드 4.3이하 : Droid Sans Fallback / Roboto (안드로이드 2.x) Droid sans
+  * 삼성 : 삼성고딕
+  * LG  : LG스마트고딕
+  * 팬텍 : 베가고딕
+  * 도돌 런처 : 얘로 테마를 바꾸면 폰트가 바뀜. (강제) (4.3 이하)
+  * 회사 서비스가 잘되서 일본에 진출
+    * 일본어 기본 고딕 폰트?
+      * Kozuka Gothic
+    * 태국어 기본 고딕 폰트? => 전 모름
+    * 그 언어의 특정 형태의 폰트
+    * Generic Fonts
+      * sans-serif : 삐침 없는 문자 (고딕)
+      * serif : 삐침 있는 문자 (명조)
+      * monospace : 고정폭 폰트 (개발용)
+      * fantasy : 요상한 폰트 (요상함)
+      * cursive : 손글씨 (손글씨)
+  * 웹폰트 : 서버에 폰트를 저장해두고, 유저가 이 사이트에 접속할 때마다 폰트를 다운
+  * 한국어 : 무거움 (Noto Sans CJK 용량 => 116mb)
+  * 한국어 웹폰트를 사용한다는 것은 큰 도전
+    * Noto sans는 11172자를 지원 (확장형 한국어) : 한글에 존재하는 모든 형태를 다 지원
+    * 고, 곤, 곰, 곪, 곡, 곸, 곹, 곷, 곺
+    * 한국어 완성형 문자 : 2350자 : 한글에서 많이 쓰이는 것들
+    * Noto sans를 2350자만 추리면 용량이 줆 (5mb)
+  * 우리나라에서 가장 점유율 높은 브라우저?
+    * IE
+    * IE10, IE11 (보통 기본폰트를 돋움, 굴림)
+  */
+  font-family: "APPLE SD Gothic NEO", "Malgeun Gothic", "맑은고딕", sans-serif;
+  /*
+   * 정석대로라면 이쯤 color를 선언
+   */
+}
+
+/*
+ * Header 구현
+   * 레이아웃 잡기
+   * Header의 Tree
+ * .header
+   > .header-wrap
+     > .btn-menu
+     > h1
+       > a
+     > .etc
+       > .lnk
+       > .btn-search
+   > .nav
+     > .nav-main
+       > li
+         > a (여기에 CSS를 주고싶음)
+     > .nav-others
+       > li
+         > a
+ */
+body {
+  padding-top:150px;
+}
+ button {
+   display:inline-block;
+   padding:1em;
+   font: inherit;
+   color:#333333;
+   background: transparent;
+   border:0;
+   margin:0;
+ }
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  box-shadow:0 1px 2px rgba(0,0,0,0.4);
+  background:#ffffff;
+}
+.header-wrap {
+  position: relative;
+  padding:1.5em 2em;
+  border-bottom:1px solid #ebebeb;
+}
+.header .btn-menu {
+  position: absolute;
+  left:0;
+  top:5px;
+}
+.header h1 {
+  text-align:center;
+  margin:0;
+}
+.header .etc {
+  position: absolute;
+  right:0;
+  top:5px;
+}
+a {
+  color:inherit;
+  text-decoration:none;
+}
+.nav {}
+/*
+ * conditional class
+ * 얘가 있을 때 특정한 무언가를 부여함
+ */
+.nav-open {}
+.nav .nav-main {
+  padding:0;
+  margin:0;
+}
+.nav .nav-main::after {
+  content:'';
+  display: block;
+  clear: both;
+}
+.nav .nav-main li {
+  float:left;
+  list-style:none;
+  width:14.285714%;
+  text-align:center;
+}
+.nav .nav-main li a {
+  display:block;
+  border-left:1px  solid #ebebeb;
+  border-bottom:1px solid #ebebeb;
+}
+.nav .nav-main li:first-child a {
+  border-left:0;
+}
+.nav .nav-others {
+  text-align:center;
+  padding:0;
+  margin:0;
+}
+.nav .nav-others::after {
+  content:'';
+  display: block;
+  clear: both;
+}
+.nav .nav-others li {
+  display:inline-block;
+  list-style:none;
+}
+.nav .nav-others li a {
+  display: block;
+  padding:3px 5px;
+}
+
+.wrapper {
+  width:960px;
+  margin:auto;
+}
+.wrapper::after {
+  content: '';
+  display: block;
+  clear:both;
+}
+.wrapper .col {
+  float: left;
+  width: 33.333333%;
+  height: 120px;
+  background:purple;
+}
+.wrapper .col-2x {
+  width: 66.66666%;
+  background:gray;
+}
+.wrapper .col-3x {
+  width: 100%;
+  background:gold;
+}

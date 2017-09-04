@@ -1,22 +1,69 @@
 .header {
   position: absolute;
-  background: royalblue;
-  left: 0;
+  left: 0; 
+  /* right: 0; */
   top: 0;
+  width: 100%;
+  /* background: royalblue; */
 }
 .header::after {
-  content:'';
+  /* content:'';
   display: block;
-  clear: both;
+  clear: both; */
 }
 .header .logo-area {
   float: left;
 }
-.header .logo-area a {
+.header .logo-area button {
+  float: left;
+  margin: 10px;
+}
+.header .logo-area h1 {
+  float: left;
+  margin: 0;
 }
 .header .tools-area {
+  float: right;
+  position: relative;
+  top: 9px;
 }
 
-.contents {}
-.contents .cover {}
-.contents .cover-text {}
+body {
+  font-size: 22px;
+  line-height: 1.5;
+  font-family: "APPLE SD Gothic NEO", "Nanum Gothic", "sans-serif";
+  margin: 0;
+}
+.cover {
+  width:100vw;
+  height: 100vh;
+  background:url(https://images.unsplash.com/photo-1454328911520-ccf83f1ef41d?dpr=1&auto=format&fit=crop&w=1080&h=707&q=80&cs=tinysrgb&crop=);
+  background-position: center center;
+  background-size: cover;
+}
+.cover-text {
+  position: absolute;
+  bottom: 0;
+  padding: 1em 3em;
+  color: white;
+}
+.cover-text p {
+  /* opacity: 0.5; */
+}
+h2 {
+  margin: 0;
+}
+.wrapper {
+  max-width: 960px;
+  padding: 20px;
+  margin: auto;
+}
+footer .thumba{}
+footer figcaption {
+
+}
+footer dl {
+
+}
+footer dt {}
+footer dd {}

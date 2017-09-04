@@ -1,0 +1,74 @@
+body {
+  font-size: 22px;
+  line-height: 1.5;
+  font-family: "APPLE SD Gothic NEO", "Nanum Gothic", "sans-serif";
+  margin: 0px;
+}
+.header {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}
+/* .header:after {
+  content:'';
+  display: block;
+  clear: both;
+} */
+.menu-area {
+  float: left;
+  margin: 10px;
+}
+.tools-area {
+  float: right;
+  margin: 10px;
+}
+
+.main {}
+.cover {
+  width: 100vw;
+  height: 100vh;
+  background: url(http://images.unsplash.com/photo-1504123221345-938396029ff2);
+  background-position: center center;
+  background-size: cover;
+}
+.cover-text {
+  position: absolute;
+  left:0px;
+  bottom: 0px;
+  padding: 1em 3em;
+  color: white;
+}
+.cover-text p {
+  opacity: 0.5;
+}
+.content {
+  max-width: 1000px;
+  margin: auto;
+  /* background: white; */
+}
+
+figure {}
+footer .thumb {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 50%;
+  background: url(http://images.unsplash.com/photo-1504123221345-938396029ff2);
+  background-position: center center;
+  background-size: cover;
+}
+figcaption {
+  margin-top: -50px;
+  padding-top: 60px;
+  padding-bottom: 100px;
+  text-align: center;
+  /* background: royalblue; */
+}
+dl {
+  margin: 0;
+}
+dt {}
+dd {
+  margin: 0;
+}

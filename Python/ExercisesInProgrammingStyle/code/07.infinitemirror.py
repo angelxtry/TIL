@@ -22,6 +22,8 @@ import re, sys, operator
 
 # RECURSION_LIMIT를 3224 이상으로 설정하면 프로그램이 죽는다.
 # 신기하네
+# 검색을 좀 해보니 파이썬은 최대 재귀 호출 횟수가 1,000으로 정해져 잇다고 한다.
+# 최대 재귀 호출 횟수를 늘리려면 sys.setrecursionlimit 함수를 이용해야 한다.
 RECURSION_LIMIT = 3224
 sys.setrecursionlimit(RECURSION_LIMIT+10)
 

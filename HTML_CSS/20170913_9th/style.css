@@ -1,0 +1,177 @@
+/*
+ * 기기목록 : https://material.io/devices/
+ * Ultimate Guide to iphone resolution: https://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions
+ * 해상도 대응
+ * 전제: 브라우저는 사이즈 변경이 가능하다
+ * 여러분들의 웹사이트를 제공하는 곳 : ?
+ * 스크린 (Screen)
+ * End User : 90% 이상이 Screen을 이용해서 웹을 사용함
+ * 스크린의 사이즈는 제각각
+ * 프론트엔드 (UI)에서 유저의 접속 환경을 관측하는 일은 불가능에 가까움
+  * 해상도대응 :
+  * 유저가 접근할 거 같은 모든 해상도를 다 대응
+  * 320 x 480 : 아이폰 SE
+  * 분기점 : 특정 해상도 이하라면 해당 그룹을 집합
+  * 만약 {통상적인 스마트폰 크기}라면
+  * 767 > { 이 지점 } > 0
+  * 만약 {통상적인 PC(모니터) 크기}라면
+  * 1024 * 768 (PC에서 가장 작은 사이즈 / 아이패드 미니)
+  * 1920 x 1080
+  * 2560 x 1440
+  * 5120 x 2880 (4K)
+  * 미디어쿼리 (@media)
+  * min : 최소
+  * max : 최대
+ */
+
+ /*
+  * 아이콘 : https://material.io/icons/
+  */
+
+ /*
+  * reset.css
+  */
+body {
+  margin:0;
+}
+h1,h2,h3,h4,h5,h6,p,dl,dt,dd,ul,ol,li {
+  margin:0;
+  padding:0;
+  font:inherit;
+}
+
+/*
+ * real.css
+ */
+body {
+  padding-top:53px;
+  font-size:14px;
+  line-height:1.3em;
+}
+.header {
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  padding:15px;
+  border-bottom:1px solid #eeeeee;
+  background:white;
+  box-sizing:border-box;
+  z-index:10000000000;
+}
+.clearfix::after {
+  content:'';
+  display:block;
+  clear:both;
+}
+.header .logo-area {
+  position:absolute;
+  left:15px;
+  top:15px; 
+}
+.header .search-area {
+  float:left;
+  padding-left:15%;
+  width:70%;
+  text-align:center;
+}
+.header .etc-area {
+  float:right;
+  width:15%;
+}
+.card {
+  background:white;
+}
+.card-profile {
+  position:relative;
+  padding:7px;
+}
+.card-profile .profile-area .thumb {
+  float:left;
+  padding-right:10px;
+}
+.card-profile .profile-area .thumb img {
+  width:50px;
+}
+.card-profile button {
+  position:absolute;
+  right:10px;
+  top:10px;
+}
+.card-image-container {
+  border-top:1px solid #dddddd;
+}
+.card-image-container img {
+  width:100%;
+}
+.card-contents {
+  padding:7px;
+}
+.card-comments {
+  padding:7px;
+}
+/*
+ * Mobile
+ * 767 이하
+ */
+@media (max-width:767px) {
+/*
+ * 평소 CSS 작성하듯이 작성하면 됩니다
+ */
+  body {
+    background: crimson;
+  }
+  .header .search-area {
+    display: none;
+  }
+  .header .etc-area {
+    width:50%;
+    text-align:right;
+  }
+}
+
+/*
+ * Desktop
+ * 768 이상
+ */
+@media (min-width:768px) {
+  body {
+    background:royalblue;
+    font-size: 14px;
+  }
+  .card {
+    width:600px;
+    margin:20px auto;
+  }
+}
+
+/*
+ * large screen
+ * 1920 이상
+ */
+@media (min-width:1920px) {
+  body {
+    background:orange;
+  }
+}
+
+/*
+ * 레티나 디스플레이
+ * 원래 1:1배율로 보여져야하는 것을
+ * 1:2 배율로, 1:3배율, 1:4배율로 보여지게 하는 기술
+ * 스크린에 200px * 300px로 보여질 이미지
+ * 1배율 : 200px * 300px (모바일에서 대응하지 않음)
+ * 2배율 : 400px * 600px (보통)
+ * 3배율 : 600px * 900px (저는 사용)
+ * 4배율 : 800px * 1200px (여기까진.. 안ㅆ..)
+ * 레티나 대응 = 이미지 대응
+ * 이미지 용량이 커짐
+ * 1배율 : 144dpi
+ */
+
+ /*
+  * 기본이미지 : 2배율
+  */
+ @media (min-resolution: 300dpi) {
+  /* 3배율 */
+}

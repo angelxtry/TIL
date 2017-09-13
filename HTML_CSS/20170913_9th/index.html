@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram</title>
+  <!--
+    - viewport
+    - 모바일 기기에서 이 웹 페이지를 어떻게 보여줄 지
+    - 모바일 기기 (Mobile Device)
+    - 줌 (scale)
+    - initial-scale : 기본 줌
+    - minimum-scale : 최소 얼마까지 줌 아웃이 가능한 지
+    - maximum-scale : 최대 얼마까지 줌 인이 가능한 지
+    - width : 페이지의 width
+    - 0부터의 숫자 (소숫점 지원)
+  -->
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header cleafix">
+    <h1 class="logo-area">
+      <a href="#">
+        <span>instagram</span>
+      </a>
+    </h1>
+    <div class="search-area">
+      <input type="text">
+    </div>
+    <div class="etc-area">
+      <a href="#">둘러보기</a>
+      <button type="button">알림</button>
+      <a href="#">내 프로필</a>
+    </div>
+  </header>
+  <main class="main">
+    <div class="card">
+      <div class="card-profile">
+        <div class="profile-area clearfix">
+          <div class="thumb">
+            <a href="#"><img src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/20882826_1460968503986123_4507907866894604058_n.jpg?oh=c6f4597888c46bf1e1c34f53c9b6ab2b&oe=5A5C9373" alt=""></a>
+          </div>
+          <a href="#">_secendeyes</a>
+        </div>
+        <button type="button">옵션 더보기</button>
+      </div>
+      <div class="card-image-container">
+        <img src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/20882826_1460968503986123_4507907866894604058_n.jpg?oh=c6f4597888c46bf1e1c34f53c9b6ab2b&oe=5A5C9373" alt="">
+      </div>
+      <div class="card-contents">
+        <div class="reactions-area">
+          <button type="button">좋아요</button>
+          <button type="button">덧글달기</button>
+        </div>
+        <div class="like-count-area">
+          좋아요 27개
+        </div>
+        <div class="contents-area">
+          <dl>
+            <dt><a href="#">_secondeyes</a></dt>
+            <dd>
+              맛있게 얻어 드세요 :)
+              <a href="#">#배달의민족</a>
+              <a href="#">#대신결제</a>
+            </dd>
+          </dl>
+          <dl>
+            <dt><a href="#">jieun.jane.lee</a></dt>
+            <dd>
+              수고하셔씁니다으앙
+            </dd>
+          </dl>
+        </div>
+        <div class="upload-time-area">
+          <time datetime="2017-09-12">1일 전</time>
+        </div>
+      </div>
+      <div class="card-comments">
+        <form action="/">
+          <input type="text">
+          <input type="submit">
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

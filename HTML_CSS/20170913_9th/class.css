@@ -1,0 +1,20 @@
+@media (max-width: 767px){
+  body {
+    background: crimson;
+  }
+}
+
+@media (min-width: 768px){
+  body {
+    background: royalblue;
+    font-size: 14px;
+  }
+}
+
+/* @media (min-width: 1920px){ */
+@media (min-width: 1024px){
+  body {
+    background: orange;
+/* 폰트사이즈는 768과 동일하다. */
+  }
+}

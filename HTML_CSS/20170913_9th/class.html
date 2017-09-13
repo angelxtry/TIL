@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- 
+    viewport
+    모바일 기기에서 이 웹 페이지를 어떻게 보여줄 지
+    모비일기기 (Mobile Divice)
+    줌(scale)
+    initial-scale: 기본 줌
+    minimum-scale: 최소 얼마까지 줌 아웃이 가능한지
+    maximum-scale: 최대 얼마까지 줌 인이 가능한지
+    0부터 숫자(소수점 지원)
+    width: 페이지의 width
+    (크롬 개발자 도구로 확인)
+   -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Instagram</title>
+  <link rel="stylesheet" href="./class.css">
+</head>
+<body>
+  <header>
+    <h1>
+      <a href="#">
+        <span>instagram</span>
+      </a>
+      <input type="text"> <!-- 검색 -->
+      <div class="etc">
+        <a href="#">둘러보기</a>
+        <button type="button">알림</button>
+        <a href="#">내 프로필</a>
+      </div>
+    </h1>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="card-profile">
+        <img src="" alt="card profile image">
+        <a href="#" class="card-user-id">ididid</a>
+      </div>
+      <div class="card-etc">
+        <button type="button">팔로우</button>
+        <a href="#">더보기</a>
+      </div>
+      <div class="card-image-container">
+        <img src="" alt="card main image">
+      </div>
+      <div class="card-contents">
+        <div class="crad-contents-icon">
+          <button type="button">좋아요</button>
+          <a href="#">댓글달기</a>
+        </div>
+        <button type="button" class="like-text-btn">좋아요 x개</button>
+        <a href="#" class="card-user-id">ididid</a>
+        <p class="input-date">날짜</p>
+        <div class="main-text">
+          <p class="main-text">날짜</p>
+        </div>
+      </div>
+      <div class="card-comments"></div>
+    </div>
+  </main>
+</body>
+</html>

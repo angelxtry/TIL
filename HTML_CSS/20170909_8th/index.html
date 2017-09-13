@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Hello world</title>
+  <style>
+    div {
+      float:left;
+      width: 150px;
+      background: royalblue;
+    }
+    strong {
+      float:left;
+      padding:10em;
+      margin:1em;
+      background:#eee;
+    }
+    .clearfix::after {
+      content:'';
+      display: block;
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+  <!--
+    - 보기에는 아무것도 없는 상태
+    - float는 해당 라인박스의 좌측(left) 혹은 우측 (right)에
+    - 요소를 배치시키는 일을 수행
+    - inline 요소에 float를 넣으면 어떻게 될까?
+   -->
+  <div>
+    2017년 9월 9일
+  </div>
+  <!--
+    - strong 요소가 float의 영향을 받지 않았음 좋겠다
+    - clear: left, right, both
+    - clear는 block (line-box)에서만 먹혀요
+   -->
+  <strong>
+    토요일 날씨 맑음
+  </strong>
+  <div>
+    2017년 12월 15일
+  </div>
+  <!--
+    - Practice
+    - A B C D E F로 이루어진 박스
+    - [  A  ] [  B  ] [  C  ] 
+    - [  D  ] [  E  ] [  F  ]
+    - 얘들을
+    - [  A  ] [  D  ]
+    - [  B  ] [  E  ]
+    - [  C  ] [  F  ]
+    - 로 배치해주세요. (마크업 순서 바꾸지 않고)
+   -->
+
+
+</body>
+</html>

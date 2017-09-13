@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flexbox</title>
+  <style>
+    /* as-is */
+    .container::after {
+      content:'';
+      display:block;
+      clear:both;
+    }
+    .container .box {
+      float:left;
+      width:33.333333%;
+    }
+
+    /* to-be */
+    .container-flex {
+      display:flex;
+      /*
+       * flex-direction
+       * row : 좌 - 우
+       * row-reverse : 우 - 좌
+       * column : 상 - 하
+       * column-reverse : 하 - 상
+       */
+       /*
+        * justify-content: main-axis 정렬
+        * flex-start : main-axis의 start point
+        * center : 중앙
+        * flex-end : main-axis의 end point
+        * space-between : 양끝 정렬
+        * space-around : 동일한 간격
+        */
+        justify-content: space-between;
+        /*
+         * flex가 한줄일 경우에 동작
+         * align-items : cross-axis 
+         * flex-start : cross-axis의 start point
+         * center : 중앙 (!)
+         * flex-end : closs-axis의 end point
+         * stretch : 늘여뜨리기 (기본값)
+         */
+         align-items:center;
+         /*
+          * 자식요소가 부모요소의 영역을 넘어섰을 때
+          * 어떻게 처리할 지
+          * flex-wrap
+          * nowrap : 줄바꿈 안함
+          * wrap : 줄바꿈 함
+          */
+        flex-wrap:wrap;
+        /*
+         * align-content : cross axis 기준 box 전체가 같이 정렬
+         * align-items : cross-axis 
+         * flex-start : cross-axis의 start point
+         * center : 중앙 (!)
+         * flex-end : closs-axis의 end point
+         * stretch : 늘여뜨리기 (기본값)
+         * space-around : 같은 간격
+         * space-between : 양끝정렬
+         */
+        align-content: stretch;
+        height: 500px;
+    }
+    .box {
+      padding:10px;
+      margin:10px;
+      background:royalblue;
+      color:white;
+    }
+  </style>
+</head>
+<body>
+  <!--
+    - [ A ] [ B ] [ C ]
+  -->
+  <div class="container-flex">
+    <div class="box box-a">A</div>
+    <div class="box box-b">B</div>
+    <div class="box box-c">C</div>
+    <div class="box box-d">E</div>
+    <div class="box box-e">F</div>
+    <div class="box box-f">G</div>
+
+    <div class="box box-a">A</div>
+    <div class="box box-b">B</div>
+    <div class="box box-c">C</div>
+    <div class="box box-d">E</div>
+    <div class="box box-e">F</div>
+    <div class="box box-f">G</div>
+
+    <div class="box box-a">A</div>
+    <div class="box box-b">B</div>
+    <div class="box box-c">C</div>
+    <div class="box box-d">E</div>
+    <div class="box box-e">F</div>
+    <div class="box box-f">G</div>
+
+    <div class="box box-a">A</div>
+    <div class="box box-b">B</div>
+    <div class="box box-c">C</div>
+    <div class="box box-d">E</div>
+    <div class="box box-e">F</div>
+    <div class="box box-f">G</div>
+  </div>
+</body>
+</html>

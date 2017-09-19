@@ -42,9 +42,7 @@ def scan():
     global data
     global words
     data_str = ''.join(data)
-    # print(data_str)
     words = words + data_str.split()
-    # print(words)
 
 
 """

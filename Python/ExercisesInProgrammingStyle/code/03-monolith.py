@@ -1,13 +1,19 @@
-#!/usr/bin/env python
-
+"""
+순환 복잡도(cyclomatic complexity)는 프로그램 본문의 복잡도, 특히 제어 흐름 경로의 양을 측정하기 위해 개발된 측정 지표다.
+경험적으로 프로그램 본문 한 조각의 순환 복잡도가 높을수록 프로그램을 이해하기도 어려워진다.
+순환 복잡도 계산은 프로그램 본문을 방향 그래프로 생각하고 다음 계산식에 따른다.
+CC = E - N + 2P
+E(Edge): 변의 수
+N: 노드 수
+P: 출구 노드 수
+"""
 import sys, string
-# the global list of [word, frequency] pairs
+
+
 word_freqs = []
-# the list of stop words
+
 with open('../stop_words.txt') as f:
     stop_words = f.read().split(',')
-    # print(list(f.read()))
-
     """
     stop_words = f.read()
     단순히 f.read()로 처리하면 하나의 파일을 읽어서 하나의 문자열로 만든다.
@@ -15,6 +21,7 @@ with open('../stop_words.txt') as f:
     이 문자열은 ,로 구분된 단어들이다. 그래서 split(',')을 하면
     단어가 element인 list가 된다.
     """
+
 stop_words.extend(list(string.ascii_lowercase))
 """
 string.ascii_lowercase는 a부터 z까지 소문자로 된 문자열을 반환한다.
@@ -23,26 +30,19 @@ print(string.ascii_lowercase)
 element인 list가 합쳐진다.
 """
 
-# iterate through the file one line at a time 
 for line in open(sys.argv[1]):
-    # print(line)
     start_char = None
     i = 0
     for c in line:
-        # print(c)
         if start_char == None:
             if c.isalnum():
-                # We found the start of a word
                 start_char = i
         else:
             if not c.isalnum():
-                # We found the end of a word. Process it
                 found = False
                 word = line[start_char:i].lower()
-                # Ignore stop words
                 if word not in stop_words:
                     pair_index = 0
-                    # Let's see if it already exists
                     for pair in word_freqs:
                         if word == pair[0]:
                             pair[1] += 1
@@ -53,13 +53,10 @@ for line in open(sys.argv[1]):
                     if not found:
                         word_freqs.append([word, 1])
                     elif len(word_freqs) > 1:
-                        # We may need to reorder
                         for n in reversed(range(pair_index)):
                             if word_freqs[pair_index][1] > word_freqs[n][1]:
-                                # swap
                                 word_freqs[n], word_freqs[pair_index] = word_freqs[pair_index], word_freqs[n]
                                 pair_index = n
-                # Let's reset
                 start_char = None
         i += 1
 

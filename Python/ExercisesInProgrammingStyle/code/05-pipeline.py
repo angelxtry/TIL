@@ -1,4 +1,29 @@
-# pipeline
+"""
+파이프라인 프로그래밍 형식에서는 모든 것을 입력 집합 하나를 출력 집합 하나에 매핑하는
+연관 관계로 바라봄으로써 수학적 순수성을 달성하려고 한다.
+
+멱등성(idempotent)은 함수를 한 번 이상 호출하더라도
+단 한 번 호출할 때와 정확히 동일한 관측 결과를 만들어 낸다는 것을 의미한다.
+
+인자가 여러 개인 함수는 커링(currying)이라는 기법을 통해
+일련의 단일 값 고차 함수로 변형할 수 있다.
+"""
+
+# currying
+def f(x, y, z):
+    return x * y + z
+
+f(2, 3, 4) # 10
+
+def f(x):
+    def g(y):
+        def h(z):
+            return x * y + z
+        return h
+    return g
+
+f(2)(3)(4) # 10
+##############################
 
 import sys, re, operator, string
 
@@ -32,9 +57,6 @@ def remove_stop_words(word_list):
     return [w for w in word_list if not  w in stop_words]
 
 
-"""
-dict를 이렇게도 만들 수 있구나...
-"""
 def frequencies(word_list):
     word_freqs = {}
     for w in word_list:
@@ -60,8 +82,5 @@ def print_all(word_freqs):
         print_all(word_freqs[1:])
 
 
-"""
-04-cookbook.py는 약 12초, 05-pipeline.py는 약 0.238초가 걸린다.
-"""
 print_all(sort(frequencies(remove_stop_words(
     scan(filter_chars_and_normalize(read_file(sys.argv[1]))))))[0:25])

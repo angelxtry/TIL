@@ -1,0 +1,209 @@
+/*
+ * style
+ */
+ /* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*
+ * Real
+ */
+
+/*
+ * common
+ */
+.blind {
+  position:absolute;
+  z-index:-1;
+  opacity:0;
+}
+
+.input-text {
+  display:inline-block;
+  border:0;
+  padding:0;
+  margin:0;
+  font:inherit;
+}
+
+/*
+ * icons
+ */
+.security::after {
+  content:'';
+  position:relative;
+  top:-1px;
+  display:inline-block;
+  width:18px;
+  height:18px;
+  background:url(ic_lock_black_24dp_2x.png) 0 0 no-repeat;
+  background-size:cover;
+  vertical-align:middle;
+}
+
+/*
+ * CSS
+ */
+
+body {
+  background:#eeeeee;
+}
+
+.input-group-container {
+  width:400px;
+  margin:10px auto;
+  border:1px solid #ccc;
+  background:#ffffff;
+}
+.input-container {
+  position:relative;
+  padding:12px;
+  padding-right:100px;
+}
+.input-container .input-text {
+  width:100%;
+}
+.input-container-full {
+  padding-right:12px;
+}
+.input-container .more-data {
+  position:absolute;
+  right:15px;
+  top:14px;
+  font-size:14px;
+}
+.input-container + .input-container {
+  border-top:1px solid #eee;
+}
+
+/*
+ * radio button
+ */
+.button-set {
+  width:100%;
+}
+.button-set::after {
+  content:'';
+  display:block;
+  clear:both;
+}
+.custom-button {
+  float:left;
+  width:50%;
+}
+.custom-button label {
+  position:relative;
+  display:block;
+  padding:10px;
+  box-sizing:border-box;
+  text-align:center;
+  border:1px solid #eeeeee;
+}
+.custom-button + .custom-button label {
+  left:-1px;
+}
+.custom-button input:checked ~ label {
+  color:green;
+  border-color:green;
+  z-index:10;
+}
+
+.input-container-custom {
+  padding:0;
+}
+.input-container-custom::after {
+  content:'';
+  display:block;
+  clear:both;
+}
+.input-title {
+  float:left;
+  width:50px;
+  padding:12px 0;
+  text-align:center;
+  background:#eee;
+}
+.input-wrapper {
+  float:left;
+  width:326px;
+}
+.input-wrapper .input-item {
+  float:left;
+  width:33.33333%;
+  margin:7px 0 8px;
+  padding:3px 4px 3px;
+  box-sizing:border-box;
+}
+.input-wrapper .input-item + .input-item {
+  border-left:1px solid #eee;
+}
+.input-select {
+  position:relative;
+}
+.input-select label {
+  position:relative;
+  display:block;
+  padding:2px 0 0 0;
+}
+.input-select label::after {
+  content:'';
+  display:block;
+  position:absolute;
+  right:10px;
+  top:6px;
+  width:5px;
+  height:5px;
+  background:black;
+}
+.input-select select {
+  position:absolute;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  opacity:0;
+}

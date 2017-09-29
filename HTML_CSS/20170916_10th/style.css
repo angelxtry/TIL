@@ -1,0 +1,248 @@
+body {
+  margin:0;
+}
+h1,h2,h3,h4,h5,h6,p,dl,dt,dd,ul,ol,li {
+  margin:0;
+  padding:0;
+  font:inherit;
+}
+img {
+  vertical-align:top;
+}
+
+body {
+  padding-top:75px;
+  font-size:14px;
+  line-height:1.3em;
+}
+.clearfix::after {
+  content:'';
+  display:block;
+  clear:both;
+}
+.ico, .ico img {
+  width:24px;
+  vertical-align:top;
+}
+.lnk-svg, .btn-svg {
+  display:inline-block;
+  position:relative;
+  padding:12px;
+}
+.lnk-svg::after, .btn-svg::after {
+  content:'';
+  display:block;
+  position:absolute;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+}
+button, input {
+  display:inline-block;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  /* iOS Safari에서 Input의 기본 스타일을 없애주는 CSS */
+  -webkit-appearance: none;
+  /* 외곽선이 약간 둥근 형태 */
+  border-radius: 0;
+  font:inherit;
+  transition:.3s opacity ease;
+}
+button:active {
+  opacity:0.6;
+}
+a {
+  color:inherit;
+  text-decoration: none;
+  transition:.3s opacity ease;
+}
+a:active {
+  opacity:0.6;
+}
+
+.header {
+  position:fixed;
+  left:0;
+  top:0;
+  padding:12px;
+  width:100%;
+  border-bottom:1px solid #eeeeee;
+  background:white;
+  box-sizing:border-box;
+  z-index:10000000000;
+}
+.header .logo-area {
+  position:absolute;
+  left:12px;
+  top:12px; 
+}
+.header .search-area {
+  float:left;
+  padding-left:20%;
+  width:60%;
+  text-align:center;
+}
+.header .etc-area {
+  float:right;
+  width:20%;
+}
+.card {
+  background:white;
+}
+.card-profile {
+  position:relative;
+  padding:15px;
+}
+.card-profile .profile-area {
+  display:flex;
+  align-items:center;
+}
+.card-profile .profile-area .thumb {
+  padding-right:10px;
+}
+.card-profile .profile-area .thumb img {
+  width:30px;
+  border-radius:50%;
+}
+.card-profile .profile-area .profile-contents {
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start;
+}
+.card-profile .profile-area .lnk-profile {
+  font-weight:bold;
+}
+.card-profile button {
+  position:absolute;
+  right:0;
+  top:50%;
+  /* margin-top:-24px; */
+  transform: translate(0, -50%);
+}
+.card-image-container {
+  border-top:1px solid #dddddd;
+}
+.card-image-container img {
+  width:100%;
+}
+.reactions-area .btn-svg {
+  padding:6px;
+}
+.card-contents .contents-row {
+  margin:0 7px;
+}
+.like-count-area {
+  margin:0 7px;
+}
+.card-contents .contents-row .lnk-tag {
+  color:#1428aa;
+}
+.card-contents .contents-row dt {
+  float:left;
+  padding-right:10px;
+  font-weight:bold;
+}
+.input-container {
+  display:flex;
+  margin:15px 7px 0;
+  border-top:1px solid #eeeeee;
+  padding:15px 0;
+}
+.input-container .input-area {
+  width:100%;
+}
+.input-container .input-area input {
+  display:block;
+  width:100%;
+  outline:none;
+}
+.input-container .etc-area input {
+  color:royalblue;
+}
+
+@media (max-width:767px) {
+  .header .search-area {
+    display: none;
+  }
+  .header .etc-area {
+    width:50%;
+    text-align:right;
+  }
+}
+/*
+ * 오늘 할 일
+ * 1. 이미지 씌우는 것
+ * 2. 디테일한 CSS
+ * 3. Input 요소 스타일링 (button, input)
+ */
+
+ /*
+  * Image (이미지)
+  * 화면 상에 보여지기 위해 있는 특수한 목적의 파일
+  * 확장자: Jpeg(jpg), gif, png, svg
+  * 색상 : RGBA (Red, Green, Blue, Alpha)
+  * JPEG (이세상에 존재하는 모든 컬러를 우선 표현 가능)
+    * 16비트 이미지
+    * 단점: Alpha 표현이 불가능 (투명도 X)
+    * 장점: 이미지 용량이 적음.
+    * 색상표현범위가 높아질수록 + 이미지 크기가 커질 수록 당연히 용량은 커짐
+    * JPEG는 퀄리티 조정 (50% ~ 60%)
+    * 순수한 사진 / 일러스트를 나타낼 때 많이 사용
+  * GIF
+    * 그래픽 인터체인지 포맷
+    * Frame이 존재하는 포맷
+    * 256개의 색밖에 표현하지 못함 => 용량이 작음
+    * 이미지 퀄리티가 아주 낮아짐.
+    * 장점 : 특별한 처리를 하지 않아도 애니메이션을 구현할 수 있음.
+    * 장점 : Alpha값 표현이 가능함
+    * 단점 : 색상 표현력의 한계로 이미지 퀄리티가 아주 낮아짐
+    * 2012년에 처음 개발할 때 많이 씀 => 지금 안 씀
+    * 이 친구의 색상 표현력 한계로 나온 게 => PNG
+  * PNG
+    * GIF의 대체재
+    * 8비트 PNG / 24비트 PNG
+    * 8비트는 256개
+    * 24비트 : 지구상에 존재하는 모든 색을 표현할 수 있음.
+    * 장점 : JPEG 장점 - 용량 + Alpha
+    * 단점 : 용량이 큼
+    * 아이콘 / Chrome (꾸밈용 이미지)
+  * SVG
+    * Scalable Vector Graphics
+    * 이미지 표현법 : 비트맵, 벡터
+      * 비트맵: 픽셀을 한땀한땀 찍는 방식
+      * 벡터: 특정한 좌표를 놓고 해당 좌표를 이어서 이미지를 생성하는 형태
+    * 비트맵의 단점: 어쨌든 픽셀이라 화면의 해상도가 높아질 수록 이미지가 지글거려요.
+    * SVG의 장점 : 모든 해상도를 한번에 대응
+    * 포토샵으로 그릴 수 있는 모든 아이콘 / 모든 그래픽은 SVG로 변환 가능
+    * 처음부터 일러스트레이터로 작업하시면 됩니다.
+    * 아직은 브라우저 지원율이 높지 않은 편 (모바일에서는 그냥 쓰시고.. PC에서는....)
+    * 네이버 검색에서 SVG를 사용하고 있음.
+    * 용량은 PNG랑 고만고만한 수준
+    * svgo라는 최적화 도구가 있음.
+    * SVG는 IE9부터 지원 (많은 이미지를 SVG로 제공하려면 IE10)
+  * webp
+    * 크롬에서만 써요.
+    * 웹용 이미지 포맷
+    * 표준이 아니에요
+    * 안써요
+  */
+
+/*
+ * 인스타그램 작업
+ * SVG (모든 아이콘)
+ * PNG (SVG Fallback)
+ * JPG (사진)
+ */
+
+ /*
+  * 이미지 씌우기
+  * material icons에서 아이콘을 다운받아서 적재적소에 이미지를 씌우면 됩니다.
+    * Original SVG : 
+    * <object type="image/svg+xml" data="assets/images/ic_favorite_border_black_48px.svg">
+    *   <img src="assets/images/ic_favorite_border_black_48dp.png" alt="알림">
+    * </object>
+    * 이미지는 assets 폴더 내의 images 폴더 안에 저장합니다.
+  */

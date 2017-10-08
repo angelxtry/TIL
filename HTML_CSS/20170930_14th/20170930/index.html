@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Interactive Web</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!--
+    - Animation
+    - A에서 B로 가는 과정을 Frame화 시킨 것
+    - HTML Div 요소가 left: 150 => left 450
+    - 150부터 450 사이를 n초동안 60fps로 애니메이션
+      - TV (24~30fps)
+      - 영화 (24fps)
+      - 게임 (60fps ~ ?)
+      - 원래는 60fps를 한땀 한땀 그려야 함.
+    - 웹에서는 n초만 결정하면 Frame은 알아서 계산
+    - 단점 : 애니메이션 프레임 보장이 100% 되지 않음.
+   -->
+  <div class="section">
+    <!--
+      - 어떤 속성을 사용해서 이 애니메이션을 구현할 수 있을까?
+      - 중앙정렬 (center)
+      - 변형 (transform)
+    -->
+    <div class="center">
+      <h1>Lynda Nova</h1>
+    </div>
+  </div>
+  <a href="#">
+    <span>HELLO</span>
+  </a>
+</body>
+</html>

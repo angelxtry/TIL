@@ -1,0 +1,260 @@
+html, body {
+  margin:0;
+  height:100%;
+}
+h1 {
+  margin:0;
+}
+.section {
+  width:100%;
+  height:100%;
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*
+ * 집중적으로 배울 속성
+ * transform
+ */
+
+ /*
+  * skew (비틀기)
+  * transform: skew();
+  * skew() => CSS 함수
+  * 비틀기 => 각도 (deg)
+  * 박스에는 X축과 Y축
+  * 항상 앞쪽 값이 X고 뒤 값이 Y
+  * 0 0 => 0 -10deg
+  */
+
+/*
+ * 어떻게 하면 한 점으로 모든 텍스트를 모을까?
+ * letter-spacing을 이용하면 됨
+ */
+
+/*
+ * transition
+ * A에서 B로 변하는 과정을 애니메이션으로 만들어줌
+ */
+h1 {
+  transition:1s all ease;
+  transform: skew(0, -10deg);
+  letter-spacing: -0.5em;
+  filter: blur(7px);
+  /* filter 수요일 */
+}
+h1:hover {
+  letter-spacing: 1px;
+  filter: blur(0);
+}
+
+/*
+ * 어떤 속성을 이용해야 이 애니메이션 구현이 가능할까?
+ * 전제 : A => B
+ */
+
+/*
+ * LOGO 쪽
+ */
+
+/*
+ * A (Default) : color : black / background : none
+ * B (End) : color: white / backgrond: black
+ * 배경 (박스) => 얘가 애니메이션의 주체
+ */
+a {
+  color:black;
+}
+a span {
+  position:relative;
+  z-index:10;
+}
+a {
+  display: inline-block;
+  padding:3px 10px;
+  position:relative;
+  transition:0.5s all ease;
+}
+/*
+ * A : bottom: 100%
+ * B : bottom: 0;
+ */
+a::after {
+  content:'';
+  display:block;
+  position:absolute;
+  left:0;
+  top:0;
+  right:0;
+  bottom:100%;
+  background:black;
+  transition: 0.5s all ease;
+}
+a:hover {
+  color:white;
+}
+a:hover::after {
+  bottom:0;
+}
+
+/*
+ * 기존에 알던 것들을 꼬는 법
+ * 본격적으로 시작해봅시다.
+ */
+
+/*
+ * transform
+ * transition
+ * animation
+ */
+
+/*
+ * transform (변형)
+ * 1. 비틀기 (skew)
+ * 2. 회전 (rotate)
+ * 3. 이동 (translate)
+ * 4. 크기 조정 (scale)
+ * 처음보면 어색하고 낯선데....
+ */
+
+.skew {
+  /* skew (X축, Y축) */
+  transform: skew(10px , 10px);
+  transform: skewX();
+  transform: skewY();
+}
+
+.rotate {
+  /* rotate (x축, y축) */
+  /* rotate와 skew를 같이 사용하지 마세요 */
+  transform: rotate(180deg);
+  transform: rotateX();
+  transform: rotateY();
+}
+
+.translate {
+  /* translate(x축, y축) */
+  /* GPU 연산을 이용한 애니메이션을 구현하기 좋아서 */
+  transform: translate(0, 0);
+
+  /* 자기 자신의 width와 height를 기준으로 이동하는 유일한 속성 */
+  /* .box { width: 150px; height: 150px } */
+  /* translate(100%, 100%) => translate(150px, 150px) */
+  transform: translate(100%, 100%);
+}
+
+.scale {
+  /* scale(0) */
+}
+
+
+/*
+ * transition
+ */
+
+/*
+ * transition
+ * A => B로 바뀌는 과정을 자동으로 애니메이션화 시켜주는
+ * 항상 trigger가 존재해야 한다.
+ */
+
+.transition {
+  transition: 0.5s all ease;
+}
+/*
+ * transition-delay
+   * trigger 발동 후 몇 초 뒤에 애니메이션을 시작할 것인가?
+ * transition-duration
+   * 이 애니메이션을 몇초동안 할 것인가?
+ * transition-property
+   * 어떤 속성이 변경될 때 애니메이션을 걸건 지
+ * transition-timing-function (몹시 중요)
+   * 애니메이션의 가속도
+ * transition: <transition-duration> 
+               <transition-property> 
+               <transition-timing-function>
+ * transition-delay: 0.6s;
+ */
+
+.transition {
+  /* 0.5초간 모든 애니메이션이 등속운동 */
+  transition: 0.5s all linear;
+
+  /* 0.5초간 margin-left만 양끝에서만 감속되게 */
+  transition:0.5s margin-left ease;
+
+  /* 0.5초간 margin-left만 끝에서만 감속되게 */
+  transition:0.5s margin-left ease-out;
+
+  /* 0.5초간 margin-left만 처음에만 감속되게 */
+  transition:0.5s margin-left ease-in;
+
+  /* 0.5초간 margin-left만 처음이랑 마지막에 감속 (약간 더 많이 감속) */
+  transition:0.5s margin-left ease-in-out;
+
+  /* 0.5초간 margin-left와 margin-top에만 애니메이션 */
+  transition:0.5s margin-left ease-in-out, 0.5s margin-top ease-in-out;
+
+  /* bezier curve */
+  /* http://cubic-bezier.com */
+  /* https://codepen.io/ChoEun/pen/xXrQLQ */
+} 
+
+
+/*
+ * CSS Animation
+ * - 특별한 트리거 없이 애니메이션을 실행
+ * - 애니메이션을 A - B - C - D - E - F 순으로도 할 수 있읍니다.
+ * - 애니메이션 무한반복도 가능
+ */
+
+/*
+ * animation 속성
+ * 이 요소에서 어떤 애니메이션을 어떻게 동작시킬 건 지
+ */
+
+.loading {
+  /*
+   * animation
+   * animation-delay
+   * animation-duration
+   * animation-name
+   * animation-timing-function
+   * 추가
+   * animation-play-state : 애니메이션이 실행 중인 지
+     * 재생중 : running
+     * 정지 : paused
+   * animation-fill-mode : 애니메이션이 끝났을 때 되감기를 할건 지... 그 상태 유지시킬 건 지
+     * forwards : 끝나면 정지
+     * backwards : 끝나면 처음으로 (기본값)
+   * animation-iteration-count : 반복 횟수 (애니메이션 몇번 반복시킬 건지?)
+     * 정수
+     * infinite (무한대)
+   * animation-direction : 끝나고 나서 애니메이션이 되돌아갈 때 그 상태를 어떻게 처리할 지
+     * alternate
+     * alternate-reverse
+     * reverse
+   */
+  animation: 1s loading aese;
+}
+
+/*
+ * @keyframes
+ * 실제 애니메이션
+ * 유튜브 로딩
+ * 0% => 100%
+ */
+
+@keyframes loading {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}

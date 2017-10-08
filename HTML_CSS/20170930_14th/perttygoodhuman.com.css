@@ -1,0 +1,25 @@
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  font-size: 1.2em;
+}
+/* .brand {
+  display: block;
+  height: 150px;
+  width: 150px;
+  background: royalblue;
+} */
+
+h1 {
+  transition: 1s all ease;
+  transform: skew(0, -10deg);
+  letter-spacing: -0.5em;
+  filter: blur(7px);
+}
+h1:hover {
+  letter-spacing: 1em;
+  filter: blur(0);
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./project.css">
+</head>
+<body>
+  <div class="btn-all">
+    <div class="btn color-red">red</div>
+    <div class="btn color-blue">blue</div>
+    <div class="btn color-green">green</div>
+    <div class="btn color-maroon">maroon</div>
+    <div class="btn color-yellow">yellow</div>
+  </div>
+
+  <script>
+    var stateColor;
+    var btnAll = document.querySelector('.btn-all');
+    var btnColorRed = document.querySelector('.color-red');
+    var btnColorBlue = document.querySelector('.color-blue');
+    var btnColorGreen = document.querySelector('.color-green');
+    var btnColorMaroon = document.querySelector('.color-maroon');
+    var btnColorYellow = document.querySelector('.color-yellow');
+    btnColorRed.addEventListener('mouseenter', function() {
+      btnAll.classList.add('color-red-on');
+    })
+    btnColorRed.addEventListener('mouseleave', function() {
+      btnAll.classList.remove('color-red-on');
+    })
+
+    btnColorBlue.addEventListener('mouseenter', function() {
+      stateColor = "blue";
+      btnAll.classList.add('color-blue-on');
+    })
+    btnColorBlue.addEventListener('mouseleave', function() {
+      btnAll.classList.remove('color-blue-on');
+    })
+
+    btnColorGreen.addEventListener('mouseenter', function() {
+      btnAll.classList.add('color-green-on');
+    })
+    btnColorGreen.addEventListener('mouseleave', function() {
+      btnAll.classList.remove('color-green-on');
+    })
+
+    btnColorMaroon.addEventListener('mouseenter', function() {
+      btnAll.classList.add('color-maroon-on');
+    })
+    btnColorMaroon.addEventListener('mouseleave', function() {
+      btnAll.classList.remove('color-maroon-on');
+    })
+
+    btnColorYellow.addEventListener('mouseenter', function() {
+      btnAll.classList.add('color-yellow-on');
+    })
+    btnColorYellow.addEventListener('mouseleave', function() {
+      btnAll.classList.remove('color-yellow-on');
+    })
+  </script>
+</body>
+</html>

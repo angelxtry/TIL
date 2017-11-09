@@ -1,0 +1,27 @@
+body{
+
+}
+.btn-all {
+  transition-property: background-color;
+  transition-duration: 0.5s; 
+}
+.btn {
+  font-size: 50px;
+}
+.color-red-on {
+  background-color: crimson;
+  /* transition-property: background-color;
+  transition-duration: 2s; */
+}
+.color-blue-on {
+  background-color: royalblue;
+}
+.color-green-on {
+  background-color: greenyellow;
+}
+.color-maroon-on {
+  background-color: maroon;
+}
+.color-yellow-on {
+  background-color: yellowgreen;
+}

@@ -53,3 +53,21 @@ date_str2 = datetime.strftime(date, '%Y%m%d')
 strptime으로 문자열을 날짜로 변환.
 
 strftime으로 날짜를 문자열로 변환.
+
+## 오늘 날짜 구하기
+
+```py
+>>> from datetime import datetime
+>>> datetime.today()
+datetime.datetime(2017, 11, 2, 17, 55, 40, 935418)
+>>> datetime.today().year
+2017
+>>> datetime.today().month
+11
+>>> datetime.today().day
+2
+>>> datetime.today().hour
+17
+>>> datetime.today().strftime("%Y%m%d")
+'20171102'
+```

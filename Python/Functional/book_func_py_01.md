@@ -129,7 +129,7 @@ print( sum( n for n in range(1, 10) if n%3==0 or n%5==0) )
 
 > 일단 결합되고 나면, 그 결합 변수의 값은 결코 바뀌지 않는다. 루프 안에 있는 n이라는 변수는 근본적으로 range() 함수가 돌려주는 값을 짧게 부르는 것에 불과하다.
 
-> 제네레이터 식을 가지고 작업하면서, 결합 변수가 게산의 상태를 정의하는 희미한 경계선상에 있다는 것을 알게 될 것이다.
+> 제네레이터 식을 가지고 작업하면서, 결합 변수가 계산의 상태를 정의하는 희미한 경계선상에 있다는 것을 알게 될 것이다.
 
 ## 객체 생성 살펴보기
 
@@ -167,6 +167,8 @@ def next_(n, x):
     return (x+n/x)/2
 ```
 
+수학적으로 이 수식이 무슨 의미인지 잘 모르겠다.
+
 ```py
 n = 2
 f = lambda x: next_(n, x)
@@ -181,7 +183,7 @@ a0 = 1.0
 > 제대로 된 제곱근으로 수렴하는 무한 수열을 생성할 수 있는 함수는 다음과 같이 작성할 수도 있다.
 
 ```py
-def repeat(f, a)
+def repeat(f, a):
     yield a
     for v in repeat(f, f(a)):
         yield v
@@ -209,6 +211,8 @@ yield from 반복자
 
 > 재귀적 제네레이터 함수값을 만들어 내는 데 있어서는 두 가지 방법이 모두 동일하다. 우리는 yield 형식을 더 강조할 것이다. 하지만 경우에 따라 yield에서 복잡한 식을 만들어 내는 것이 그와 동등한 매핑이나 제네레이터 식을 사용하는 것 보다 명확할 수도 있다.
 
+하지만 이후의 문장이 잘 이해되지 않는다.
+
 > 전체 무한 수열이 필요한 것은 아니다. 이 수열에서 어느 두 값의 차이가 충분히 작아서, 두 값을 모두 제곱근이라 불러도 문제가 없다면 수의 생성을 중단할 수 있다. 얼마나 가까운지를 나타내는 데 사용하는 기호는 그리스 문자인 입실론이다. 이를 우리가 잠내할 수 있는 가장 큰 오차 범위라고 생각할 수 있다.
 
 ```py
@@ -229,3 +233,28 @@ def sqrt(a0, e, n):
 ```
 
 > sqrt(1.0, 0.0001, 3)과 같은 식은 1.0부터 추정하여 루트 3의 값을 0.0001 오차 범위 안까지 계산할 것이다.
+
+```py
+def next_(n, x):
+    return (x + n/x)/2
+
+f = lambda x: next_(n, x)
+
+def repeat(f, a):
+    yield a
+    yield from repeat(f, f(a))
+
+def within(e, iterable):
+    def head_tail(e, a, iterable):
+        b = next(iterable)
+        if abs(a - b) <= e:
+            return b
+        return head_tail(e, b, iterable)
+    return head_tail(e, next(iterable), iterable)
+
+def sqrt(a0, e, n):
+    return within(e, repeat(lambda x: next_(n, x), a0))
+
+print(sqrt(1.0, 0.0001, 2))
+
+```

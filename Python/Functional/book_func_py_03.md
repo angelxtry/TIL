@@ -276,3 +276,92 @@ with open("A's q") as source:
 ```
 
 > 한 반복자를 다른 반복자의 결과에 적용했을 뿐이다. 실제로 이는 합성 함수를 정의하는 것과 같다.
+
+## list, dict, set 사용하기
+```py
+from collections import namedtuple
+import csv
+
+def row_iter(source):
+        return csv.reader(source, delimiter="\t")
+
+def head_split_fixed(row_iter):
+    title = next(row_iter)
+    assert len(title) == 1 and title[0] == "Anscombe's quartet"
+    header = next(row_iter)
+    assert len(header) == 4 and header == ['I', 'II', 'III', 'IV']
+    columns = next(row_iter)
+    assert len(columns) == 8 and\
+        columns == ['x', 'y', 'x', 'y', 'x', 'y', 'x', 'y']
+
+    return row_iter
+
+Pair = namedtuple('Pair', ('x', 'y'))
+def series(n, row_iter):
+    for row in row_iter:
+        yield Pair(*row[n*2:n*2+2])
+
+with open("Anscombe.txt") as source:
+    data = tuple(head_split_fixed(row_iter(source)))
+    sample_I = tuple(series(0, data))
+    sample_II = tuple(series(1, data))
+    sample_III = tuple(series(2, data))
+    sample_IV = tuple(series(3, data))
+    print(data)
+    print(sample_I)
+
+```
+
+> head_split_fixed()와 row_iter()를 합성한 함수에 tuple()함수를 적용한다. 이렇게 하면 다른 함수에서 사용할 객체를 만들 것이다. tuple 객체를 실체화하지 않으면 오직 첫 번째 샘플에만 데이터가 들어갈 것이다. 그 후 원본 반복자를 모두 소모하기 때문에 그 반복자에 대한 나머지 접근은 모두 빈 시퀀스를 만들어 낼 것이다.
+
+```py
+mean = sum(float(pair.y) for pair in sample_I) / len(sample_I)
+```
+
+> 이는 각 Pair 객체의 y 값 평균을 계산한다.
+
+```py
+for subset in sample_I, sample_II, sample_III, sample_IV:
+    mean = sum(float(pair.y) for pair in subset) / len(subset)
+```
+> 메모리 사용을 줄이기 위해(성능은 향상됨) 우리는 가능한 제네레이터 식과 함수를 더 선호한다. 이러한 식으로 컬렉션에 대한 반복자를 오직 한 번만 사용할 수 있기 때문에 때로는 컬렉션을 tuple로 실체화시켜야 할 수도 있다. 컬렉션을 실체화하려면 메모리가 필요하고, 시간도 소요되기 때문에 주의를 기울여야 한다.
+
+## 상태가 있는 매핑 사용하기
+> 파이썬의 dict 클래스에 포함된 여러 매핑과 collections 모듈에 정의된 여러 매핑 등과 같이 몇 가지 상태가 있는 컬렉션을 제공한다. 이러한 매핑은 상태가 있기 때문에 조심스럽게 사용해야 한다.
+
+> 파이썬을 사용해 함수형 프로그래밍 기법을 배우려는 목적 아래 매핑을 사용하는 방법은 두 가지가 있다.
+
+> 첫 번째는 매핑을 누적시키는 상태가 있는 딕셔너리로 사용하는 방식이고, 두 번째는 고정시킨(frozen) 딕셔너리다. 
+
+> 파이썬에서는 사용하기 쉽거나 변경 불가능한 매핑을 제공하지 않는다. collenctions.abc.Mapping 추상 클래스는 변경 불가능하지만, 쉽게 새용할 만한 것은 못된다.
+
+> collections.abc.Mapping 추상 클래스를 사용하는 방식으로 엄밀성을 추구하는 대신, 우리는 ns_map을 대입문의 좌변에 오직 한 번만 사용하고, ns_map.update()나 ns.map.pop()과 같은 메서드를 결코 사용하지 않는 방식으로 돌아길 것이다. 또한 맵에 들어 있는 원소를 대상으로 del을 사용하지도 않을 것이다.
+
+> 상태가 있는 딕셔너리의 전형적인 용례는 다음 두 가지 범주에 들어간다.
+> * 일단 만들어진 다음에는 결코 변하지 않는 딕셔너리. 이 경우, 우리는 dict의 해시 키 기능을 활용하여 성능을 회적화할 수 있다. dict(시퀀스)를 사용하면 (키, 값)2-튜플의 반복 가능한 시퀀스로부터 딕셔너리를 생성할 수 있다.
+> * 점진적으로 만들어지는 딕셔너리. 이는 리스트 객체를 실체화하고 정렬하는 대신에 사용할 수 있는 최적화다. 점진덕으로 맵을 만드는 것은 메모이제이션(memoization)시에 유용하다.
+
+> 첫 번째 예제인 딕셔너리를 한 번에 만드는 것은 입력을 수집하고, dict 객체를 만들며, 그 딕셔너리에 있는 매핑을 바탕으로 입력 데이터를 처리하는 세 가지 작동 단계로 이뤄진다. 이러한 종류의 애플리케이션 에로는 이름과 (R, G, B)3-튜플로 이뤄진 특정 색 팔레트를 사용하는 이미지 처리를 들 수 있다.
+
+> Color라는 이름 있는 튜플을 사용한다고 가정해보자.
+
+```py
+from collections import namedtuple
+Color = namedtuple('Color', ('red', 'green', 'blue', 'name'))
+
+(Color(red=239, green=222, blue=205, name='Almond'), Color(...))
+```
+
+> 주어진 색의 이름을 빠르게 찾기 위해 이 시퀀스로부터 고정시킨 딕셔너리를 만들 것이다. 
+
+> 튜플에서 매핑을 만들어 내기 위해서는 처리(감싸기(반복 가능 객체))라는 디자인 패턴을 사용해야 한다.
+
+```py
+name_map = dict( (c.name, c) for c in sequence)
+```
+
+> 순서는 보장할 수 없다.
+
+> 매핑을 실체화했으므로 dict() 객체를 색 이름에서 (R, G, B) 색으로 변환하는 처리에 반복적으로 사용할 수 있다. 딕셔너리가 키를 해시값으로 빠르게 변환하여 검색을 수행하기 때문에 색 이름 검색은 매우 빠르게 수행될 수 있다.
+
+## bisect 모듈을 사용해 매핑 만들기

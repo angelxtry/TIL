@@ -239,6 +239,17 @@ def next_(n, x):
     return (x + n/x)/2
 
 f = lambda x: next_(n, x)
+```
+
+람다식에 기본 변수 이외의 변수를 더 사용하고 싶다면 next_(n,x)와 같이 함수를 만들어서 사용한다.
+
+f를 람다식이 아닌 함수를 리턴하는 함수로 작성하면 next_(n, x)와 람다를 하나로 만들 수 있다. 정말? 해보려고 했는데 잘 안된다.
+
+```py
+def next_(n, x):
+    return (x + n/x)/2
+
+f = lambda x: next_(n, x)
 
 def repeat(f, a):
     yield a
@@ -258,3 +269,5 @@ def sqrt(a0, e, n):
 print(sqrt(1.0, 0.0001, 2))
 
 ```
+
+reapat나 within 같은 재귀를 내가 직접 만들어서 사용할 수 있을까?

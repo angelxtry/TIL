@@ -12,7 +12,7 @@
 > 함수형 파이선을 작성하려면 튜플과 변경할 수 없는 컬렉션에 초점을 맞출 필요가 있다.
 
 ## 순수 함수 작성하기
-> 자유 변수(free variable)를 사용해 파이썬의 전역에 있는 ㄱㅂㅅ을 참조하면 매개변수를 적절히 사용해 처리할 수 있다.
+> 자유 변수(free variable)를 사용해 파이썬의 전역에 있는 값을 참조하면 매개변수를 적절히 사용해 처리할 수 있다.
 
 ```py
 def some_function(a, b, t):
@@ -27,7 +27,7 @@ def some_function(a, b, t):
 > 상태가 있는 파일 객체 사용을 잘 정의된 영역 안으로 제한할 수 있는 with문을 사용해야 한다.
 
 ## 일급 게층 객체인 함수
-> 호출 가능한 객체를 사용해 함수를 만들 수도 있다. 호출 ㄱ능한 객체도 일급 계층 객체다. 심지어 호출 가능 클래스 정의를 고차 함수라고 생각할 수도 있다. 호출 가능 객체에서 `__init()__` 메서드를 사용하는 방식을 신중하게 생각할 필요가 있다. 즉, 상태가 있는 클래스 변수를 피해야 한다. 한 가지 일반적인 응용방법은 `__init()__` 메서드를 사용해 전략 디자인 패턴(Strategy design pattern)에 부합하는 객체를 만드는 것이다.
+> 호출 가능한 객체를 사용해 함수를 만들 수도 있다. 호출 가능한 객체도 일급 계층 객체다. 심지어 호출 가능 클래스 정의를 고차 함수라고 생각할 수도 있다. 호출 가능 객체에서 `__init()__` 메서드를 사용하는 방식을 신중하게 생각할 필요가 있다. 즉, 상태가 있는 클래스 변수를 피해야 한다. 한 가지 일반적인 응용방법은 `__init()__` 메서드를 사용해 전략 디자인 패턴(Strategy design pattern)에 부합하는 객체를 만드는 것이다.
 
 > 전략 디자인 패턴을 따르는 클래스는 알고리즘이나 알고리즘의 일부를 제공하는 다른 객체에 의존한다. 이 패턴은 알고리즘의 자세한 부분을 클래스 안에 컴파일 해 넣는 대신, 실행 시점에 알고리즘의 세부 사항을 주입할 수 있게 해준다.
 
@@ -171,7 +171,7 @@ def pfactorsl(x):
 
 > 재귀 외에도 중요한 for 루프를 하나 더 사용했다. 그 루프를 통해 인수가 1,000개인 경우까지 쉽게 처리할 수 있다. 이 수는 최소한 2^1000, 즉 300자리 숫자 이상의 크기를 가지고 있다. for에서 사용하는 i변수를 그 루프 바깥에서는 사용하지 않기 때문에 루프에 대해 변경을 가하더라도 i가 가지는 상태가 바깥에 영향을 끼치는 일은 없다.
 
-> 걀과적으로 우리는 꼬리재귀 최적화를 수행한 셈이다. 재귀호출은 3부터 루트x까지 를 센다. for 루프는 그 범위 안에 있는 모든 수를 하나하나 검토하는 재귀호출을 하지 않고도 원하는 바를 이룰 수 있게 해준다. for 루프는 단지 재귀함수의 결과인 반복 가능 객체를 소비하기 위한 것이다.
+> 결과적으로 우리는 꼬리재귀 최적화를 수행한 셈이다. 재귀호출은 3부터 루트x까지 를 센다. for 루프는 그 범위 안에 있는 모든 수를 하나하나 검토하는 재귀호출을 하지 않고도 원하는 바를 이룰 수 있게 해준다. for 루프는 단지 재귀함수의 결과인 반복 가능 객체를 소비하기 위한 것이다.
 
 > 재귀적인 제네레이터 함수에서는 return 문을 사용할 때 조심해야 한다. 다음과 같은 문장을 사용하면 안 된다.
 ```py
@@ -195,6 +195,8 @@ yield from recursive_iter(args)
 
 ## 제네레이터의 한계
 > itertools.tee() 메서드를 사용하면 한 번밖에 사용하지 못하는 한계를 넘어설 수 있다.
+
+tee의 의미가 뭘까? 왜 메서드의 의미를 tee라고 붙였을까?
 
 ```py
 import itertools
@@ -239,7 +241,7 @@ g_f_x = (g(y) for y in f_x)
 그래 좋다. 이런 조합이 있다는 것을 알았다. 이것을 어디에 활용할 수 있을까?
 
 ## 제네레이터 함수를 사용해 원자료 정리하기
-> ... 다음과 같이 데이터에 대한 본복자를 정의할 수 있다.
+> ... 다음과 같이 데이터에 대한 반복자를 정의할 수 있다.
 
 ```py
 import csv
@@ -286,3 +288,125 @@ with open("A's q") as source:
 
 > list, dict, set에 대해 []과 {}를 사용하는 리터럴 구문이 있는 반면, 튜플에 대한 것은 없다. 튜플을 실체화하려면 tuple() 함수를 사용해야만 한다. 이러한 이유로 list(), tuple(), set() 함수를 더 선호하는 편이 가장 일관성이 있어 보인다.
 
+```py
+from collections import namedtuple
+import csv
+
+def row_iter(source):
+        return csv.reader(source, delimiter="\t")
+
+def head_split_fixed(row_iter):
+    title = next(row_iter)
+    assert len(title) == 1 and title[0] == "Anscombe's quartet"
+    header = next(row_iter)
+    assert len(header) == 4 and header == ['I', 'II', 'III', 'IV']
+    columns = next(row_iter)
+    assert len(columns) == 8 and\
+        columns == ['x', 'y', 'x', 'y', 'x', 'y', 'x', 'y']
+
+    return row_iter
+
+Pair = namedtuple('Pair', ('x', 'y'))
+def series(n, row_iter):
+    for row in row_iter:
+        yield Pair(*row[n*2:n*2+2])
+
+with open("Anscombe.txt") as source:
+    data = tuple(head_split_fixed(row_iter(source)))
+    sample_I = tuple(series(0, data))
+    sample_II = tuple(series(1, data))
+    sample_III = tuple(series(2, data))
+    sample_IV = tuple(series(3, data))
+    print(data)
+    print(sample_I)
+
+```
+
+> head_split_fixed()와 row_iter()를 합성한 함수에 tuple()함수를 적용한다. 이렇게 하면 다른 함수에서 사용할 객체를 만들 것이다. tuple 객체를 실체화하지 않으면 오직 첫 번째 샘플에만 데이터가 들어갈 것이다. 그 후 원본 반복자를 모두 소모하기 때문에 그 반복자에 대한 나머지 접근은 모두 빈 시퀀스를 만들어 낼 것이다.
+
+```py
+mean = sum(float(pair.y) for pair in sample_I) / len(sample_I)
+```
+
+> 이는 각 Pair 객체의 y 값 평균을 계산한다.
+
+```py
+for subset in sample_I, sample_II, sample_III, sample_IV:
+    mean = sum(float(pair.y) for pair in subset) / len(subset)
+```
+> 메모리 사용을 줄이기 위해(성능은 향상됨) 우리는 가능한 제네레이터 식과 함수를 더 선호한다. 이러한 식으로 컬렉션에 대한 반복자를 오직 한 번만 사용할 수 있기 때문에 때로는 컬렉션을 tuple로 실체화시켜야 할 수도 있다. 컬렉션을 실체화하려면 메모리가 필요하고, 시간도 소요되기 때문에 주의를 기울여야 한다.
+
+## 상태가 있는 매핑 사용하기
+> 파이썬의 dict 클래스에 포함된 여러 매핑과 collections 모듈에 정의된 여러 매핑 등과 같이 몇 가지 상태가 있는 컬렉션을 제공한다. 이러한 매핑은 상태가 있기 때문에 조심스럽게 사용해야 한다.
+
+> 파이썬을 사용해 함수형 프로그래밍 기법을 배우려는 목적 아래 매핑을 사용하는 방법은 두 가지가 있다.
+
+> 첫 번째는 매핑을 누적시키는 상태가 있는 딕셔너리로 사용하는 방식이고, 두 번째는 고정시킨(frozen) 딕셔너리다. 
+
+> 파이썬에서는 사용하기 쉽거나 변경 불가능한 매핑을 제공하지 않는다. collenctions.abc.Mapping 추상 클래스는 변경 불가능하지만, 쉽게 사용할 만한 것은 못된다.
+
+> collections.abc.Mapping 추상 클래스를 사용하는 방식으로 엄밀성을 추구하는 대신, 우리는 ns_map을 대입문의 좌변에 오직 한 번만 사용하고, ns_map.update()나 ns.map.pop()과 같은 메서드를 결코 사용하지 않는 방식으로 돌아길 것이다. 또한 맵에 들어 있는 원소를 대상으로 del을 사용하지도 않을 것이다.
+
+> 상태가 있는 딕셔너리의 전형적인 용례는 다음 두 가지 범주에 들어간다.
+> * 일단 만들어진 다음에는 결코 변하지 않는 딕셔너리. 이 경우, 우리는 dict의 해시 키 기능을 활용하여 성능을 회적화할 수 있다. dict(시퀀스)를 사용하면 (키, 값)2-튜플의 반복 가능한 시퀀스로부터 딕셔너리를 생성할 수 있다.
+> * 점진적으로 만들어지는 딕셔너리. 이는 리스트 객체를 실체화하고 정렬하는 대신에 사용할 수 있는 최적화다. 점진적으로 맵을 만드는 것은 메모이제이션(memoization)시에 유용하다.
+
+> 첫 번째 예제인 딕셔너리를 한 번에 만드는 것은 입력을 수집하고, dict 객체를 만들며, 그 딕셔너리에 있는 매핑을 바탕으로 입력 데이터를 처리하는 세 가지 작동 단계로 이뤄진다. 이러한 종류의 애플리케이션 에로는 이름과 (R, G, B)3-튜플로 이뤄진 특정 색 팔레트를 사용하는 이미지 처리를 들 수 있다.
+
+> Color라는 이름 있는 튜플을 사용한다고 가정해보자.
+
+```py
+from collections import namedtuple
+Color = namedtuple('Color', ('red', 'green', 'blue', 'name'))
+
+(Color(red=239, green=222, blue=205, name='Almond'), Color(...))
+```
+
+> 주어진 색의 이름을 빠르게 찾기 위해 이 시퀀스로부터 고정시킨 딕셔너리를 만들 것이다. 
+
+> 튜플에서 매핑을 만들어 내기 위해서는 처리(감싸기(반복 가능 객체))라는 디자인 패턴을 사용해야 한다.
+
+```py
+name_map = dict( (c.name, c) for c in sequence)
+```
+
+> 순서는 보장할 수 없다.
+
+> 매핑을 실체화했으므로 dict() 객체를 색 이름에서 (R, G, B) 색으로 변환하는 처리에 반복적으로 사용할 수 있다. 딕셔너리가 키를 해시값으로 빠르게 변환하여 검색을 수행하기 때문에 색 이름 검색은 매우 빠르게 수행될 수 있다.
+
+## bisect 모듈을 사용해 매핑 만들기
+> bisect 모듈을 사용한다는 것은 정렬된 객체를 만들고, 나중에 그 객체를 검색에 활용한다는 의미다. 이때 dict 매핑과 완전히 호환되도록 하기 위해 collections.abc.Mapping을 기반 클래스로 사용할 수도 있다.
+
+> dict 매핑은 해시를 사용해 원소의 위치를 거의 즉각적으로 정할 수 있다. 하지만 이를 위해서는 상당히 큰 메모리를 할당해야 한다. bisect 매핑은 검색을 수행하되, 매핑에서만큼 많은 메모리를 소비하지 않지만, 성능은 거의 즉각적이라 할 만큼 좋다.
+
+> static 매핑 클래스는 다음과 같다.
+```py
+import bisect
+from collections.abc import Mapping
+
+class staticMapping(Mapping):
+    def __init__(self, iterable):
+        self._data = tuple(iterable)
+        self._keys = tuple(sorted(key for key, _ in self._data))
+    def __getitem__(self, key):
+        ix = bisect.bisect_left(self.keys, key)
+        if ix != len(self._keys) and self._keys[ix] == key:
+            return self._data[ix][1]
+        raise ValueError("{0!r} not found".format(key))
+    def __iter__(self):
+        return iter(self._keys)
+    def __len__(self):
+        return len(slef._keys)
+```
+> 이 클래스는 추상 상위 클래스인 collection.abc.Mapping을 확장한다. 이 클래스는 초기화 메서드를 제공하고, 추상 클래스를 상속할 때 구현해야만 하는 세 가지 함수를 구현한다.
+
+> `__getitem__()` 메서드는 bisect.bisect_left() 함수를 사용해 키의 컬렉션을 검색한다. 키를 찾은 경우에는 그에 따른 값을 반환한다.
+
+> `__iter__()` 메서드는 상위 클래스의 요구사항에 맞춰 반복자를 반환한다.
+
+> `__len__()` 메서드도 이와 마찬가지로 요구에 맞게 컬렉션의 길이를 제공한다.
+
+## 상태가 있는 집합 사용하기
+> 파이썬은 집합 컬렉션을 포함한 몇 가지 상태가 있는 컬렉션을 지원한다. 집합을 우리의 목적에 적합하게 사용할 수 있는 경우는 두 가지이다. 한 가지는 원소를 누적시키는 상태가 있는 집합으로 사용하는 것이고, 다른 한 가지는 원소를 빠르게 검색하기 위해 고정시킨 집합으로 사용하는 것이다.
+
+> tuple 객체를 만들어 내는 것과 마찬가지 방식을 forzenset(반복 가능 객체)이라는 문장을 사용하면 고정시킨 집합을 만들 수 있다. 이렇게 하면 매우 빠른 in 연산자를 제공하는 구조를 만들어 낸다. 이를 사용해 데이터를 수집한 후 고정시킨 집합을 만들고 그 집합을 사용해 데이터를 처리할 수 있다.

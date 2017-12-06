@@ -194,3 +194,27 @@ print(Counter(quantized).most_common())
 ```
 
 ## 정렬을 사용해 매핑 만들기
+> Counter 클래스가 없이 같은 문제의 해법을 구현하고 싶다면, 정렬한 후 그룹을 만드는 더 함수적인 방식을 사용할 수 있다.
+
+```py
+def group_sort(trip):
+    def group(data):
+        previous, count = None, 0
+        for d in sorted(data):
+            if d == previous:
+                count += 1
+            elif previous is not None: # and d != previous
+                yield previous, count
+                previous, count = d, 1
+            elif previous is None:
+                previous, count = d, 1
+            else:
+                raise Exception("Bad Bad design problem")
+        yield previous, count
+    quantized = (5*(dist//5) for start, end, dist in trip)
+    return dict(group(quantized))
+```
+
+...
+
+## 키 값에 따라 데이터를 그룹화하거나 분할하기

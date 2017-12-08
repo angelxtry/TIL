@@ -100,6 +100,39 @@ print(v1)
 
 > 우리는 저수준 XML 구문 분석과 고수준 데이터 재구성을 명확히 분리했다. XML 구문 분석은 일반적인 문자열의 튜플 구조를 만들어 낸다. 이는 CSV 파서의 출력과도 호환 가능하다. 이를 통해 다양한 원본에서 가져온 데이터에 균일하게 사용할 수 있는 고수준 처리 코드를 만들 수 있다.
 
+```py
+import xml.etree.ElementTree as XML
+import urllib.request
+
+def comma_split(text):
+    return text.split(',')
+
+def row_iter_kml(file_obj):
+    ns_map = {
+        'ns0': 'http://www.opengis.net/kml/2.2',
+    }
+    doc = XML.parse(file_obj)
+    return (comma_split(coordinates.text)
+            for coordinates in
+            doc.findall('./ns0:Document/'
+            'ns0:Placemark/ns0:Point/ns0:coordinates', ns_map))
+
+def pick_lat_lon(lon, lat, alt):
+    return lat, lon
+
+def lat_lon_kml(row_iter):
+    return (pick_lat_lon(*row) for row in row_iter)
+
+with urllib.request.urlopen('file:./kml.xml') as source:
+    v1 = tuple(lat_lon_kml(row_iter_kml(source)))
+
+print(v1)
+```
+
+urllib만 import 하면 request를 찾을 수 없다고 나온다.
+
+urllib.request까지 import 해야한다.
+
 ## 시퀀스 원소를 둘씩 짝짓기
 > 데이터 재구성의 요구사항 중 하나는 시퀀스에 있는 여러 점의 정보를 시작점-끝점 쌍으로 만드는 것이다. 시계열 분석을 수행하는 경우에는 좀 더 많은 개수의 정보를 묶어야 할 수도 있다. 여기서는 단지 연속된 두 값만을 묶는다.
 
@@ -132,7 +165,7 @@ def pairs(iterable):
 
 > 이 함수를 pairs() 함수에서 호출했다. pairs() 함수는 초기화를 제대로 하고, 종료를 표현하는 예외를 조용히 처리한다.
 
-> 파이썬의 반복 가능 재귀에는 재귀의 결과를 제대로 소비하고 내보내기 위한 for 루프가 들어간다. 좀 더 간단해보이는 return pair_from(nxt, iterable_tail) 방식을 사용하면 반복 기능을 제대로 소비하지 못하고, 모든 값을 만들어 내지 못한다는 사실을 알게 될 것이다 제네레이터 함수 안에서 재귀를 사용하려면 결과로 반환하는 반복 가능 객체가 값을 소비할 수 있도록 해주는 yield문이 필요하다. 이를 위해 yield from recursive_iter(args)를 사용하라. return recursive_iter(args)와 같은 것은 제네리이터 객체만을 반환한다. 따라서 해당 재귀함수를 평가하여 만들어진 값을 반환하지 못한다.
+> 파이썬의 반복 가능 재귀에는 재귀의 결과를 제대로 소비하고 내보내기 위한 for 루프가 들어간다. 좀 더 간단해보이는 return pair_from(nxt, iterable_tail) 방식을 사용하면 반복 기능을 제대로 소비하지 못하고, 모든 값을 만들어 내지 못한다는 사실을 알게 될 것이다. 제네레이터 함수 안에서 재귀를 사용하려면 결과로 반환하는 반복 가능 객체가 값을 소비할 수 있도록 해주는 yield문이 필요하다. 이를 위해 yield from recursive_iter(args)를 사용하라. return recursive_iter(args)와 같은 것은 제네리이터 객체만을 반환한다. 따라서 해당 재귀함수를 평가하여 만들어진 값을 반환하지 못한다.
 
 > 꼬리 호출 재귀를 최적화하기 위한 전략은 재귀를 제네레이터 식으로 바꾸는 것이다. 이 방식을 사용하면 재귀를 단순한 for 루프로 최적화할 수 있다.
 
@@ -154,6 +187,60 @@ list[0:1], list[1:2], list[2:3], ..., list[-2:]
 > 이 함수를 다른 방식으로 정리하면 다음과 같다.
 ```py
 zip(list, list[1:])
+```
+
+```py
+import xml.etree.ElementTree as XML
+import urllib.request
+
+def comma_split(text):
+    return text.split(',')
+
+def row_iter_kml(file_obj):
+    ns_map = {
+        'ns0': 'http://www.opengis.net/kml/2.2',
+    }
+    doc = XML.parse(file_obj)
+    return (comma_split(coordinates.text)
+            for coordinates in
+            doc.findall('./ns0:Document/'
+            'ns0:Placemark/ns0:Point/ns0:coordinates', ns_map))
+
+def pick_lat_lon(lon, lat, alt):
+    return lat, lon
+
+def lat_lon_kml(row_iter):
+    return (pick_lat_lon(*row) for row in row_iter)
+
+# with urllib.request.urlopen('file:./kml.xml') as source:
+#     v1 = tuple(lat_lon_kml(row_iter_kml(source)))
+# print(v1)
+
+def pairs(iterable):
+    def pair_from(head, iterable_tail):
+        nxt = next(iterable_tail)
+        yield head, nxt
+        yield from pair_from(nxt, iterable_tail)
+    try:
+        return pair_from(next(iterable), iterable)
+    except StopIteration:
+        return
+
+# with urllib.request.urlopen('file:./kml.xml') as source:
+#     pair_tuple = tuple(pairs(lat_lon_kml(row_iter_kml(source))))
+# print(pair_tuple)
+
+def legs(lat_lon_iter):
+    begin = next(lat_lon_iter)
+    for end in lat_lon_iter:
+        yield begin, end
+        begin = end
+
+with urllib.request.urlopen('file:./kml.xml') as source:
+    pair_tuple = tuple(legs(lat_lon_kml(row_iter_kml(source))))
+print(pair_tuple)
+
+
 ```
 
 > 이해하는 데는 도움이 되지만, 이 두 가지 코드는 오직 시퀀스 객체에 대해서만 작동한다. legs()와 pairs() 함수는 시퀀스 객체를 포함해 모든 반복 가능 객체에 대해 잘 작동한다.
@@ -198,7 +285,7 @@ print(tuple(legs((float(lat), float(lon)) for lat, lon in lat_lon_kml())))
 ```
 > legs() 함수를 제네레이터 식에 적용한 후 lat_lon_kml()의 결과를 가지고 float 값을 만들었다. 이 코드는 뒤에서 앞으로 읽을 수 있다. lat_lon_kml()의 출력을 float 값의 쌍으로 변환한 후 이를 legs() 함수의 시퀀스로 변환한다.
 
-> 이러한 식의 코드는 금방 복잡해진다. 여기서도 내포된 함수가 매우 많다. float(), legs() tuple() 함수를 제네레이터에 적용하고 있다. 복잡한 식을 리펙토링하는 일반적인 방법 중 하나는 제네레이터 식과 실페화한 컬렉션을 분리하는 것이다. 식을 다음과 같이 단순화할 수 있다.
+> 이러한 식의 코드는 금방 복잡해진다. 여기서도 내포된 함수가 매우 많다. float(), legs() tuple() 함수를 제네레이터에 적용하고 있다. 복잡한 식을 리펙토링하는 일반적인 방법 중 하나는 제네레이터 식과 실체화한 컬렉션을 분리하는 것이다. 식을 다음과 같이 단순화할 수 있다.
 
 ```py
 flt = ((float(lat), float(lon)) for lat, lon in lat_lon_kml())
@@ -299,7 +386,47 @@ def mean(iterable):
 
 > 우아하기는 하지만 이 정의가 모든 반복 가능 객체에 적용할 수 있는 것은 아니다. 이 정의는 시퀀스에만 적용할 수 있다.
 
-(평균, 표준편차, 상관관계 생략)
+> 실제로, 반복 가능 객체를 기반으로 평균이나 표준편차를 계산하는 것은 비효율적이다. 파이썬에서는 시퀀스 객체를 실체화하거나 좀 더 복잡한 연산으로 각 계산을 재구성해야만 한다.
+
+> 다음은 꽤 우아한 평균과 표준편차 정의의 예다.
+
+```py
+import math
+s0 = len(data) # sum(1 for x in data) # x**0
+s1 = sum(data) # sum(x for x in data) # x**1
+s2 = sum(x*x for x in data)
+
+mean = s1/s0
+stdev = math.sqrt(s2/s0 - (s1/s0)**2)
+```
+
+```py
+def s0(data):
+    return sum(1 for x in data)
+
+def s1(data):
+    return sum(x for x in data)
+
+def s2(data):
+    return sum(x*x for x  in data)
+
+def mean(x):
+    return s1(x)/s(0)
+
+def stdev(x):
+    return math.sqrt(s2(x)/s0(x) = (s1(x)/s0(x))**2)
+```
+
+다음은 두 표본 집합의 상관관계를 계산하는 방법을 보여준다.
+```py
+def corr(sample1, sample2):
+    u_1, o_1 = mean(smaple1), stdev(sample1)
+    u_2, o_2 = mean(smaple2), stdev(sample2)
+    z_1 = (z(x, u_1, o_1) for x in sample1)
+    z_2 = (z(x, u_2, o_2) for x in sample2)
+    r = sum(zx1*zx2 for zx1, zx2 in zip(z_1, z_2) )/s0(sample1)
+    return r
+```
 
 ## zip()을 사용해 시퀀스를 구조화하거나 펼치기
 > zip() 함수는 여러 반복자나 시퀀스의 값을 일정 간격으로 섞는다. 그 함수는 n개의 입력 반복자나 시퀀스로부터 n-튜플을 만들어 낸다.

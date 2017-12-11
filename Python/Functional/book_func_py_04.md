@@ -462,12 +462,12 @@ list(zip((1, 2, 3), ('a', 'b')))
 # [(1, 'a'), (2, 'b')]
 ```
 
-> 이 결과는 논란의 여지가 있다. 왜 길이를 줄여야 할까? 더 짭은 리스트에서 부족한 원소를 None 값으로 채워넣지 말아야 할 이유가 있을까? 이러한 방식을 선택하는 zip() 함수의 또 다른 구현이 itertools 모듈에 있으며, 그 이름은 zip_longest()이다.
+> 이 결과는 논란의 여지가 있다. 왜 길이를 줄여야 할까? 더 짧은 리스트에서 부족한 원소를 None 값으로 채워넣지 말아야 할 이유가 있을까? 이러한 방식을 선택하는 zip() 함수의 또 다른 구현이 itertools 모듈에 있으며, 그 이름은 zip_longest()이다.
 
 ## 튜플로 묶은 시퀀스를 다시 풀기
 > zip()을 뒤집을 수도 있다. 튜플의 컬렉션을 풀 수 있는 방법 몇 가지를 살펴본다.
 
-> 첫 번재. 튜플의 시퀀스를 풀기 위해 제네레이터 함수를 사용할 수 있다.
+> 첫 번째. 튜플의 시퀀스를 풀기 위해 제네레이터 함수를 사용할 수 있다.
 
 ```py
 p0 = (x[0] for x in pairs)
@@ -491,6 +491,12 @@ sum(p0 * p1 for p0, p1 in pairs)
 (x for line in blocked for x in line)
 ```
 
+```py
+rows = [['1', '2', '3', '4'], ['11', '22', '33', '44']]
+result = [x for row in rows for x in row]
+print(result)
+```
+
 > 다음과 같이 쓰면 좀 더 이해하기가 쉬울 것이다.
 
 ```py
@@ -510,6 +516,25 @@ list(_)
 
 > 시퀀스의 시퀀스를 만들어 내기 위한 2중 for 루프 바깥에서, 먼저 `flat_iter` 반복자를 만든다. `tuple(next(flat_iter) for i in range(5))` 식은 `flat_iter`에 있는 반복 가능 객체로부터 5-튜플을 만들어 낸다. 그 식이 내포된 제네레이터 식은 만들려고 하는 시퀀스의 시퀀스에 필요한 회수만큼 내포된 식을 반복 실행한다.
 
+```py
+rows = [['1', '2', '3', '4'],
+        ['11', '22', '33', '44'],
+        ['12', '23', '34', '45']]
+result = [x for row in rows for x in row]
+print(result)
+# ['1', '2', '3', '4', '11', '22', '33', '44', '12', '23', '34', '45']
+
+result_iter = iter(result)
+tie_3 = [tuple(next(result_iter) for i in range(3))
+         for row in range(int(len(result)/3))]
+print(tie_3)
+# [('1', '2', '3'), ('4', '11', '22'), ('33', '44', '12'), ('23', '34', '45')]
+```
+
+`range(len(result)/3)`은 `TypeError: 'float' object cannot be interpreted as an integer`가 발생한다. 형변환이나 `//` 연산자를 사용해야 한다.
+
+`//`연산자는 나누기를 하면서 소수점 이하를 버린다.
+
 > 이는 원리스트의 길이가 5의 배수인 경우에만 사용 가능하다. 그렇지 않은 경우에는 맨 마지막에 남는 5개 미만의 원소를 따로 처리할 필요가 있다.
 
 > 이러한 식의 함수를 사용해 데이터를 크기가 같은 튜플로 나눌 수 있다. 다음 코드를 보면 마지막에 남는 원소를 어떻게 처리할 것인지도 알 수 있다.
@@ -526,7 +551,20 @@ def group_by_seq(n, sequence):
     else:
         return fill_sized_items
 ```
-
+```py
+def group_by_seq(n, sequence):
+    flat_iter = iter(sequence)
+    full_sized_items = list( tuple(next(flat_iter)
+                       for i in range(n))
+                       for row in range(len(sequence)//n) )
+    trailer = tuple(flat_iter)
+    if trailer:
+        return full_sized_items + [trailer]
+    else:
+        return full_sized_items
+print(group_by_seq(5, result))
+# [('1', '2', '3', '4', '11'), ('22', '33', '44', '12', '23'), ('34', '45')]
+```
 > 각 튜플의 크기가 n인 리스트를 만든다. 남는 원소가 있다면 크기가 0보다 큰 튜플로 만들어 앞에서 만든 온전한 튜플의 리스트 뒤에 붙인다. 남는 원소가 없다면 아무 것도 하지 않는다.
 
 ```py
@@ -535,6 +573,16 @@ def group_by_iter(n, iterable):
     while row:
         yield row
         row = tuple(next(iterable) for i in range(n))
+```
+
+```py
+def group_by_iter(n, iterable):
+    row = tuple(next(iterable) for i in range(n))
+    while row:
+        yield row
+        row = tuple(next(iterable) for i in range(n))
+print(list(group_by_iter(5, iter(result))))
+# [('1', '2', '3', '4', '11'), ('22', '33', '44', '12', '23'), ('34', '45')]
 ```
 > 입력 반복 가능 객체로부터 원하는 길이의 row를 만든다. 입력의 끝에 도달했다면 tuple(next(iterable) for i in range(n))의 결과가 길이가 0인 퓨틀일 것이다. 그 경우가 바로 재귀의 기본적인 경우라고 할 수 있다.
 
@@ -545,19 +593,32 @@ def group_by_iter(n, iterable):
 ```py
 zip(flat[0::2], flat[1::2])
 ```
-
+```py
+other_tie_3 = (result[0::4], result[1::4], result[2::4], result[3::4])
+print(other_tie_3)
+# (['1', '11', '12'], ['2', '22', '23'], ['3', '33', '34'], ['4', '44', '45'])
+```
 > flat 리스트의 길이가 짝수라면 이 코드는 훌륭하게 튜플의 리스트를 만들어낸다.
 
-홀수이면? element가 1개인 튜플이 마지막에 추가될까?
+```py
+other_result = (result[0::5], result[1::5], result[2::5], result[3::5], result[4::5])
+print(other_result)
+# (['1', '22', '34'], ['2', '33', '45'], ['3', '44'], ['4', '12'], ['11', '23'])
+```
+입력 시퀀스를 적적하게 나누지 못하면 복잡한 결과가 나올 수 있다. 그러므로 간단한 조건에만 사용하도록 하자.
 
 > 이러한 접근 방법을 일반화시킬 수도 있다. `*(args)` 형태의 접근 방식을 사용하여 zip() 할 시퀀스를 만들어 낼 수 있다.
 ```py
 zip(*(flat[i::n] for i in range(n)))
 ```
+```py
+print(tuple(zip(*(result[i::5] for i in range(5)))))
+# (('1', '2', '3', '4', '11'), ('22', '33', '44', '12', '23'))
+```
 
 > 이는 n개의 슬라이스, flat[0::n], flat[1::n], filat[2::n], ..., flat[n-1::n]을 만들어 낸다. 이렇게 만들어진 슬라이스의 컬렉션은 zip()의 인자가 된다. 따라서 그 결과는 각 슬라이스의 원소를 합친 튜플 리스트다.
 
-> zip()은 인자 리스트 중 가장 짧은 쪽에 맞게 결과를 잘라낸다는 사실을 기억하라. 이는 원리스트가 그룹의 크기 n의 배수가 아닌 경우 (즉, len(flat)%n != 0) 마지막 슬라이스들의 길이가 더 짧기 때문에 앞 슬라이스의 맨 마지막에 있던 원소까지 결과에서 사라진다는 뜻이다. 하지만 이러한 결과를 원하는 겨우우는 드물 것이다.
+> zip()은 인자 리스트 중 가장 짧은 쪽에 맞게 결과를 잘라낸다는 사실을 기억하라. 이는 원리스트가 그룹의 크기 n의 배수가 아닌 경우 (즉, len(flat)%n != 0) 마지막 슬라이스들의 길이가 더 짧기 때문에 앞 슬라이스의 맨 마지막에 있던 원소까지 결과에서 사라진다는 뜻이다. 하지만 이러한 결과를 원하는 경우는 드물 것이다.
 
 > 이러한 경우 itertools.zip_longest() 메서드를 사용한다면, 마지막 튜플의 일부가 None으로 채워져서 길이가 n인 튜플이 될 것이다. 경우에 따라서는 이러한 식으로 채워넣어지는 것을 용인할 수도 있다. 그렇지 않은 경우, None으로 채워지는 것은 우리가 원하는 것이 아니다.
 
@@ -589,6 +650,8 @@ def to_base(x, b):
 
 > tuple(digits(x, b))[::-1]이라는 슬라이스를 사용해 같은 작업을 할 수도 있다. 하지만 슬라이스는 반복자가 아니다. 슬라이스는 다른 실체화한 객체로부터 만들어 낼 실체화한 객체다. 여기서 보여준 함수와 같은 경우, 값의 컬렉션 크기가 작다면 슬라이스와 reversed() 사이의 차이가 크지 않을 것이다. reversed() 함수가 메모리를 더 적게 사용하므로, 컬렉션이 커지면 그로 인한 이익도 커질 것이다.
 
+슬라이스보다 reversed()를 사용하자.
+
 ## enumerate()를 사용해 인덱스 번호 포함시키기
 > 파이썬의 enumerate() 함수는 어떤 시퀀스나 반복 가능 객체의 원소에 인덱스 값을 추가해준다. 이 함수는 우리가 사용해온 풀기(처리하기(감싸기(데이터))) 패턴에 사용할 수 있는 감싸기 함수에 속하는 특별한 경우다.
 
@@ -596,6 +659,16 @@ def to_base(x, b):
 
 ```py
 zip(range(len(source)), source)
+```
+
+```py
+print(tuple(zip(range(len(result)), result)))
+# ((0, '1'), (1, '2'), (2, '3'), (3, '4'), (4, '11'), (5, '22'), (6, '33'), (7, '44'), (8, '12'), (9, '23'), (10, '34'), (11, '45'))
+```
+
+```py
+print(tuple(enumerate(iter(result))))
+# ((0, '1'), (1, '2'), (2, '3'), (3, '4'), (4, '11'), (5, '22'), (6, '33'), (7, '44'), (8, '12'), (9, '23'), (10, '34'), (11, '45'))
 ```
 
 > enumerate() 의 중요한 특징은 결과가 반복 가능 객체이고, 모든 반복 가능 객체를 인자로 받을 수 있다는 점이다.

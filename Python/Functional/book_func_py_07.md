@@ -1,11 +1,10 @@
 # 7. 튜플을 사용하는 다른 기법
-> 우리는 상태가 있는 클래스 정의를 식별하여, 적절하거나 바른 순서로 메서드 함수 호출을 숳ㅇ할 수 있도록 메타 프로퍼티를 포함시킬 것이다. X.p()가 X.q() 보다 먼저 호출되는 경우, 결과가 정해져 있지 않다와 같은 문장은 언어의 표현을 벗어나며, 클래스의 메타 프로퍼티다. 때로는 상태가 있는 클래스에는 메서드들이 올바른 순서대로 사용되는지 확신하기 위해 단언문을 실행하거나 오류를 검사해야 하는 부가 비용이 들기도 한다. 상태가 있는 클래스를 피할 수 있다면 이러한 종류의 부가 비용을 피할 수 있다.
 
 ## 변경 불가능한 이름 있는 튜플을 레코드로 사용하기
 > 튜플을 사용하는 방법
 > * 인덱스를 사용해 이름이 붙은 원소를 선택하는 람다(또는 함수)
 > * 매개변수를 사용해 인덱스에 매핑되는 매개변수 이름에 따라 원소를 선택하는 람다
-> * 애트리뷰트 이름이나 인덱스를 사용해 원소를 선택하는 이름 있는 투플
+> * 애트리뷰트 이름이나 인덱스를 사용해 원소를 선택하는 이름 있는 튜플
 
 ```py
 first_leg = ((xxx.xxx, yyy.yyyy), (zzz.zzzz, kkk.kkkk), rrrr.rrr)
@@ -46,7 +45,7 @@ latitude = lambda lat, lon: lat
 Leg = namedtuple('Leg', ('start', 'end', 'distance'))
 Point = namedtuple('Point', ('latitude', 'longitude'))
 ```
-> 이렇게 하면 first_leg.start.latitude를 사용해 데이터의 특정 부분을 가져올 수 있다. 전위 형식의 함수가 후위 형식의 애트리뷰트로 바뀐 것이 이름 있는 튜플로 쓰였다는 것을 알아챌 수 있도록 해준다 반면, 구분이 바뀌는 것이 혼동을 초래할 수도 있다.
+> 이렇게 하면 first_leg.start.latitude를 사용해 데이터의 특정 부분을 가져올 수 있다. 전위 형식의 함수가 후위 형식의 애트리뷰트로 바뀐 것이 이름 있는 튜플로 쓰였다는 것을 알아챌 수 있도록 해준다. 반면, 구분이 바뀌는 것이 혼동을 초래할 수도 있다.
 
 ## 함수형 생성자로 이름 있는 튜플 만들기
 > namedtuple의 인스턴스를 만드는 방법은 세 가지다. 어떤 기법을 선택할 것인지는 객체를 생성할 때 얼마나 많은 정보가 있느냐에 따라 달라진다.
@@ -61,16 +60,92 @@ Leg(start, end, round(haversine(start, end), 4))
 Point(map(float, pick_lat_lon(row)))
 ```
 
-> * 키워드 대입을 활용할 수 있다. 지금까지 다룬 예제에서는 사용한 적이 없지만, 다음과 가은 형식을 사용하면 , 각각의 관계를 좀 더 명확하게 보여줄 수 있다.
+> * 키워드 대입을 활용할 수 있다. 지금까지 다룬 예제에서는 사용한 적이 없지만, 다음과 같은 형식을 사용하면, 각각의 관계를 좀 더 명확하게 보여줄 수 있다.
 ```py
 Point(longitude=float(row[0]), latitude=float(row[1]))
 ```
 
 ## 상태가 있는 클래스 사용을 피하기 위해 튜플 사용하기
 
+```py
+from collections import namedtuple
+import csv
+import pprint
+
+def row_iter(source):
+        return csv.reader(source, delimiter="\t")
+
+def head_split_fixed(row_iter):
+    title = next(row_iter)
+    assert len(title) == 1 and title[0] == "Anscombe's quartet"
+    header = next(row_iter)
+    assert len(header) == 4 and header == ['I', 'II', 'III', 'IV']
+    columns = next(row_iter)
+    assert len(columns) == 8 and\
+        columns == ['x', 'y', 'x', 'y', 'x', 'y', 'x', 'y']
+
+    return row_iter
+
+Pair = namedtuple('Pair', ('x', 'y'))
+def series(n, row_iter):
+    for row in row_iter:
+        yield Pair(*row[n*2:n*2+2])
+
+with open("Anscombe.txt") as source:
+    data = tuple(head_split_fixed(row_iter(source)))
+    sample_I = tuple(series(0, data))
+    sample_II = tuple(series(1, data))
+    sample_III = tuple(series(2, data))
+    sample_IV = tuple(series(3, data))
+    print(sample_I)
+
+y_rank = tuple(enumerate(sorted(sample_I, key=lambda p: float(p.y))))
+xy_rank = tuple(enumerate(sorted(y_rank, key=lambda rank: float(rank[1].x))))
+pprint.pprint(y_rank)
+pprint.pprint(xy_rank)
+
+#((0, Pair(x='4.0', y='4.26')),
+# (1, Pair(x='7.0', y='4.82')),
+# (2, Pair(x='5.0', y='5.68')),
+# (3, Pair(x='8.0', y='6.95')),
+# (4, Pair(x='6.0', y='7.24')),
+# (5, Pair(x='13.0', y='7.58')),
+# (6, Pair(x='10.0', y='8.04')),
+# (7, Pair(x='11.0', y='8.33')),
+# (8, Pair(x='9.0', y='8.81')),
+# (9, Pair(x='14.0', y='9.96')),
+# (10, Pair(x='12.0', y='10.84')))
+#((0, (0, Pair(x='4.0', y='4.26'))),
+# (1, (2, Pair(x='5.0', y='5.68'))),
+# (2, (4, Pair(x='6.0', y='7.24'))),
+# (3, (1, Pair(x='7.0', y='4.82'))),
+# (4, (3, Pair(x='8.0', y='6.95'))),
+# (5, (8, Pair(x='9.0', y='8.81'))),
+# (6, (6, Pair(x='10.0', y='8.04'))),
+# (7, (7, Pair(x='11.0', y='8.33'))),
+# (8, (10, Pair(x='12.0', y='10.84'))),
+# (9, (5, Pair(x='13.0', y='7.58'))),
+# (10, (9, Pair(x='14.0', y='9.96'))))
+```
+
+y_rank는 Pair.y를 기준으로 정렬하여 enumerate로 순위를 매긴 후 다시 튜플로 만든다.
+
+xy_rank는 y_rank를 이용하여 Pair.x를 기준으로 정렬하여 한 단계 더 내포된 튜플을 만든다.
+
+> 원칙적으로는 x와 y의 순위를 사용해 두 변수 사이의 순위-순서 상관관계를 계산할 수 있다. 하지만 추출하는 식이 약간 이상해 보인다. 데이터 집합 r에 있는 순위가 붙은 표본에 대해 r[0]을 r[1][0]과 비교해야 한다.
+
 ...
+> 원래의 Pair 객체를 두 번 감싸 순위가 들어간 새로운 튜플을 만들었다. 복잡한 데이터 구조를 점진적으로 만들기 위해 상태가 있는 클래스 정의를 사용하는 것을 피했다.
+
+> 왜 내표 깊이가 깊은 튜플을 만드는 것일까? 그 이유는 지연 계산을 위해서다. 튜플을 분해하여 새로운 평면적인 튜플을 만드는 데는 많은 시간이 걸린다. 기존 튜플을 감싸기만 하면 처리하는 시간이 덜 걸린다.
+
+> 개선이 필요한 사항은 2가지다.
+> 1. 좀 더 평면적인 데이터 구조가 좋다. (x rank, (y rank, Pair()))와 같이 내포된 튜플을 사용하는 것은 간결하지도 않고, 이해하기도 어렵다.
+> 2. enumerate() 함수는 동률을 잘 처리하지 못한다.
 ...
-...
+
+## 통계적인 순위 할당하기
+
 
 ## 다형성과 파이썬 다운 패턴 매치
 > 일부 마수형 언어는 정적으로 타입을 지정하는 함수 정의에 대해 작업할 수 있는 멋진 접근 방법을 제공한다. 문제가 되는 것은 우리가 작성하려는 많은 함수가 데이터 타입을 기준으로 볼 때 완전히 제네릭한 경우다. 예를 들어, 우리가 사용하는 통계 함수는 나눗셈이 numbers.Real의 하위 클래스(예를 들어, Decimal, Fraction, flost)인 값을 반환하는 한, int나 float에 대해 모두 동일하다. 단 하나의 제네릭한 정의를 여러 데이터 타입에 사용할 수 있게 만들기 위해 정적 타입 지정 언어의 컴파일러난 복잡한 타입 시스템이나 패턴 매치 규칙을 사용한다.

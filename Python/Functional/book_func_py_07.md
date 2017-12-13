@@ -145,6 +145,46 @@ xy_rank는 y_rank를 이용하여 Pair.x를 기준으로 정렬하여 한 단계
 ...
 
 ## 통계적인 순위 할당하기
+> 순위를 결정하는 문제를 두 부분으로 나눌 것이다. 첫째, Pair 객체의 x나 y 값 중 하나에 순위를 부여하기 위한 제네릭한 고차 함수를 살펴본다. 그런 다음 그 함수를 사용해 Pair를 x와 y의 순위로 감싸는 함수를 만들 것이다. 이렇게 하면 내포 깊이가 깊어지는 것을 막을 수 있다.
+
+```py
+from collections import defaultdict
+def rank(data, key=lambda obj:obj):
+    def rank_output(duplicates, key_iter, base=0):
+        for k in key_iter:
+            dups = len(duplicates[k])
+            for value in duplicates[k]:
+                yield (base+1+base+dups)/2, value
+            base += dups
+    def build_duplicates(duplicates, data_iter, key):
+        for item in data_iter:
+            duplicates[key(item)].append(item)
+        return duplicates
+    duplicates = build_duplicates(defaultdict(list), iter(data), key)
+    return rank_output(duplicates, iter(sorted(duplicates)), 0)
+
+result1 = list(rank([0.8, 1.2, 1.2, 2.3, 18]))
+print(result1)
+
+data = ((2, 0.8), (3, 1.2), (5, 1.2), (7, 2.3), (11, 18))
+result2 = list(rank(data, key=lambda x:x[1]))
+print(result2)
+# [(1.0, 0.8), (2.5, 1.2), (2.5, 1.2), (4.0, 2.3), (5.0, 18)]
+# [(1.0, (2, 0.8)), (2.5, (3, 1.2)), (2.5, (5, 1.2)), (4.0, (7, 2.3)), (5.0, (11, 18))]
+```
+
+이 부분은 내용이 잘 이해되지 않아서 책 내용을 요약하는 것이 아니라 모두 옮겨적어도 부족할 정도다. 내 수준이 딱 여기까지인 것 같다.
+
+내용을 다 적기보다는 책 내용을 끝까지 다 본 후 다시 분석해보자.
+
+
+## 상태를 바꾸는 대신 감싸기
+> 어떤 데이터를 감싸는 데에는 두 가지 일반적인 전략이 있다.
+
+> * 병렬성: 데이터의 복사본을 두 가지 만들어 각각의 순위를 계산한다. 그 후 두 복사본을 양쪽 결과를 모두 포함하는 최종 결과로 다시 합친다. 순서가 다를수도 있는 두 시퀀스를 병합해야 하기 때문이 이렇게 하는 것이 약간 이상할 수도 있다.
+
+> * 직렬성: 한 변수에 대한 순위를 계산한 결과로 원래의 데이터를 감싼다. 그 후 이렇게 감싼 데이터를 다른 변수에 대한 순위로 부여할 수 있다. 이렇게 하면 좀 더 복잡한 구조가 생긴다. 하지만 마지막 결과를 감쌀 때 정보를 평면적으로 펼치도록 하는 방식으로 어느 정도 최적화할 수 있다.
+...
 
 
 ## 다형성과 파이썬 다운 패턴 매치
@@ -158,3 +198,6 @@ xy_rank는 y_rank를 이용하여 Pair.x를 기준으로 정렬하여 한 단계
 > * isinstance() 함수를 사용해 여러 가지 다른 경우를 구분한다.
 > * tuple이나 numbers.Number의 하위 클래스를 만들고, 적절한 다형성 특수 메서드를 구현한다.
 
+...
+
+어렵다 ㅠㅠ 이런 경우는 천천히 읽으면서 코드를 뜯어봐야하는데... 일단 7장은 미완으로 남겨둔다. 

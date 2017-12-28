@@ -1,3 +1,84 @@
+# hexo
+## install
+npm install -g hexo-cli
+
+directory 생성
+
+cd directory
+
+hexo init .
+
+hexo server
+
+cd themes
+
+tranquilpeak 설치
+
+# Site
+title: TIL
+subtitle:
+description:
+author: John Doe
+language: en
+timezone: ROK
+
+
+npm install hexo-deployer-git --save
+
+deploy:
+  type: git
+  repo: https://github.com/angelxtry/angelxtry.github.io
+
+npm install hexo-generator-feed --save
+
+feed:
+    type: atom
+    path: atom.xml
+    limit: 20
+
+
+https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak/blob/master/docs/user.md#enable-pages
+
+```
+Enable all-categories page
+To enable all-categories page :
+
+Run hexo new page "all-categories". A new folder named all-categories will be created in source/
+Replace source/all-categories/index.md content with :
+---
+title: "all-categories"
+layout: "all-categories"
+comments: false
+---
+New page will be reach at : /all-categories. On this page, users will be able to search and filter categories.
+
+Enable all-tags page
+To enable all-tags page :
+
+Run hexo new page "all-tags". A new folder named all-tags will be created in source/
+Replace source/all-tags/index.md content with :
+---
+title: "all-tags"
+layout: "all-tags"
+comments: false
+---
+New page will be reach at : /all-tags. On this page, users will be able to search and filter tags.
+
+Enable all-archives page
+To enable all-archives page :
+
+Run hexo new page "all-archives". A new folder named all-archives will be created in source/
+Replace source/all-archives/index.md content with :
+---
+title: "all-archives"
+layout: "all-archives"
+comments: false
+---
+New page will be reach at : /all-archives.
+On this page, users will be able to search and filter posts.
+Search pattern : YYYY/MMM/DD
+```
+
 ## hexo -> git 배포
 
 ```

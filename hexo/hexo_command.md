@@ -23,6 +23,8 @@ hexo new draft "md파일명"
 
 * `"`를 양쪽에 붙이는 것이 좋다.
 
+* title을 원하는 제목으로 수정한다. 한글도 된다.
+
 
 ### draft를 post로 변경
 

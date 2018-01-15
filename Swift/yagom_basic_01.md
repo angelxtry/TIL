@@ -191,3 +191,77 @@ let intersection: Set<Int> = setA.intersection(setB)
 let subtracting: Set<Int> = setA.subtracting(setB)
 
 
+## 함수
+
+```
+func 함수이름(인자1: 타입, 인자2: 타입 ...) -> return 타입 {
+    함수 구현부
+    return 반환값
+}
+
+func sum(a: Int, b: Int) -> Int {
+    return a + b
+}
+```
+
+* return 값이 없는 경우
+    * Void라고 명시
+    * Void를 생략해도 된다.
+
+func printMyName(name: String) -> Void {
+    print(name)
+}
+
+* 함수의 호출
+sum(a: 3, b: 5)
+
+## 함수 고급
+* 매개변수 기본값
+    * 인자에 기본값을 설정할 수 있다.
+
+* 전달인자 레이블
+    * 함수를 호출할 때 매개변수의 역할을 좀 더 명확하게 하거나
+    * 함수 사용자의 입장에서 표현하고자 할 때 사용
+    * 함수 내부에서 인지를 사용할 때는 반드시 인자의 이름을 사용
+    * 호출할 때는 꼭 레이블을 이용하여 호출
+    * 레이블이 없는 함수와 동일하더라도 다른 함수로 인식한다.
+```
+func greeting(to friend: String, from me: String) {
+    print("Hello \(firend)! I'm \(me)")
+}
+
+greeting(to: "hana", from: "yagom")
+```
+
+* 가변인자
+    * 인자 타입뒤에 `...`을 공백없이 사용한다.
+    * 가변인자는 함수당 하나만 가질 수 있다.
+    * 가변인자에 아무값도 넘기고 싶지 않다면 레이블을 생략한다.
+
+```
+func sayHelloToFriends(me: String, firends: String...) -> String {
+    return "Hello \(firends)! I'm \(me)!"
+}
+print(sayHelloToFriends(me: "yagom", firends: "hana", "eric", "wing"))
+```
+
+* 일급객체
+    * 인자의 타입이 다른 함수는 할당할 수 없다.
+```
+var someFunction: (String, String) -> Void = greeting(to:from:)
+someFunction("eric", "yagom")
+
+someFunction = greeting(firend:me:)
+someFunction("eric", "yagom")
+```
+
+* 인자로 함수를 넘겨줄 수도 있다.
+```
+func runAnother(function: (String, String) -> Void) {
+    function("jenny", "mike")
+}
+
+runAnother(function: greeting(firend:me:))
+
+runAnother(function: someFunction)
+```

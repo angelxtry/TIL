@@ -12,6 +12,18 @@
 
 `pip install cx_Oracle==5.2.1`
 
+----
+
+* 20180118 현재 Oracle client를 버전을 변경하여 재설치 한 것 때문에 cx_Oracle이 제대로 설치되지 않는다.
+
+* `myvenv\Lib\site-packages` 경로에서 `cx_Oracle.cp36-win_amd64.pyd` 파일을 copy
+
+* 새롭게 만드는 project 디렉토리의 `myvenv\Lib\site-packages`에 해당 파일을 paste
+
+* 기존 project에서 `db_connection.py` 를 c&p
+
+* 테스트를 위해 `python db_connection.py` 실행
+
 ## cx_Oracle 한글 사용시 encoding 문제
 
 기존에 잘 사용하고 있었던 코드인데 OS를 다시 설치했더니 문제가 생겼다.

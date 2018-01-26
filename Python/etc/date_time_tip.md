@@ -1,5 +1,10 @@
 # Date, Time tips
 
+## dateutil 설치
+```
+pip install python-dateutil
+```
+
 ## 문자열을 시간으로 변환
 
 ```py
@@ -34,7 +39,7 @@ for i in range(31):
     print(month_start_date, month_end_date)
 ```
 
-핵심은 calendar.monthrage() 함수.
+핵심은 calendar.monthrange() 함수.
 
 연도와 월을 param으로 전달하면 1일의 요일과 마지막 날짜가 tuple로 return된다.
 

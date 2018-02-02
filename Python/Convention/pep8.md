@@ -347,3 +347,10 @@ if not seq:
 if len(seq)
      if not len(seq)
 ```
+
+* `==`를 사용하여 True/False 를 비교하지 않는다.
+```py
+if greeting:  # good
+if greeting == True:  # bad
+if greeting is True:  # worst
+```

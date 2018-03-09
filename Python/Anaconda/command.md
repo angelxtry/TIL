@@ -1,8 +1,8 @@
 # 사용법
 
 * conda.exe 파일 경로
-    * Anaconda3\Scripts
-    * path에 Anaconda3\Scripts 경로를 넣어야 conda 커멘드가 어디서든 실행된다.
+  * Anaconda3\Scripts
+  * path에 Anaconda3\Scripts 경로를 넣어야 conda 커멘드가 어디서든 실행된다.
 
 * `conda --version`
 
@@ -13,7 +13,8 @@
     * ex) conda create -n py35 python=3.5 anaconda
     * ...\Anaconda3\envs 경로에 선택한 VERSION의 python을 설치
     * 설치가 끝나면 다음과 같은 구문이 나온다.
-```
+
+```sh
 #
 # To activate this environment, use:
 # > activate py35
@@ -26,8 +27,9 @@
 ```
 
 * 생성된 가상환경의 목록 확인
-    * `conda info --envs`
-```
+  * `conda info --envs`
+
+```sh
 > conda info --envs
 # conda environments:
 #
@@ -38,7 +40,7 @@ root                  *  C:\Anaconda3
 
 * anaconda를 이용하여 가상환경을 하나 더 만들어보았다.
 
-```
+```sh
 > conda create -n py36practice python=3.6
 Fetching package metadata .............
 Solving package specifications: .
@@ -68,7 +70,16 @@ Proceed ([y]/n)? y
 # * for power-users using bash, you must source
 #
 ```
+
 * -n은 name의 약자
 * py36practice라는 이름으로 만든다는 의미
-    * py36practice라는 디렉토리가 생성된다.
-    * activate 하는 이름도 동일하다.
+  * py36practice라는 디렉토리가 생성된다.
+  * activate 하는 이름도 동일하다.
+
+## 가상환경 활성화
+
+* `activate <virtual env name>`
+
+## 가상환경 비활성화
+
+* `deactivate <virtual env name>`

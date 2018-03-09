@@ -2,7 +2,7 @@
 
 * pylint를 설치하는 과정에서 다음과 같은 에러를 만났다.
 
-```
+```sh
 Collecting pylint
   Downloading pylint-1.8.2-py2.py3-none-any.whl (689kB)
     100% |████████████████████████████████| 696kB 1.9MB/s
@@ -56,6 +56,7 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb6 in position 67: invalid
 * 다음과 같이 변경했다.
 
 * before
+
 ```py
 if sys.version_info >= (3,):
     def console_to_str(s):
@@ -66,6 +67,7 @@ if sys.version_info >= (3,):
 ```
 
 * after
+
 ```py
 if sys.version_info >= (3,):
     def console_to_str(s):

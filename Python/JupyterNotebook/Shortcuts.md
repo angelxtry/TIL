@@ -2,6 +2,9 @@
 
 ## Command Mode
 
+* y : to code
+* m : to markdown
+* r : to row
 * j : 위로
 * k : 아래로
 * Enter : 선택할 셀 편집

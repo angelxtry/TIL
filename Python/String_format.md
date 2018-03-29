@@ -1,20 +1,24 @@
 # string format() method
 
 ## String format() Param
+
 * Positional param
-    * param으로 전달받은 인자를 중괄호`{index}`를 이용하여 사용할 수 있다.
+  * param으로 전달받은 인자를 중괄호`{index}`를 이용하여 사용할 수 있다.
 * Keyword param
-    * `key=value` 형식으로 전달받은 인자를 중괄호`{key}`를 이용해여 사용할 수 있다.
+  * `key=value` 형식으로 전달받은 인자를 중괄호`{key}`를 이용해여 사용할 수 있다.
 
 ## String format()의 리턴값
+
 * formatted string을 리턴한다.
 
 ## 간단 예제
+
 ```py
 In [1]: 'Hello {0}, your balance is {1:9.3f}'.format('lee', 230.2346)
 Out[1]: 'Hello lee, your balance is   230.235'
 ```
-* 'Hello {0}, your balance is {1:9.3f}'을 `template string`이라고 부른다. 
+
+* 'Hello {0}, your balance is {1:9.3f}'을 `template string`이라고 부른다.
 * `{0}`은 0번째 인자 `lee`를 의미한다.
 * `{1:9.3f}`의 1은 1번째 인자 230.2346을 의미한다.
 
@@ -22,6 +26,7 @@ Out[1]: 'Hello lee, your balance is   230.235'
 In [2]: 'Hello {}, your balance is {:9.3f}'.format('lee', 230.2346)
 Out[2]: 'Hello lee, your balance is   230.235'
 ```
+
 * 0과 1이라는 숫자가 없어도 인자가 순서대로 전달된다.
 * `9.3f`의 f는 float number를 의미한다.
 * `.`앞의 숫자 9는 width 또는 padding을 의미한다.
@@ -34,6 +39,7 @@ Out[2]: 'Hello lee, your balance is   230.235'
 In [5]: 'Hello {name}, your balance is {bal:9.3f}'.format(name='lee', bal=230.2346)
 Out[5]: 'Hello lee, your balance is   230.235'
 ```
+
 * keyword arguments를 이용한 format
 * `9.3f`를 표현하기 위해 `:`을 사용한다.
 
@@ -56,6 +62,7 @@ Hello Adam, your balance is 230.2346.
 ```
 
 ## Number formatting
+
 * d, f, n 정도는 잊지말고 기억하자.
 * d: Decimal integer
 * f: 부동소수, default: 6
@@ -70,6 +77,7 @@ The float number is:123.456790
 ```
 
 ## Number formatting - padding
+
 ```py
 # 공백이 3칸
 In [12]: print("start:{:5d}".format(12))
@@ -93,6 +101,7 @@ start:0012.235
 ```
 
 ## Number formatting - signed number
+
 ```py
 In [17]: print("{:+f} {:+f}".format(12.23, -12.23))
 +12.230000 -12.230000
@@ -103,11 +112,13 @@ In [18]: print("{:-f} {:-f}".format(12.23, -12.23))
 In [19]: print("{: f} {: f}".format(12.23, -12.23))
  12.230000 -12.230000
 ```
+
 * +를 붙이면 양수는 +, 음수는 -가 붙어서 출력된다.
 * -를 붙이면 양수는 보통 출력과 변함이 없고 음수만 -가 붙어서 출력된다.
 * space를 붙이면 양수는 빈칸이 하나 추가되고, 음수는 -가 붙어서 출력된다.
 
 ## Number formatting - alignment
+
 ```py
 # default는 오른쪽 정렬
 In [25]: print("start:{:5d}:end".format(12))
@@ -125,12 +136,14 @@ start:12000:end
 In [28]: print("start:{:=8.3f}:end".format(-12.2346))
 start:- 12.235:end
 ```
+
 `<`: 왼쪽 정렬
 `^`: 가운데 정렬, 좌우 space가 일치하지 않을 경우 오른쪽에 space가 +1
 `>`: 오른쪽 정렬
 `=`: +, - 부호만 왼쪽 정렬, 숫자를 오른쪽 정렬, 나머지 공간은 space
 
 ## String formatting - padding, alignment
+
 ```py
 # default 왼쪽 정렬
 In [32]: print("start:{:5}:end".format("cat"))
@@ -144,7 +157,7 @@ start:  cat:end
 In [34]: print("start:{:^5}:end".format("cat"))
 start: cat :end
 
-# 가운데 정렬, 좌우 space가 일치하지 오른쪽에 +1 
+# 가운데 정렬, 좌우 space가 일치하지 오른쪽에 +1
 In [35]: print("start:{:^6}:end".format("cat"))
 start: cat  :end
 
@@ -154,6 +167,7 @@ start:*cat**:end
 ```
 
 ## Truncate
+
 ```py
 # 3글자만 출력
 In [37]: print("start:{:.3}:end".format("caterpillar"))
@@ -177,6 +191,7 @@ start:*한글은*:end
 ```
 
 ## Formatting class member
+
 ```py
 In [43]: class Person:
     ...:     age = 25
@@ -188,6 +203,7 @@ lee's age is: 25
 ```
 
 ## Formatting dictionary
+
 ```py
 In [45]: person = {'age': 25, 'name': 'lee'}
 
@@ -200,6 +216,7 @@ lee's age is: 25
 ```
 
 ## Dynamic formatting
+
 ```py
 In [48]: string = "{:{fill}{align}{width}}"
 
@@ -213,6 +230,7 @@ start:123.24  :end
 ```
 
 ## Type-sepcific formatting
+
 ```py
 In [54]: import datetime
 
@@ -228,6 +246,7 @@ Real part: 1.0, Imaginary part: 2.0
 ```
 
 ## __format__() method override
+
 ```py
 In [67]: class Person:
     ...:     def __format__(self, arg):
@@ -242,12 +261,14 @@ lee's age is: None
 In [69]: print("lee's age is: {:age}".format(Person()))
 lee's age is: 23
 ```
+
 * 잘 이해되지 않는다.
 * arg 변수에 age가 들어오면 문자열 23을 리턴하는 구조다.
 * format 메소드에는 Person class를 전달했다.
 * 문자열에 포함되어 있는 `{:age}`는 어떻게 class에 전달되는 걸까?
 
 ## __str__(), __repr__()을 !s, !r로 대체
+
 ```py
 In [73]: print("Quotes: {0!r}, Without Quotes: {0!s}".format("cat"))
 Quotes: 'cat', Without Quotes: cat
@@ -262,15 +283,17 @@ In [74]: class Person:
 In [75]: print("repr: {p!r}, str: {p!s}".format(p=Person()))
 repr: REPR, str: STR
 ```
+
 * 문자열을 !r로 표현하면 `'`가 붙어서 출력된다.
 * !s 로 출력하면 문자열만 출력된다.
 * class에서 정의한 `__str__()`, `__repr__()`을 바로 사용할 수 있다.
 
 ## __str__(), __repr__() 의 차이
+
 * `__str__()`
-    * 사용자가 보기 쉬운 형태로 출력(informal)
+  * 사용자가 보기 쉬운 형태로 출력(informal)
 * `__repr__()`
-    * 파이썬 인터프리터가 해당 객체를 인식할 수 있는 공식적인 문자열(official)
+  * 파이썬 인터프리터가 해당 객체를 인식할 수 있는 공식적인 문자열(official)
 * repr(): `__repr__` 메소드 호출
 * str(), print: `__str__` 메소드 호출
 * eval(repr(object))를 하면 해당 object를 얻어올 수 있다.

@@ -1,0 +1,13 @@
+# IPython Shortcuts
+
+* Ctrl + p : 이전 명령
+* Ctrl + n : 이후? 명령
+* Ctrl + r : 최근 명령 키워드로 검색
+* Ctrl + Shift + v : 클립보드의 텍스트 붙여넣기
+* Ctrl + a : 커서를 줄의 처음으로 이동
+* Ctrl + e : 커서를 줄의 끝으로 이동
+* Ctrl + k : 커서부터 줄의 끝까지 삭제
+* Ctrl + u : 현재 입력된 모든 텍스트 지우기
+* Ctrl + f : 한 글자씩 앞으로 이동
+* Ctrl + b : 한 글자씩 뒤로 이동
+* Ctrl + l : 화면 지우기

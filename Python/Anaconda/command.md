@@ -7,12 +7,12 @@
 * `conda --version`
 
 * update
-    * `conda update conda`
+  * `conda update conda`
 
 * conda create -n DIR_NAME python=VERSION anaconda
-    * ex) conda create -n py35 python=3.5 anaconda
-    * ...\Anaconda3\envs 경로에 선택한 VERSION의 python을 설치
-    * 설치가 끝나면 다음과 같은 구문이 나온다.
+  * ex) conda create -n py35 python=3.5 anaconda
+  * ...\Anaconda3\envs 경로에 선택한 VERSION의 python을 설치
+  * 설치가 끝나면 다음과 같은 구문이 나온다.
 
 ```sh
 #
@@ -83,3 +83,7 @@ Proceed ([y]/n)? y
 ## 가상환경 비활성화
 
 * `deactivate <virtual env name>`
+
+## conda 환경에서 package 설치
+
+* `conda install <package name>`

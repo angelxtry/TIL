@@ -1,8 +1,10 @@
 # pandas 날짜 처리
+
 * pandas에서 시계열 자료를 생성하려면 인덱스를 DatetimeIndex로 만들어야 한다.
 * DatetimeIndex는 다음의 함수를 사용하여 생성한다.
-    * pd.to_datetime()
-    * pd.date_range()
+  * pd.to_datetime()
+  * pd.date_range()
+
 ```py
 In [2]: date_str = ['2018, 1, 1', '2018, 2, 1', '2018, 2, 3']
 
@@ -11,6 +13,7 @@ In [3]: idx = pd.to_datetime(date_str)
 In [4]: idx
 Out[4]: DatetimeIndex(['2018-01-01', '2018-02-01', '2018-02-03'], dtype='datetime64[ns]', freq=None)
 ```
+
 * pd.to_datetime() 함수는 문자열을 자동으로 datetime 타입으로 변경하여 DatetimeIndex를 생성한다.
 
 ```py
@@ -23,6 +26,7 @@ Out[8]:
 2018-02-03    0.511756
 dtype: float64
 ```
+
 * DatetimeIndex를 이용하여 series를 생성
 
 ```py
@@ -40,6 +44,7 @@ DatetimeIndex(['2018-01-01', '2018-01-02', '2018-01-03', '2018-01-04',
                '2018-01-29', '2018-01-30', '2018-01-31'],
               dtype='datetime64[ns]', freq='D')
 ```
+
 * pd.date_range()에 start_date, end_date를 설정하면 두 일자를 포함한 두 일자 사이의 모든 날짜가 포함된다.
 
 ```py
@@ -57,6 +62,7 @@ DatetimeIndex(['2018-02-01', '2018-02-02', '2018-02-03', '2018-02-04',
                '2018-03-01', '2018-03-02'],
               dtype='datetime64[ns]', freq='D')
 ```
+
 * period인자를 이용하여 일수를 지정할 수 있다.
 
 * 매달 특정 일자를 지정하여 선택하는 기능은 없다.

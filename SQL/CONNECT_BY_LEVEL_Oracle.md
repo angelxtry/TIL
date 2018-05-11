@@ -1,0 +1,67 @@
+# CONNECT BY LEVEL
+
+* `CONNECT BY LEVEL <= VAL`을 사용하면 1부터 VAL까지 1씩 루프를 돌린다.
+
+```SQL
+SELECT LEVEL
+FROM DUAL
+CONNECT BY LEVEL <= 10
+```
+
+```cmd
+LEVEL
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+```
+
+* LEVEL을 가공하면 시작점도, 증가폭도 다양하게 만들 수 있다.
+
+```sql
+SELECT 11-LEVEL
+FROM DUAL
+CONNECT BY LEVEL <= 10
+```
+
+```cmd
+11-LEVEL
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+```
+
+```sql
+SELECT
+TO_CHAR(TO_DATE(SD, 'YYYYMMDD') + (LEVEL -1), 'YYYYMMDD') T0
+FROM (
+   SELECT
+         '20180505' SD
+       , '20180508' ED
+   FROM DUAL
+   )
+CONNECT BY TO_DATE(SD, 'YYYYMMDD') + (LEVEL -1) <= TO_DATE(ED, 'YYYYMMDD')
+```
+
+```cmd
+T0
+20180505
+20180506
+20180507
+20180508
+```
+
+* epdlxj

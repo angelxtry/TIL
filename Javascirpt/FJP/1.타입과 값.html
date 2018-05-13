@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+# 1. 타입과 값
+
+## 7가지 내장 타입으로 바라보기
+
+자바스크립트에는 7가지 내장 타입이 있습니다.
+
+- null
+- undefined
+- boolean
+- number
+- string
+- object
+- symbol
+
+위 타입은 다시 크게 두 가지로 나눌 수 있습니다. 객체(object)와 객체가 아닌 것입니다.
+위 7가지 타입에서 객체르 제외한 모든 값은 원시 값이며, 원시 값의 경우 인자로 전달하거나 할당할 때
+항상 값 복사가 이루어지고, 객체의 경우는 항상 레퍼런스 사본을 만듭니다.
+
+<script>
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+User.prototype.getName = function() {
+  return this.Name;
+};
+
+class User2 {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  getName() {
+    return this.name;
+  }
+}
+
+var user2 = new User2('ID', 35);
+for (const key in user2) {
+  console.log(key);
+}
+</script>
+
+### 유사 배열
+
+유사 배열은 전개 연산자나 `for...of`와 사용될 수 없다.
+대표적으로 jquery 객체들은 유사배열이다. `$(div)`
+underscore.js는 유사배열을 지원한다.
+argumants 객체도 배열이 아니다.
+
+web api도 유사 배열을 사용하지 않는다.
+앞으로는 유사 배열을 사용하지 말자.
+
+<script>
+
+</script>
+
+## undefined
+
+`undefined`는 정의됮 않는 변수나, 리턴 값이 없는 함수, 객체에 정의되지 
+
+## 열거 가능한 값, 컬렉션
+
+1. JSON 데이터 타입 내의 object
+2. Array, Map, Set ...
+3. 그 외 `[Symbol.iterator]()`
+
+## 컬렉션 순회
+
+## 불변성
+
+값에 변화가 생길 때 원본 값을 변경하지 않겠다.
+
+## 화살표 함수
+
+## Promise
+
+타입을 가진 일급 값으로 판단.
+
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+<script>
+
+const add10 = a => new Promise(resolve => resolve(a + 10));
+const sub10 = a => a - 10;
+const add5 = a => a + 5;
+const sub5 = a => new Promise(resolve => resolve(a - 5));
+
+async function f1(a) {
+  var b = a;
+  b = await add10(b);
+  b = sub10(b);
+  b = add5(b);
+  b = await sub5(b);
+  return b;
+};
+
+function log(a) {
+  a instanceof Promise ?
+    a.then(console.log) : console.log(a);
+}
+
+// log(f1(10));
+
+// 다형성 - 이거이거나 아니거나
+
+function f2(a) {
+  if (a == null) return;
+  a.a = 10;
+  return a;
+}
+
+// function go (a, ...fs) {
+//   // console.log(a, fs);
+//   var b = a;
+//   for (const f of fs)  {
+//     // console.log(f);
+//     b = f(b);
+//   }
+//   return b;
+// }
+
+// go (10, a => a, a => a, a => a, log)
+// go (10, add10, sub10, add5, sub5, log)
+
+// 작은 문제로 나누어서, 복잡한 문제를 해결하기
+const then = f => a => a instanceof Promise ? a.then(f) : f(a);
+const callR = (b, f) => f(b);
+const go = (a, ...fs) => fs.map(then).reduce(callR, a);
+
+go(10, add10, sub10, add5, sub5, console.log)
+go(10, sub10, add5, console.log)
+
+// 함수형 프로그래밍이란?
+// 순수 함수와 효과가 있는 함수를 잘 관리하는 프로그래밍 ㅋㅋ
+// 순수 함수
+function add(a, b) { return a + b; };
+
+// 효과가 있는 함수
+
+
+</script>
+</body>
+</html>

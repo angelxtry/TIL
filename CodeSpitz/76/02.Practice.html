@@ -8,16 +8,41 @@
 </head>
 <body>
 <style>
-  div{width:100px;height:100px;padding:10px;
-      border:10px dashed #000; display: inline-block;}
+  .outer {
+    /* position: relative; */
+    float: left;
+    /* top:50; */
+    /* left:50; */
+    width: 200px;
+    height: 200px;
+    /* border-radius: 50%; */
+    /* border: 30px solid white; */
+    /* padding: 50px; */
+    /* box-shadow:  */
+      /* 0 0 0 30px crimson, */
+      /* inset 0 0 0 30px crimson; */
+  }
+  .inner {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    /* position: absolute; */
+    /* line-height: 200px; */
+    /* display: block; */
+    /* padding-bottom: 50px; */
+    /* text-align: center; */
+    font-size: 100px;
+    color: white;
+    /* padding: 10px; */
+    background: blue;
+    border-radius: 50%;
+    /* border: 50px solid crimson; */
+  }
 </style>
-<div style="background:blue;
-  box-shadow:
-    0 0 0 10px #aa0,
-    0 0 0 20px #0a0,
-    inset 0 0 0 10px #aa0,
-    inset 0 0 0 20px #0a0
-"></div>
-<div><div>★</div></div> 
+<div class="outer">
+  <div class="inner">★</div> 
+</div>
 </body>
 </html>

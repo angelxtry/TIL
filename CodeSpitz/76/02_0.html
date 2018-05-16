@@ -36,7 +36,7 @@
     border: 10px dashed rgba(0,0,0,0.5);
     display: inline-block;
   }
-  @keyframes ani {
+  /* @keyframes ani {
     from {transform: rotate(0);
           box-shadow:
             0 0 0 0 #aa0,
@@ -49,13 +49,35 @@
           0 0 0 20px #0a0,
           inset 0 0 0 10px #aa0,
           inset 0 0 0 20px #0a0}
-  }
+  } */
   .eee {
     width: 100px;
     height: 100px;
     padding: 10px;
     border: 10px dashed #000;
     display: inline-block;
+  }
+  .stitched {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    background: brown;
+    border-radius: 30px;
+    outline: 10px solid brown;
+    border: 1px dashed #fff;
+    color: #fff;
+    box-shadow: 0 0 0 10px brown;
+  }
+  .stitched2 {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    background: yellow;
+    border-radius: 15px;
+    outline: 10px solid rgba(0,255,0,0.5);
+    border: 1px dashed #fff;
+    color: #fff;
+    box-shadow: 0 0 0 10px red;
   }
 </style>
 <div class="aaa" style="background: red;">
@@ -110,6 +132,21 @@ border-radius: 50%;"></div>
 <div class="eee" style="background: blue;
 border-radius: 50%;
 animation:ani 0.4s linear alternate infinite"></div>
+<br>
+<br>
+<div class="stitched">stitched</div>
+<br>
+<br>
+<div class="stitched2">stitched</div>
+<br>
+<br>
+<div style="width: 200px; height: 200px; background: yellow; margin: 100px">
+  <div style="width: 100px; height: 100px;
+              position: absolute; background: red;"></div>
+  <div style="width: 100px; height: 100px;
+              position: absolute; background: blue; left: 0; top: 0;"></div>
+</div>
+
 
 </body>
 </html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+const Style = (_ => {
+  const prop = new Map, prefix = 'webkit,moz,ms,chrome,o,khtml'.split(',');
+  const NONE = Symbol();
+  const BASE = document.body.style;
+  const getKey = key => {
+    if (prop.has(key)) return prop.get(key);
+    if (key in BASE) prop.set(key, key);
+    else if (!prefix.some(v => {
+      // prefix를 붙인 속성은 존재하는가?
+      const newKey = v + key[0].toUpperCase() + key.substr(1);
+      if (newKey in BASE) {
+        prop.set(key, newKey);
+        key = newKey;
+        return true;
+      } else return false;
+    })){
+      prep.set(key, NONE);
+      key = NONE;
+    }
+  };
+  return class {
+    constructor(style){this._style = style;}
+    get(key) {
+      key = getKey(key);
+      if (key === NONE) return null;
+      return this._style[key];
+    }
+    set (key, val) {
+      key = getKey(key);
+      if ( key !== NONE ) this._style[key] = val;
+      return this;
+    }
+  };
+})();
+
+const el = document.querySelector("#s");
+const sheet = el.sheet;
+const rules = sheet.cssRules;
+const rule = rules[0];
+const style = new Style(rule.style);
+style.set()
+     .set()
+
+const Rule = class {
+  constructor(rule) {
+    this._rule = rule;
+    this._style = new Style(rule.style);
+  }
+  get(key) {
+    return this._style.get(key);
+  }
+  set(key, val) {
+    this._style.set();
+
+  }
+}
+
+const Sheet = class{
+  constructor(sheet){
+    this._sheet = sheet;
+    this._rules = new Map;
+  }
+  add(selector){
+    const index = this._sheet.cssRules.length;
+    this._sheet;
+  }
+  remove(selector){
+
+  }
+  get(selector){ return ;}
+}
+</script>
+</html>

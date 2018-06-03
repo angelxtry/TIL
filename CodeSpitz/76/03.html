@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<style id="s">
+  .test {
+    background: #ff0;
+  }
+</style>
+</body>
+<div class="red red1">red</div>
+<div class="blue blue1">blue</div>
+<div class="red">red</div>
+<div class="blue">blue</div>
+<div class="red">red</div>
+<div class="blue">blue</div>
+<div class="red">red</div>
+<div class="blue">blue</div>
+<div class="red">red</div>
+<div class="blue">blue</div>
+<div class="red">red</div>
+<div class="blue">blue</div>
+<div class="red">red</div>
+<div class="blue">blue</div>
+<script>
+  const el = document.querySelector("#s");
+  const sheet = el.sheet;
+  const rules = sheet.cssRules;
+  const rule = rules[0];
+  // console.log(rule);
+  // console.log(rule.selectorText);
+  // console.log(rule.style.background);
+
+  // console.log(sheet.cssText);
+
+  document.querySelector('.red1').onclick= _ => {
+    sheet.insertRule('.red{background: red}', rules.length);
+    sheet.insertRule('.blue{background: blue}', rules.length);
+  }
+  document.querySelector('.blue1').onclick= _ => {
+    sheet.deleteRule(rules.length-1);
+  }
+  // console.log(sheet.cssText);
+
+  // verder prefix는 실행도중에 확인할 수 밖에 없다.
+  // runtime fetch
+  // unsupported property -> graceful fail
+  // hierarchy optimaze -> sheet.disabled = true;
+</script>
+</html>

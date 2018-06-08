@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../lib/functional.js"></script>
+  <script>
+    const { log,
+      valuesIterObj, reverseIter,
+      reduce, go } = Functional;
+  </script>
+</head>
+
+<body>
+<script>
+// go test
+// go(10,
+//   a => a + 10,
+//   a => a - 10,
+//   log);
+
+// go(10,
+//   a => Promise.resolve(a + 10),
+//   a => a - 10,
+//   log);
+
+
+// valuesIterObj test
+// var users = {
+//   cid1: { id: 1, name: 'SH' },
+//   cid2: { id: 2, name: 'ID' },
+//   cid3: { id: 3, name: 'VX' },
+// };
+
+// function findUserName(name) {
+//   for (const u of valuesIterObj(users)) {
+//     if (u.name === name) return u;
+//   }
+// }
+
+// go(findUserName('ID'), log);
+
+
+// reduce test
+// log( reduce((acc, a) => acc + a, [1, 2, 3], 0) );
+// reduce(a => Promise.resolve(a + 3), [1, 2, 3], 0).then(log);
+
+log( reduce((acc, a) => acc + a, { 'a': 1, 'b': 2, 'c': 3 }));
+
+const posts = [
+  { id: 1, body: '내용1', comment: [{}, {}] },
+  { id: 2, body: '내용2', comment: [{}] },
+  { id: 3, body: '내용3', comment: [{}, {}, {}] },
+];
+log( reduce((count, a) => count + a.comment.length, posts, 0) );
+
+const users = [
+  { id: 1, name: 'name1', age: 30 },
+  { id: 2, name: 'name2', age: 31 },
+  { id: 3, name: 'name3', age: 32 },
+  { id: 4, name: 'name4', age: 31 },
+  { id: 5, name: 'name5', age: 32 },
+];
+
+function incSel(obj, k) {
+  obj[k] ? obj[k]++ : obj[k] = 1;
+  return obj;
+}
+
+const countBy = (f, coll) =>
+  reduce((counts, a) => incSel(counts, f(a)), coll, {});
+
+log( reduce((group, u) => {
+  (group[u.age] || (group[u.age] = [])).push(u);
+  return group;
+}, users, {}) );
+
+log( reduce((counts, u) => incSel(counts, u.age), users, {}) );
+log( countBy(u => u.age, users) );
+
+const identity = a => a;
+
+const count = coll => countBy(identity, coll);
+
+
+// reverseIter
+// log( reduce((a, b) => a - b, [1, 2, 3, 4]) );
+// log( reduce((a, b) => a - b, reverseIter([1, 2, 3, 4])) );
+</script>
+</body>
+
+</html>

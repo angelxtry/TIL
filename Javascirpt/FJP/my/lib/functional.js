@@ -2,6 +2,10 @@
 
   const log = console.log;
 
+  function *valuesIter(obj) {
+    for (const k in obj) yield obj[k];
+  }
+
   const collIter = coll =>
     coll[Symbol.iterator] ?
       coll[Symbol.iterator]() :
@@ -30,7 +34,7 @@
 
   const Functional = {
     log,
-    valuesIterObj, reverseIter,
+    // valuesIterObj, reverseIter,
     reduce, go
   };
 

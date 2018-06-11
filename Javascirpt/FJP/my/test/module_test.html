@@ -8,14 +8,73 @@
   <title>Document</title>
   <script src="../lib/functional.js"></script>
   <script>
-    const { log,
-      valuesIterObj, reverseIter,
-      reduce, go } = Functional;
+    const { 
+      // log,
+      // valuesIterObj, reverseIter,
+      // reduce,
+      // go
+    } = Functional;
   </script>
 </head>
 
 <body>
 <script>
+//// promise 간단 테스트
+// const add10 = a => new Promise(resolve => resolve(a + 10));
+const add10 = a => Promise.resolve(a + 10);
+const add5 = a => a + 5;
+const sub5 = a => a - 5;
+const sub10 = a => Promise.resolve(a - 10);
+
+// add10(10).then(log);
+
+const log = a => a instanceof Promise ? a.then(console.log) : console.log(a);
+
+const f1 = a => {
+  let b = a;
+  b = add10(b);
+  b = add5(b);
+  b = sub5(b);
+  b = sub10(b);
+  return b;
+}
+
+log( f1(10) );
+
+async function f2(a) {
+  let b = a;
+  b = await add10(b);
+  b = add5(b);
+  b = sub5(b);
+  b = await sub10(b);
+  return b;
+}
+
+log( f2(10) );
+f2(10).then(log);
+
+// const go = (a, ...fs) => {
+//   let b = a;
+//   const iter = fs[Symbol.iterator]();
+//   return function recur(b) {
+//     for (const f of iter) {
+//       b = f(a)
+//       if (b instanceof Promise) return b.then(recur);
+//     }
+//     return b;
+//   } (b);
+//   return b;
+// }
+
+// go(10, add10, add5, sub5, sub10, log);
+
+const then = f => a => a instanceof Promise ? a.then(f) : f(a);
+const callR = (b, f) => f(b);
+// const go = (a, ...fs) => fs.map(then).reduce((b, f) => f(b), a);
+const go = (a, ...fs) => fs.map(then).reduce(callR, a);
+
+go(10, add10, add5, sub5, sub10, log);
+
 // go test
 // go(10,
 //   a => a + 10,
@@ -48,42 +107,42 @@
 // log( reduce((acc, a) => acc + a, [1, 2, 3], 0) );
 // reduce(a => Promise.resolve(a + 3), [1, 2, 3], 0).then(log);
 
-log( reduce((acc, a) => acc + a, { 'a': 1, 'b': 2, 'c': 3 }));
+// log( reduce((acc, a) => acc + a, { 'a': 1, 'b': 2, 'c': 3 }));
 
-const posts = [
-  { id: 1, body: '내용1', comment: [{}, {}] },
-  { id: 2, body: '내용2', comment: [{}] },
-  { id: 3, body: '내용3', comment: [{}, {}, {}] },
-];
-log( reduce((count, a) => count + a.comment.length, posts, 0) );
+// const posts = [
+//   { id: 1, body: '내용1', comment: [{}, {}] },
+//   { id: 2, body: '내용2', comment: [{}] },
+//   { id: 3, body: '내용3', comment: [{}, {}, {}] },
+// ];
+// log( reduce((count, a) => count + a.comment.length, posts, 0) );
 
-const users = [
-  { id: 1, name: 'name1', age: 30 },
-  { id: 2, name: 'name2', age: 31 },
-  { id: 3, name: 'name3', age: 32 },
-  { id: 4, name: 'name4', age: 31 },
-  { id: 5, name: 'name5', age: 32 },
-];
+// const users = [
+//   { id: 1, name: 'name1', age: 30 },
+//   { id: 2, name: 'name2', age: 31 },
+//   { id: 3, name: 'name3', age: 32 },
+//   { id: 4, name: 'name4', age: 31 },
+//   { id: 5, name: 'name5', age: 32 },
+// ];
 
-function incSel(obj, k) {
-  obj[k] ? obj[k]++ : obj[k] = 1;
-  return obj;
-}
+// function incSel(obj, k) {
+//   obj[k] ? obj[k]++ : obj[k] = 1;
+//   return obj;
+// }
 
-const countBy = (f, coll) =>
-  reduce((counts, a) => incSel(counts, f(a)), coll, {});
+// const countBy = (f, coll) =>
+//   reduce((counts, a) => incSel(counts, f(a)), coll, {});
 
-log( reduce((group, u) => {
-  (group[u.age] || (group[u.age] = [])).push(u);
-  return group;
-}, users, {}) );
+// log( reduce((group, u) => {
+//   (group[u.age] || (group[u.age] = [])).push(u);
+//   return group;
+// }, users, {}) );
 
-log( reduce((counts, u) => incSel(counts, u.age), users, {}) );
-log( countBy(u => u.age, users) );
+// log( reduce((counts, u) => incSel(counts, u.age), users, {}) );
+// log( countBy(u => u.age, users) );
 
-const identity = a => a;
+// const identity = a => a;
 
-const count = coll => countBy(identity, coll);
+// const count = coll => countBy(identity, coll);
 
 
 // reverseIter

@@ -19,18 +19,26 @@
 
 <body>
 <script>
-  //// reduce 만드는 과정
+//// reduce 만드는 과정
+const then1 = (f, a) => a instanceof Promise ? a.then(f) : f(a);
+const then2 = (a, f) => a instanceof Promise ? a.then(f) : f(a);
+
 const collIter = coll =>
   coll.constructor === Object ?
     valuesIter(coll) : coll[Symbol.iterator]();
 
 function reduce(f, coll, acc) {
-  const iter = collIter(coll);
-  acc = acc === undefined ? iter.next().value : acc;
-  for (const v of iter) {
-    acc = f(acc, v);
-  }
-  return acc;
+  return then2(coll, function(coll) {
+    const iter = collIter(coll);
+    acc = acc === undefined ? iter.next().value : acc;
+    return then2(acc, function recur(acc){
+      for (const v of iter) {
+        acc = f(acc, v);
+        if (acc instanceof Promise) return acc.then(recur);
+      }
+      return acc;
+    });
+  });
 }
 
 function *valuesIter(obj) {
@@ -62,6 +70,12 @@ const groupBy = (f, coll) =>
   reduce((group, a) => pushSel(group, f(a), a), coll, {});
 
 const group = coll => groupBy(identity, coll);
+
+const push = (arr, v) => (arr.push(v), arr);
+
+function map(f, coll) {
+  return reduce((res, a) => then2(f(a), b => push(res, b)), coll, []);
+}
 
   // log(reduce((acc, a) => acc + a, [1, 2, 3]));
 
@@ -112,14 +126,7 @@ const group = coll => groupBy(identity, coll);
 
 // log( group([1, 2, 1, 2, 3, 3, 3, 3,]));
 
-async function reduce(f, coll, acc) {
-  const iter = collIter(await coll);
-  acc = acc === undefined ? iter.next().value : acc;
-  for (const v of iter) {
-    acc = f(acc, v);
-  }
-  return acc;
-}
+
 
 // log(reduce((acc, a) => acc + a, [1, 2, 3] ));
 // log(reduce((acc, a) => acc + a, Promise.resolve([1, 2, 3])) );
@@ -127,21 +134,30 @@ async function reduce(f, coll, acc) {
 // reduce((acc, a) => acc + a, [1, 2, 3] ).then(log);
 // reduce((acc, a) => acc + a, Promise.resolve([1, 2, 3])).then(log);
 
-const then2 = (f, a) => a instanceof Promise ? a.then(f) : f(a);
+// const then2 = (f, a) => a instanceof Promise ? a.then(f) : f(a);
 
-function reduce(f, coll, acc) {
-  return then2(function (coll) {
-    const iter = collIter(coll);
-    acc = acc === undefined ? iter.next().value : acc;
-    for (const v of iter) {
-      acc = f(acc, v);
-    }
-    return acc;
-  }, coll);
-}
 
-log(reduce((acc, a) => acc + a, [1, 2, 3] ));
-reduce((acc, a) => acc + a, Promise.resolve([1, 2, 3])).then(log);
+// log(reduce((acc, a) => acc + a, [1, 2, 3] ));
+// reduce((acc, a) => acc + a, Promise.resolve([1, 2, 3])).then(log);
+
+
+// reduce((acc, a) => Promise.resolve(acc + a), [1, 2, 3] ).then(log);
+
+
+
+// reduce(
+//   (acc, a) => Promise.resolve(acc + a),
+//   [1, 2, 3],
+//   Promise.resolve(10))
+//   .then(log);
+
+
+
+
+log( map(a => a + 10, [1, 2, 3]) );
+map(a => a + 10, Promise.resolve([1, 2, 3])).then(log);
+map(a => Promise.resolve(a + 10), Promise.resolve([1, 2, 3])).then(log);
+
 
 </script>
 </body>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../lib/functional.js"></script>
+  <script>
+    const { 
+      log,
+      // valuesIterObj, reverseIter,
+      // reduce,
+      // go
+    } = Functional;
+  </script>
+</head>
+
+<body>
+<script>
+
+const curry = f => (a, ..._) =>
+  _.length === 0 ? (..._2) => f(a, ..._2) : f(a, ..._);
+
+const then1 = (f, a) => a instanceof Promise ? a.then(f) : f(a);
+const then2 = (a, f) => a instanceof Promise ? a.then(f) : f(a);
+
+const hasIter = coll => !!coll[Symbol.iterator];
+
+const collIter = coll =>
+  hasIter(coll) ?
+    coll[Symbol.iterator]() :
+    valuesIter(coll);
+
+function reduce(f, coll, acc) {
+  return then2(coll, function(coll) {
+    const iter = collIter(coll);
+    acc = acc === undefined ? iter.next().value : acc;
+    return then2(acc, function recur(acc){
+      for (const v of iter) {
+        acc = f(acc, v);
+        if (acc instanceof Promise) return acc.then(recur);
+      }
+      return acc;
+    });
+  });
+}
+
+function gen(g) {
+  return function(v) {
+    const iter = g(v);
+    return { next: () => iter.next(),
+             [Symbol.iterator]() { return this; }}
+  }
+}
+
+const valuesIter = gen(function *(obj) {
+  for (const k in obj) yield obj[k];
+});
+
+const entriesIter = gen(function *(obj) {
+  for (const k in obj) yield [k, obj[k]];
+});
+
+const reverseIter = gen(function *(arr) {
+  let l = arr.lenght;
+  while (l--) yield arr[l];
+});
+
+const incSel = (obj, k) => {
+  obj[k] ? obj[k]++ : obj[k] = 1;
+  return obj;
+}
+
+const countBy = (f, coll) =>
+  reduce((counts, a) => incSel(counts, f(a)), coll, {});
+
+const identity = a => a;
+
+const count = coll => countBy(identity, coll);
+
+const pushSel = (obj, k, v) => {
+  (obj[k] || (obj[k] = [])).push(v);
+  return obj;
+}
+
+const groupBy = (f, coll) =>
+  reduce((group, a) => pushSel(group, f(a), a), coll, {});
+
+const group = coll => groupBy(identity, coll);
+
+const push = (arr, v) => (arr.push(v), arr);
+
+const isPlainObject = coll => coll.constructor === Object;
+
+const set = (obj, k, v) => (obj[k] = v, obj);
+
+
+// const baseMF = (f1, f2) => (f, coll) =>
+//   hasIter(coll) ?
+//     reduce(f1(f), coll, []) :
+//     reduce(f2(f), entriesIter(coll), {});
+
+// const map = baseMF(
+//   f => (res, a) => then2(f(a), b => push(res, b)),
+//   f => (res, [k, a]) => then2(f(a), b => set(res, k, b))
+// );
+
+// const filter= baseMF(
+//   f => (res, a) => then2(f(a), b => b ? push(res, a) : res),
+//   f => (res, [k, a]) => then2(f(a), b => b ? set(res, k, a) : res)
+// );
+
+const go = (...coll) => reduce((arg, f) => f(arg), coll);
+const pipe = (...fs) => arg => reduce((arg, f) => f(arg), fs, arg);
+
+const baseMF = (f1, f2) => curry((f, coll) =>
+  hasIter(coll) ?
+    reduce((res, a) => go(a, f, b => f1(res, a, b)), coll, []) :
+    reduce((res, [k, a]) => go(a, f, b => f2(res, k, a, b)),
+      entriesIter(coll), {}));
+
+const map = baseMF(
+  (res, a, b) => push(res, b),
+  (res, k, a, b) => set(res, k, b));
+
+const filter = baseMF(
+  (res, a, b) => b ? push(res, a) : res,
+  (res, k, a, b) => b ? set(res, k, a) : res);
+
+const values = coll => 
+  map(identity, coll instanceof Map ? coll.values() : collIter(coll));
+
+const not = a => !a;
+const negate = f => pipe(f, not);
+
+const reject = (f, coll) => filter(negate(f), coll);
+
+const compact = filter(identity);
+
+const cfilter = curry(filter);
+const cmap = curry(map);
+
+//// TEST reduce
+// log(reduce((acc, a) => acc + a, [1, 2, 3] ));
+// reduce((acc, a) => acc + a, Promise.resolve([1, 2, 3])).then(log);
+// reduce((acc, a) => Promise.resolve(acc + a), [1, 2, 3] ).then(log);
+// reduce(
+//   (acc, a) => Promise.resolve(acc + a),
+//   [1, 2, 3],
+//   Promise.resolve(10))
+//   .then(log);
+// log(reduce((acc, a) => acc + a, { a: 3, b: 4, c: 5 }));
+// log(reduce((acc, a) => acc + a, new Set([2, 3, 4]), 0));
+
+
+const posts = [
+  { id: 1, body: '내용1', comment: [{}, {}] },
+  { id: 2, body: '내용2', comment: [{}] },
+  { id: 3, body: '내용3', comment: [{}, {}, {}] },
+  { id: 4, body: '내용3', comment: [{}, {}, {}] },
+];
+
+const users = [
+  { id: 1, name: 'name1', age: 30 },
+  { id: 2, name: 'name2', age: 31 },
+  { id: 3, name: 'name3', age: 32 },
+  { id: 4, name: 'name4', age: 31 },
+  { id: 5, name: 'name5', age: 32 },
+  { id: 6, name: 'name6', age: 32 },
+];
+
+// TEST map
+// log( map(a => a + 10, [1, 2, 3]) );
+// map(a => Promise.resolve(a + 10), [1, 2, 3]).then(log);
+// log ( map(a => a + 10, { a: 1, b: 2, c: 3 }) );
+// map(a => Promise.resolve(a + 10), { a: 1, b: 2, c: 3 }).then(log);
+
+
+//// TEST filter
+// log( filter(a => a % 2, [1, 2, 3, 4, 5]) );
+// filter(a => Promise.resolve(a % 2), [1, 2, 3, 4, 5]).then(log);
+// log( filter(a => a % 2, { a: 1, b: 2, c: 3 }) );
+// filter(a => Promise.resolve(a % 2), { a: 1, b: 2, c: 3 }).then(log);
+
+//// TEST values
+// log(values([1, 2, 3, 4]));
+// log(values({ a: 1, b: 2, c: 3 }));
+// log(values(new Set([1, 2, 3, 4, 5])));
+// log(values(new Map([['a', 1], ['b', 2]])));
+// log(values(new Map([['a', 1], ['b', 2]]).keys()));
+
+//// TEST reject
+// log(
+//   reject(a => a % 2, [1, 2, 3, 4, 5, 6])
+// );
+// reject(a => Promise.resolve(a % 2), [1, 2, 3, 4, 5, 6]).then(log);
+
+
+//// TEST compact
+// log(
+//   compact([1, 0, null, undefined, {}, []])
+// );
+
+
+//// TEST go
+// go(10,
+//   a => a + 10,
+//   a => Promise.resolve(a + 10),
+//   log);
+
+// go(Promise.resolve(100),
+//   log);
+
+
+//// TEST pipe
+// const f1 = pipe(
+//   a => a + 10,
+//   a => a + 10,
+//   a => a + 10,
+//   a => a + 10);
+
+// log( f1(10) );
+
+// const f2 = pipe(
+//   a => a + 10,
+//   a => Promise.resolve(a + 10),
+//   a => a + 10,
+//   a => a + 10);
+
+// f2(10).then(log);
+
+// go(10, f2, log);
+
+
+//// TEST curry
+// const add = curry((a, b, c) => a + b + c);
+// log( add(10, 20, 30) );
+// log( add(20)(30, 40) );
+
+// const nums = [1, 2, 3, 4, 5, 6];
+
+// go(nums,
+//   nums => filter(a => a % 2, nums),
+//   nums => map(a => a * 2, nums),
+//   log);
+
+// go(nums,
+//   filter(a => a % 2),
+//   map(a => a * 2),
+//   log);
+
+
+
+</script>
+</body>
+
+</html>

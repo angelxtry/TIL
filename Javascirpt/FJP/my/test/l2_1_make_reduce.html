@@ -21,7 +21,8 @@
 <script>
 
 const curry = f => (a, ..._) =>
-  _.length === 0 ? (..._2) => f(a, ..._2) : f(a, ..._);
+  _.length === 0 ?
+    (..._2) => f(a, ..._2) : f(a, ..._);
 
 const then1 = (f, a) => a instanceof Promise ? a.then(f) : f(a);
 const then2 = (a, f) => a instanceof Promise ? a.then(f) : f(a);
@@ -33,40 +34,79 @@ const collIter = coll =>
     coll[Symbol.iterator]() :
     valuesIter(coll);
 
-function reduce(f, coll, acc) {
-  return then2(coll, function(coll) {
-    const iter = collIter(coll);
-    acc = acc === undefined ? iter.next().value : acc;
-    return then2(acc, function recur(acc){
-      for (const v of iter) {
-        acc = f(acc, v);
-        if (acc instanceof Promise) return acc.then(recur);
+const stepIter = (iter, limit) => {
+  let i = 0;
+  return {
+    next: function() {
+      if (i++ == limit) {
+        i = 0;
+        return { done: true };
       }
-      return acc;
-    });
-  });
-}
-
-function gen(g) {
-  return function(v) {
-    const iter = g(v);
-    return { next: () => iter.next(),
-             [Symbol.iterator]() { return this; }}
+      const cur = iter.next();
+      this.remain = !cur.done;
+      return cur;
+    },
+    [Symbol.iterator]() { return this; },
+    remain: true
   }
-}
+};
 
-const valuesIter = gen(function *(obj) {
+// function reduce(f, coll, acc) {
+//   return then2(coll, function(coll) {
+//     const iter = collIter(coll);
+//     acc = acc === undefined ? iter.next().value : acc;
+//     return then2(acc, function recur(acc){
+//       for (const v of iter) {
+//         acc = f(acc, v);
+//         if (acc instanceof Promise) return acc.then(recur);
+//       }
+//       return acc;
+//     });
+//   });
+// }
+
+const reduce = curry((f, coll, acc) => {
+  const iter = collIter(coll);
+  acc = acc === undefined ? iter.next().value : acc;
+  for (const v of iter) {
+    acc = acc instanceof Promise ? acc.then(acc => f(acc, v)) : f(acc, v);
+  }
+  return acc;
+});
+
+// function gen(g) {
+//   return function(v) {
+//     const iter = g(v);
+//     return { next: () => iter.next(),
+//              [Symbol.iterator]() { return this; }}
+//   }
+// }
+
+// const valuesIter = gen(function *(obj) {
+//   for (const k in obj) yield obj[k];
+// });
+
+// const entriesIter = gen(function *(obj) {
+//   for (const k in obj) yield [k, obj[k]];
+// });
+
+// const reverseIter = gen(function *(arr) {
+//   let l = arr.lenght;
+//   while (l--) yield arr[l];
+// });
+
+function *valuesIter (obj) {
   for (const k in obj) yield obj[k];
-});
+};
 
-const entriesIter = gen(function *(obj) {
+function *entriesIter (obj) {
   for (const k in obj) yield [k, obj[k]];
-});
+};
 
-const reverseIter = gen(function *(arr) {
+function *reverseIter (arr) {
   let l = arr.lenght;
   while (l--) yield arr[l];
-});
+};
 
 const incSel = (obj, k) => {
   obj[k] ? obj[k]++ : obj[k] = 1;
@@ -112,8 +152,12 @@ const set = (obj, k, v) => (obj[k] = v, obj);
 //   f => (res, [k, a]) => then2(f(a), b => b ? set(res, k, a) : res)
 // );
 
+const call1 = (f, a) => f(a);
+const call2 = (a, f) => f(a);
 const go = (...coll) => reduce((arg, f) => f(arg), coll);
-const pipe = (...fs) => arg => reduce((arg, f) => f(arg), fs, arg);
+// const pipe = (...fs) => arg => reduce((arg, f) => f(arg), fs, arg);
+// const pipe = (...fs) => arg => reduce(call2, fs, arg);
+const pipe = (f, ...fs) => (..._) => reduce(call2, fs, f(..._));
 
 const baseMF = (f1, f2) => curry((f, coll) =>
   hasIter(coll) ?
@@ -142,9 +186,78 @@ const compact = filter(identity);
 const cfilter = curry(filter);
 const cmap = curry(map);
 
+// const findVal = curry((f, coll) => {
+//   const iter = collIter(coll);
+//   let res;
+//   return function recur() {
+//     for (const a of iter) {
+//       res = f(a);
+//       if (res !== undefined){
+//         return go(res, res => res !== undefined ? res : recur());
+//       } 
+//     }
+//   } ();
+// });
+
+const findVal = curry((f, coll) => {
+  const iter = collIter(coll);
+  return function recur(res) {
+    let cur;
+    while ((cur = iter.next()) && !cur.done) {
+      if ((res = f(cur.value)) !== undefined)
+        return go(res, res => res !== undefined ? res : recur());
+    }
+  } ();
+});
+
+const findValC = curry((f, coll, limit = Infinity) => {
+  const iter = stepIter(collIter(coll), limit);
+  return new Promise(function recur(resolve) {
+    var i = 0, j = 0, cur;
+    while ((cur = iter.next()) && !cur.done) {
+      ++i;
+      go(cur.value,
+        f,
+        b => b === undefined ? undefined : resolve(b),
+        _ => i == ++j ? iter.remain ? recur(resolve) : resolve() : undefined);
+    }
+  });
+});
+
+// const find = (f, coll) => findVal(a => f(a) ? a : undefined, coll);
+const find = curry((f, coll) =>
+  findVal(a => go(a, f, b => b ? a : undefined), coll));
+
+const isUndefined = a => a === undefined;
+const none = curry((f, coll) => go(find(f, coll), isUndefined));
+// const some = curry((f, coll) => go(find(f, coll), isUndefined, not));
+const some = curry((f, coll) => go(none(f, coll), not));
+
+const every = curry((f, coll) => go(find(negate(f), coll), isUndefined));
+
+// const mapC = curry((f, coll) => {
+//   const res = [];
+//   for (const a of coll) {
+//     res.push(f(a));
+//   }
+//   return Promise.all(res);
+// });
+
+// const mapC = curry((f, coll) =>{
+//   return map(b => b.val, map(a => ({ val: f(a) }), coll))
+// });
+
+const mapC = curry((f, coll) =>
+  go(coll,
+    map(a => ({ val: f(a) })),
+    map(b => b.val)));
+
+// const series = fs => map(f => f(), fs);
+const series = map(f => f());
+const concurency = mapC(f => f());
+
 //// TEST reduce
 // log(reduce((acc, a) => acc + a, [1, 2, 3] ));
-// reduce((acc, a) => acc + a, Promise.resolve([1, 2, 3])).then(log);
 // reduce((acc, a) => Promise.resolve(acc + a), [1, 2, 3] ).then(log);
 // reduce(
 //   (acc, a) => Promise.resolve(acc + a),
@@ -209,30 +322,50 @@ const users = [
 //   a => a + 10,
 //   a => Promise.resolve(a + 10),
 //   log);
-
 // go(Promise.resolve(100),
+//   log);
+// go(
+//   reduce((a, b) => a + b, [1, 2, 3]),
+//   log);
+// go(
+//   reduce((a, b) => Promise.resolve(a + b), [1, 2, 3, 4, 5]),
+//   log);
+// go(
+//   reduce((a, b) => Promise.resolve(a + b), { a: 10, b: 20 }),
+//   log);
+// go(
+//   reduce((a, b) => Promise.resolve(a + b), [1, 2, 3, 4, 5], 10),
+//   log);
+// go(
+//   reduce((a, b) => Promise.resolve(a + b),
+//     [1, 2, 3, 4, 5], Promise.resolve(100)),
 //   log);
 
 
 //// TEST pipe
-// const f1 = pipe(
-//   a => a + 10,
-//   a => a + 10,
-//   a => a + 10,
-//   a => a + 10);
+const f1 = pipe(
+  a => a + 10,
+  a => a + 10,
+  a => a + 10,
+  a => a + 10);
 
-// log( f1(10) );
+log( f1(10) );
 
-// const f2 = pipe(
-//   a => a + 10,
-//   a => Promise.resolve(a + 10),
-//   a => a + 10,
-//   a => a + 10);
+const f2 = pipe(
+  a => a + 10,
+  a => Promise.resolve(a + 10),
+  a => a + 10,
+  a => a + 10);
 
-// f2(10).then(log);
+f2(10).then(log);
 
-// go(10, f2, log);
+go(10, f2, log);
 
+const f3 = pipe(function(a, b) { log(a, b); });
+f3(10, 20);
+
+const f4 = pipe(function(..._) { log(..._); });
+f4(10, 20, 30, 40);
 
 //// TEST curry
 // const add = curry((a, b, c) => a + b + c);
@@ -252,7 +385,122 @@ const users = [
 //   log);
 
 
+//// TEST findVal
+// log(
+//   findVal(a => a > 3 ? '끗' : undefined, [1, 2, 3, 4, 5,])
+// );
+// log(
+//   findVal(a => a > 10 ? '끗' : undefined, [1, 2, 3, 4, 5,])
+// );
+// findVal(
+//   a => Promise.resolve(a > 3 ? '끗' : undefined),
+//   [1, 2, 3, 4, 5,]).then(log);
+// go({ a: 1, b: 2, c: 3, d: 4, e: 5 },
+//   findVal(a => Promise.resolve(a > 3 ? '끗' : undefined)),
+//   log);
 
+
+//// TEST find
+// log( find(a => a > 3, [1, 2, 3, 4, 5]) );
+// find(a => Promise.resolve(a > 3), [1, 2, 3, 4, 5]).then(log);
+
+//// TEST some, none
+// log( some(a => a % 2, [2, 4, 6, 8]) );
+// log( some(a => a % 2, [2, 4, 6, 8, 9]) );
+
+// some(a => Promise.resolve(a % 2), [2, 4, 6, 8, 9]).then(log);
+// none(a => Promise.resolve(a % 2), [2, 4, 6, 8, 9]).then(log);
+
+//// TEST every
+// every(a => Promise.resolve(a % 2), [2, 4, 6, 8, 9]).then(log);
+// every(a => Promise.resolve(a % 2), [2, 4, 6, 8]).then(log);
+// every(a => Promise.resolve(a % 2), [1, 3, 5, 7]).then(log);
+
+function time(a) {
+  return new Promise(resolve => {
+    setTimeout(function() {
+      resolve(a);
+    }, 1000);
+  })
+}
+
+//// TEST mapC
+// go([1, 2, 3],
+//   map(time),
+//   log);
+
+// go([10, 20, 30],
+//   mapC(time),
+//   log);
+
+// go({ a: 10, b: 20, c: 30 },
+//   mapC(time),
+//   log);
+
+
+//// TEST findValC
+// console.time();
+// go([1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+//   nums => findValC(a => time(a > 9 ? a : undefined), nums, 2),
+//   a => log(`결과 ${a}`),
+//   _ => console.timeEnd());
+
+
+//// TEST series
+// go(
+//   series([
+//     _ => Promise.resolve(100),
+//     _ => 200,
+//     _ => Promise.resolve(300),
+//   ]),
+//   log);
+
+// go(
+//   series([
+//     _ => time(10),
+//     _ => time(20),
+//     _ => time(30),
+//   ]),
+//   log);
+
+// go(
+//   series([
+//     _ => time(Promise.resolve(100)),
+//     _ => time(200),
+//     _ => time(Promise.resolve(300)),
+//   ]),
+//   log);
+
+// go(
+//   series({
+//     users: _ => time(Promise.resolve(['user', 'user'])),
+//     posts: _ => time(Promise.resolve(['post', 'post'])),
+//   }),
+//   log);
+
+//// TEST concurency
+// go(
+//   concurency([
+//     _ => time(10),
+//     _ => time(20),
+//     _ => time(30),
+//   ]),
+//   log);
+
+// go(
+//   concurency([
+//     _ => time(Promise.resolve(100)),
+//     _ => time(200),
+//     _ => time(Promise.resolve(300)),
+//   ]),
+//   log);
+
+// go(
+//   concurency({
+//     users: _ => time(Promise.resolve(['user', 'user'])),
+//     posts: _ => time(Promise.resolve(['post', 'post'])),
+//   }),
+//   log);
 </script>
 </body>
 

@@ -64,9 +64,9 @@
 
 ## reset: 실수로 add 한 것을 취소
 
-전체를 취소하려면 `git reset`
-
-하나씩 취소하려면 `git reset 파일명`
+- 전체를 취소하려면 `git reset`
+- 하나씩 취소하려면 `git reset 파일명`
+- Staging Area 상태에 있는 파일을 Working Directory로 이동한다.
 
 ## author name/email 변경
 
@@ -99,3 +99,16 @@ git config user.email "USERNAME"
 ## commit log 중 HEAD 변경 이력만 보기
 
 `git reflog`
+
+## git config 정보 확인
+
+`git config --list`
+
+## git diff : 수정했지만 아직 staged 상태가 아닌 파일을 비교
+
+## Staging Area에서만 제거하고 워킹 디렉토리에 있는 파일은 지우지 않고 남겨두는 것
+
+`git rm --cached <filename>`
+
+- 다시 말해서 하드디스크에 있는 파일은 그대로 두고 Git만 추적하지 않게 한다.
+- 이것은 .gitignore 파일에 추가하는 것을 빼먹었거나 대용량 로그 파일이나 컴파일된 파일인 .a 파일 같은 것을 실수로 추가했을 때 쓴다.

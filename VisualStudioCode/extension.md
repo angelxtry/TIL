@@ -1,9 +1,7 @@
 # Extensions
 
-Vim
+- Vim
+- Python
+- markdownlint
 
-Python
-
-Markdown PDF
-
-Live HTML Previewer
+- Markdown PDF

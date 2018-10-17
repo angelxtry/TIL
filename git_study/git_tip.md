@@ -13,3 +13,9 @@
 `git config --global core.quotepath false`
 
 success!
+
+## windows git password 저장
+
+`git config credential.helper store`
+
+- 원리를 잘 모르겠다.

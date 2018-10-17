@@ -40,6 +40,12 @@ root                  *  C:\Anaconda3
 
 * anaconda를 이용하여 가상환경을 하나 더 만들어보았다.
 
+* 설치가능한 python version 확인
+
+```cmd
+conda search python
+```
+
 ```sh
 > conda create -n py36practice python=3.6
 Fetching package metadata .............

@@ -19,3 +19,17 @@ success!
 `git config credential.helper store`
 
 - 원리를 잘 모르겠다.
+
+## git user name, email 저장
+
+```txt
+git config --global user.name "이름"
+git config --global user.email "이메일"
+```
+
+- 프로젝트 하나에서만 변경하고 싶다면
+
+```txt
+git config --local user.name "이름"
+git config --local user.email "이메일"
+```

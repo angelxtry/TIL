@@ -63,6 +63,8 @@ abstract class 안에는 virtual, abstract를 모두 사용할 수 있다.
 virtual로 선언한 메서드는 sub class에서 구체화하지 않아도 된다.
 abstract로 선언한 메서드는 sub class에서 반드시 구체화해야 한다.
 
+virtual 메서드는 abstract가 아닌 일반 class에서도 사용할 수 있다.
+
 ```cs
 abstract class GreetingBase
 {

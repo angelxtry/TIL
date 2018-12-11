@@ -33,3 +33,10 @@ git config --global user.email "이메일"
 git config --local user.name "이름"
 git config --local user.email "이메일"
 ```
+
+## git 설정파일
+
+경로 /c/Users/%USERNAME%
+파일명 .gitconfig
+
+.gitconfig 파일은 git 설정을 하나 추가하면 생성된다.

@@ -144,7 +144,7 @@ git-scm.com
 
 documentation 클릭 -> book 클릭 -> git branching -> basic branching and merging
 
-2가지 형태의 branching 
+2가지 형태의 branching
 
 `git checkout -b iss53`
 
@@ -184,7 +184,7 @@ Merge made by the 'recursive' strategy
 
 iss53 branch가 분기한 이후에 master branch에 commit이 발생했다.
 
-그래서 merge를 시행하면 공통의 조상으로 돌아가 변경내용을 확인한 후 
+그래서 merge를 시행하면 공통의 조상으로 돌아가 변경내용을 확인한 후
 
 추가적으로 commit을 진행하여 master와 iss53을 병합한다.
 
@@ -281,5 +281,3 @@ stash의 가장 최근 작업 1개를 복구하고 삭제한다.
 stash를 적용할 수 있는 파일은 최소한 add 상태이어야 한다.
 
 즉, Untracked file은 stash되지 않는다.
-
-

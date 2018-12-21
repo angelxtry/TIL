@@ -3,6 +3,8 @@
 ## C:\Program Files\Common Files\System\ADO\msado60_Backcompat.tlb 참조 에러
 
 - 해당 경로에 파일이 없다.
+- E:\app\legacy_dll_tib 경로에 백업
+- google drive에도 하나 올려 놓았다.
 
 ## 오류 11 error LNK1123: COFF로 변환하는 동안 오류가 발생했습니다. 파일이 잘못되었거나 손상되었습니다
 

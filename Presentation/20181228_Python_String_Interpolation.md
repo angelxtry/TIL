@@ -27,5 +27,6 @@ https://www.programiz.com/python-programming/string-interpolation
 ## format() method
 
 참고
-주로 single quatation을 사용함.
-quatation이 중첩될 경우 single, double을 혼용함.
+
+- 주로 single quatation을 사용함.
+- quatation이 중첩될 경우 single, double을 혼용함.

@@ -68,18 +68,51 @@ open, close 상태가 있다.
 처리가 다 됐다면 close.
 처리가 다 된 줄 알았는데 부족한 부분이 있다면 reopen.
 
-### labels
+## labels
 
 - SYSTEM
 - KISNET
 - KISDATA
 
+- issue는 open, close 밖에 상태가 없다.
+- labels를 이용하여 meeting 등을 별도로 분류할 수도 있다.
+- 처리 된 것은 아니지만 다른 issue들로 분할되거나 통합될 경우 별도의 labels을 붙인다.
+- 진행중, 검증대기 등도 labels로 분류할 수 있다.
+
 ...
 
-### milestone
+## milestone
 
 project의 중간 목표
 프로그램의 다음 버전
 여러 개의 issue로 구성된다.
 
 크게 Due Date와 포함된 Issue로 관리한다.
+
+## issue, labels, milestone을 사용하는 이유
+
+업무를 효율적으로 관리하고 지난 업무를 추적하기 위해
+업무를 잘 하기 위해 방법을 개선하기 위해
+
+내부 회의를 통해 해야 할 일, 개선해야 할 업무 방식 등을 논의
+
+매일 오전 회의
+
+- 당일 해야 할 일들을 간단하게 발표
+  - 일 하나당 한 문장정도
+  - 최대한 일을 잘게 쪼개서 issue로 만든다.
+
+- issue status
+  - open
+  - 진행중
+    - 진행이 완료 된 것은 review 상태로 변경
+  - 논의필요
+    - 논의가 필요한 것 중 짧은 것(1분 이내)은 아침 회의
+    - 논의가 길어질 만한 것은 아침 회의때 회의 일정을 잡는다.
+  - review
+    - 모든 업무는 처리가 완료되면 review 상태로.
+    - 다 같이 한번 훓어보고, 모두 동의하면 close.
+  - close
+  - divide
+  - 연기
+  - reopen

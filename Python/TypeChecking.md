@@ -134,3 +134,88 @@ def create_deck(shuffle: bool = False) -> List[Tuple[str, str]]:
 
 List는 elements의 type이 모두 동일하다면 square bracket 내에 type을 한 번만 적어도 된다.
 하지만 Tuple은 elements의 모든 type을 순서대로 기술해야 한다.
+
+많은 경우 개발자들이 만든 함수들은 sequence를 사용한다고 볼 수 있다. sequence는 list인지 tuple인지 상관없이 사용할 수 있다.
+
+```py
+from typing import List, Sequence
+
+
+def square(elems: Sequence[float]) -> List[float]:
+    return [x**2 for x in elems]
+```
+
+sequence는 duck typing을 사용한 대표적인 사례이다. sequence는 len() 메서드가 정의되어 있고 `__getitem__()`가 정의되어 있다면 type에 상관없이 정의될 수 있다.
+
+### Type Aliases
+
+```py
+def deal_hands(deck):
+    """ Deal the cards in the deck into four hands """
+    return (deck[0::4], deck[1::4], deck[2::4], deck[3::4])
+```
+
+위의 함수에 Type Hints를 붙이면 다음과 같은 코드가 된다.
+
+```py
+def deal_hands(deck: List[Tuple[str, str]]) -> Tuple[
+    List[Tuple[str, str]],
+    List[Tuple[str, str]],
+    List[Tuple[str, str]],
+    List[Tuple[str, str]],
+]:
+    """ Deal the cards in the deck into four hands """
+    return (deck[0::4], deck[1::4], deck[2::4], deck[3::4])
+```
+
+코드가 매우 지저분해 진다. 이럴 때 type alias를 사용할 수 있다.
+
+```py
+from typing import List, Tuple
+
+
+Card = Tuple[str, str]
+Deck = List[Card]
+
+
+def deal_hands(deck: Deck) -> Tuple[Deck, Deck, Deck, Deck]:
+    """ Deal the cards in the deck into four hands"""
+    return (deck[0::4], deck[1::4], deck[2::4], deck[3::4],)
+```
+
+type alias를 설정하면 type alias가 궁금할 때 바로 확인할 수 있다.
+
+```py
+from typing import List, Tuple
+
+
+Card = Tuple[str, str]
+Deck = List[Card]
+
+print(Deck)
+```
+
+```cmd
+typing.List[typing.Tuple[str, str]]
+```
+
+### Functions Without Return Values
+
+return value가 정의되지 않은 함수는 None을 리턴한다.
+
+```py
+def play(player_name):
+    print(f'{player_name} plays')
+
+
+if __name__ == '__main__':
+    ret_val = play('Jacob')
+    print(ret_val)  # None
+```
+
+이런 경우는 Type Hints를 다음과 같이 작성하면 안된다.
+
+```py
+def play(player_name) -> None:
+    print(f'{player_name} plays')
+```

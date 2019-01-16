@@ -213,9 +213,105 @@ if __name__ == '__main__':
     print(ret_val)  # None
 ```
 
-이런 경우는 Type Hints를 다음과 같이 작성하면 안된다.
+다음과 같이 Type Hints를 작성하면 에러가 발생한다.
 
 ```py
-def play(player_name) -> None:
+# play.py
+
+def play(player_name: str) -> None:
     print(f'{player_name} plays')
+
+ret_val = play('Filip')
 ```
+
+play메서드를 호출했을 때 ret_val이라는 변수에 return value를 담는다. play 함수가 명시적으로 return value가 없더라고 해당 함수의 return value를 받아서 사용한다면 type hints를 위와 같이 설정하면 안된다. 이 경우는 다음과 같이 작성해야 한다.
+
+```py
+# play.py
+
+def play(player_name: str):
+    print(f'{player_name} plays')
+
+ret_val = play('Filip')
+```
+
+특이한 경우 NoReturn을 사용하기도 한다.
+
+```py
+from typing import NoReturn
+
+
+def black_hole() -> NoReturn:
+    raise Exception("There is no going back")
+```
+
+### Example: Play Some Cards
+
+```py
+"""
+game.py for Python Type Checking
+"""
+
+
+from pprint import pprint
+import random
+from typing import List, Tuple
+
+
+Card = Tuple[str, str]
+Deck = List[Card]
+
+SUITS = "♠ ♡ ♢ ♣".split()
+RANKS = "2 3 4 5 6 7 8 9 10 J Q K A".split()
+
+
+def create_deck(shuffle: bool = False) -> Deck:
+    """ Create a new deck of 52 cards """
+    deck = [(s, r) for r in RANKS for s in SUITS]
+    if shuffle:
+        random.shuffle(deck)
+    return deck
+
+
+def deal_hands(deck: Deck) -> Tuple[Deck, Deck, Deck, Deck]:
+    """ Deal the cards in the deck into four hands """
+    return (deck[0::4], deck[1::4], deck[2::4], deck[3::4])
+
+
+def choose(items):
+    """ Choose and return a random item"""
+    return random.choice(items)
+
+
+def player_order(names, start=None):
+    """ Ratate player order so that start goes first"""
+    if start is None:
+        start = choose(names)
+    start_idx = names.index(start)
+    return names[start_idx:] + names[:start_idx]
+
+
+def play() -> None:
+    """ Play a 4-player card game """
+    deck = create_deck(shuffle=True)
+    names = 'P1 P2 P3 P4'.split()
+    hands = {n: h for n, h in zip(names, deal_hands(deck))}
+    start_player = choose(names)
+    turn_over = player_order(names, start=start_player)
+    print(turn_over)
+    pprint(hands)
+    pprint(hands[start_player])
+
+    while hands[start_player]:
+        for name in turn_over:
+            card = choose(hands[name])
+            hands[name].remove(card)
+            print(f'{name}: {card[0] + card[1]:<3} ', end="")
+        print()
+
+
+if __name__ == '__main__':
+    play()
+```
+
+코드에 이해 안되는 부분이 있다. 좀 더 코드를 들여다봐야겠다.

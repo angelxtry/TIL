@@ -46,9 +46,119 @@ type hints는 type을 강제하는 것이 아니라 제안하는 정도다. mypy
 
 ## Duck Typing
 
-Duck Typing 은 dynamic typing과 연관이 깊은 개념이다. object의 type보다 method 또는 attribute를 확인한다.
+duck typing은 dynamic typing과 연관이 깊다. type이나 객체의 class보다 메서드가 더 중요하다. duck typing은 type을 신경쓰지 않는다. 단지 메서드가 존재하느냐와 메서드의 attribute 등만 확인한다.
+
+```py
+class TheHobbit:
+    """ class TheHobbit """
+    def __len__(self):
+        return 12345
 
 
+if __name__ == '__main__':
+    the_hobbit = TheHobbit()
+    print(len(the_hobbit))
+```
+
+len() 메서드를 호출하려면 TheHobbit에 `__len__()`을 정의하면 된다.
+len() 메서드는 다음과 같이 구현되어 있다.
+
+```py
+def len(obj):
+    return obj.__len__()
+```
+
+즉, 어떤 객체에 `__len__()`만 정의되어 있다면 len() 메서드를 사용할 수 있다. str, list, dict 등도 마찬가지다.
+
+duck typing은 Python의 static type checking에 사용된다.
+
+## Hello Types
+
+```py
+# def headline(str, align=True):
+def headline(text: str, align: bool = True) -> str:
+    """ make headline """
+    if align:
+        return f"{text.title()}\n{'-'*len(text)}"
+
+    return f"{text.title()}".center(50, 'o')
+```
+
+headline 메서드에 type hint를 정의했다.
+`:` 다음의 공백, `=` 양쪽의 공백, `->` 양쪽의 공백은 PEP8에서 권장하는 방식이다.
+
+type hint가 추가 된 것은 runtime에 전혀 영향을 주지 않는다. type을 준수하지 않아도 예외를 발생시키지 않는다면 코드는 정상적으로 동작한다.
+
+type hint는 실제로 코드를 실행해보지 않고 static type checking을 할 수 있는 tool이다.
+
+type hint를 활용하기 위해 mypy를 설치한다.
+
+`pip install mypy`
+
+mypy를 이용해여 type checking을 한다.
+
+`mypy filename.py`
+
+## Pros and Cons
+
+### Pros
+
+- 문서화
+- improve IDE, linter
+- 좀 더 나은 깨끗한 architecture
+
+### Cons
+
+- ​작성 시간
+- 최근근 Python에서만 동작. (3.6 over)
+- 약간 시간이 더 걸린다.
+
+Python은 gradual typing이라는 개념을 지원한다. static type checker는 hint가 없는 코드는 무시한다. 그래서 점진적으로 hint를 추가할 수 있다.
+
+## Annotation
+
+### Function Annotations
+
+```py
+import math
+
+
+def circumference(radius: float) -> float:
+    return 2 * math.pi * radius
+
+
+print(circumference.__annotation__)
+```
+
+```cmd
+{'radius': <class 'float'>, 'return': <class 'float'>}
+```
+
+Mypy는 이 annotation을 이용하여 동작한다.
+
+### Variable Annotations
+
+```py
+pi: float = 3.142
+
+def circumference(radius: float) -> float:
+    return 2 * pi * radius
+
+print(__annotations__)
+```
+
+```cmd
+{'pi': <class 'float'>}
+```
+
+Python 3.6에 도입된 PEP 526​에 Variable Annotations가 정의되었다.
+variables의 annotation은 module level `__annotations__` dictionary에 저장된다.
+
+### Type Comments
+
+Python 3.6 이하 버전에서는 Type Hints가 없다. 그래서 Type Comments라는 backport를 만들었다.
+
+### import time 측정
 
 ## Playing With Python Types, Part 1
 

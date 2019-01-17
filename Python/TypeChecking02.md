@@ -180,3 +180,22 @@ reveal_type이라는 함수는 mypy에서 지원하는 함수다. 해당 파일�
 Any 보다 좀 더 나은 방법이 있다.
 
 ## Type Theory
+
+[PEP 483 -- The Theory of Type Hints](https://www.python.org/dev/peps/pep-0483/)을 보는 것이 도움이 된다.
+
+Python type hints의 밑받침이 되는 이론을 조금만 살펴보자.
+
+### Subtypes
+
+Subtypes은 중요한 개념이다. 
+
+다음 2조건을 만족하면 U의 subtype이 T라고 말한다.
+
+- Every value from T is also in the set of values of U type.
+- Every function from U type is also in the set of functions of T type.
+
+값과 함수의 U, T 관계가 왜 서로 다를까?
+
+이 두 조건을 충족한다면 T와 U가 서로 다른 type이라도 T type의 변수들은 항상 U type인 척 할 수 있다.
+
+구체적인 예로, `T = bool`이고 `U = int`를 생각해보자.

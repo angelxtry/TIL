@@ -187,7 +187,7 @@ Python type hints의 밑받침이 되는 이론을 조금만 살펴보자.
 
 ### Subtypes
 
-Subtypes은 중요한 개념이다. 
+중요한 개념 중 하나는 Subtypes이다.
 
 다음 2조건을 만족하면 U의 subtype이 T라고 말한다.
 
@@ -199,3 +199,42 @@ Subtypes은 중요한 개념이다.
 이 두 조건을 충족한다면 T와 U가 서로 다른 type이라도 T type의 변수들은 항상 U type인 척 할 수 있다.
 
 구체적인 예로, `T = bool`이고 `U = int`를 생각해보자.
+
+bool type은 True, False 두 값만 가진다. 하지만 True, Flase는 integer value인 1과 0의 alias다.
+
+```py
+In [1]: int(False)
+Out[1]: 0
+
+In [2]: int(True)
+Out[2]: 1
+
+In [3]: True + True
+Out[3]: 2
+
+In [4]: issubclass(bool, int)
+Out[4]: True
+```
+
+0과 1은 모두 정수이기 때문에 첫 번째 조건은 성립한다. 그리고 bool은 정수가 할 수 있는 행위들을 모두 할 수 있다.
+그러므로 bool은 int의 subtype이다.
+
+subtypes의 중요성은 subtype은 항상 supertype인 척 할 수 있다는 것이다. 예를들어 다음 코드의 type check는 항창 참이다.
+
+```py
+def double(number: int) -> int:
+    return number * 2
+
+print(double(True))
+```
+
+subtype은 subclass와 연관이 있다. 사실 모든 subclass는 subtype과 일치한다. bool은 int의 subtype이다. 왜냐하면 bool은 int의 subclass이기 때문이다. 그러나 subtype이 subclass와 일치하지는 않는다. 예를들어 int는 float의 subtype인지만 int는 float의 subclass는 아니다.
+
+### Covariant, Contravariant, and Invariant
+
+composite type 내부에서 subtype을 사용하면 어떻게 될까? 예를들어 `Tuple[bool]`은 `Tuple[int]`의 subtype일까? 이것은 composite type에 달려있다.
+
+몇 가지 예를 보자.
+
+- Tuple은 covariant다. 이것은 item type의 type hierarchy를 보전한다는 의미다. 그래서 `Tuple[bool]`은 `Tuple[int]`의 subtype이다. 왜냐하면 bool은 int의 subtype이니까.
+- List는 invariant다. Invariant type은 subtype을 보장하지 않는다. 모든 List[bool]의 값은 List[int]의 값이다. 하지만 List[int]에 int를 추가할 수 있지만 List[bool]에는 int를 추가할 수 없다. 두 번째 조건이 성립하지 않는다. 그래서 List[bool]은 List[int]의 subtype이 아니다.

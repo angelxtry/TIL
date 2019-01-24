@@ -238,3 +238,9 @@ composite type 내부에서 subtype을 사용하면 어떻게 될까? 예를들�
 
 - Tuple은 covariant다. 이것은 item type의 type hierarchy를 보전한다는 의미다. 그래서 `Tuple[bool]`은 `Tuple[int]`의 subtype이다. 왜냐하면 bool은 int의 subtype이니까.
 - List는 invariant다. Invariant type은 subtype을 보장하지 않는다. 모든 List[bool]의 값은 List[int]의 값이다. 하지만 List[int]에 int를 추가할 수 있지만 List[bool]에는 int를 추가할 수 없다. 두 번째 조건이 성립하지 않는다. 그래서 List[bool]은 List[int]의 subtype이 아니다.
+- Callable은 Callable의 인자에 contravariant하다. 이것은 type hierarchy가 바뀌는 것을 의미한다.(reverse) -> 잘 모르겠다.
+
+### Gradual Typing and Consistent Types
+
+앞에서 Python은 gradual typing을 지원한다고 언급했다. 이 말은 Python code에 조금씩 type hints를 붙여나가는 것이 가능하다는 의미다.
+Any를 사용하는 것은 dynamic typing으로 돌아간다는 의미다. Any를 사용하면 static type checker가 어떤 type도 checking 하지 않는 것과 같다.

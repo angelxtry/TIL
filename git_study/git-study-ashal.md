@@ -105,3 +105,15 @@ To https://github.com/angelxtry/git-sample.git
  ```
 
 merge된 후 branch를 지우면 `git branch -a`라고 입력해도 보이지 않는다.
+
+로컬 branch 지우기
+
+```cmd
+git branch -d [branch-name]
+```
+
+원격 branch 지우기
+
+```cmd
+git push origin :[branch-name]
+```

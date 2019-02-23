@@ -44,7 +44,7 @@ bytecode는 platform에 종속적인 low-level language로 변환한 것이다. 
 엄밀하게 말하자면 실행되는 script를 최적화하는 것이 아니라 import된 module을 최적화 하는 것이다.
 
 3.실행을 위해 코드를 ship off 한다.
-이 시점에서 Python Virtual Machine(PVM)이 동작한다. PVM은 Python의 runtime engine이다. bytecode의 instruction이 하나씩 실행하는 것을 반복한다.
+이 시점에서 Python Virtual Machine(PVM)이 동작한다. PVM은 Python의 runtime engine이다. bytecode의 instruction이 하나씩 실행하는 것을 반복한다.
 PVM은 Python interpreter의 마지막 단계다.
 
 이것이 Python Execution Model이라고 불리는 Python script를 실행하는 전체 과정이다.
@@ -86,9 +86,61 @@ path는 2가지 방식을 사용한다.
 
 interactive session에서도 script와 module을 실행할 수 있다.
 
+### Taking Advantage of import
+
 module을 import하면 module을 load한다.
 
 module에 classes, functions, variables, and constants definitions 만 포함되었더라도, 명시적으로 실행하지 않아도 출력 등의 명령문이 포함된 경우 그것이 실행되는 것을 볼 수 있다.
 
+다음처럼 hello.py를 import만 해도 실행이 되어 Hello World!가 출력되는 것을 볼 수 있다.
 
-
+```py
+>>> import hello
+Hello World!
+```
+
+import는 session당 한 번만 수행된다. import를 한 후에, 심지어 모듈을 수정해도 다시 import를 하면 아무것도 하지 않는다.
+import operation은 비용이 비싸기 때문에 한번만 실행된다.
+
+이러한 방식이 동작하기 위해서는 몇 가지 조건이 필요하다.
+1.파이썬 코드는 반드시 current working directory에 있어야 한다.
+2.파일은 Pythom Module Search Path(PMSP)라고 하는 경로에 있어야 한다. 파이썬은 해당 경로에서 import 하고자 하는 모듈이나 package를 찾는다.
+
+PMSP를 확인하려면 다음과 같이 실행해보자.
+
+```py
+>>> import sys
+>>> for path in sys.path:
+...     print(path)
+...
+```
+
+### Using importlib and imp
+
+Python Standard Library에서 importlib를 찾을 수 있다. 이 모듈은 import_module()을 포함한다.
+
+impoort_module()을 이용하여 import operaion의 동작을 알아볼 수 있다.
+
+```py
+>>> import importlib
+>>> importlib.import_module('hello')
+Hello World!
+<module 'hello' from 'E:\\Projects\\PythonStudy\\hello.py'>
+```
+
+importlib.reload()를 이용하면 module을 다시 import 할 수 있다.
+
+```py
+import hello
+import importlib
+importlib.reload(hello)
+Hello World!!
+<module 'hello' from 'E:\\Projects\\PythonStudy\\hello.py'>
+```
+
+importlib.reload를 실행하기전에 import를 하지 않으면 NameError가 발생한다.
+importlib.reload()는 importlib.import_module()과 달리 문자열이 아니라 모듈명을 써야 한다.
+문자열을 쓰면 TypeError가 발생한다.
+
+### Using runpy.run_module() and runpy.run_path()
+

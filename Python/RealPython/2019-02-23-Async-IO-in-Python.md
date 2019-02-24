@@ -212,3 +212,142 @@ def m(x):
     y = await z(x)  # SyntaxError
     return y
 ```
+
+마지막으로 await f() ​처럼 사용하려면, f()가 awaitable 한 object여야 한다.
+
+awaitable object는 coroutine이거나, iterable을 return할 수 있는 `__await__()`가 정의된 object여야 한다.
+
+좀 더 쉽게 사용할 수 있는 awaitable object를 만드는 방법은 `@asyncio.coroutine` decorate를 사용하여 함수를 만드는 것이다. 이렇게 하면 generator-based coroutine이 만들어진다. 이런 방식은 Python에서 `async\await`를 지원하면서 old한 방식이 되었다.
+
+다음의 코드를 보자. 두 함수는 완전히 동일하다. 첫번째는 generator-based이고 두번째는 native-coroutine이다.
+
+```py
+import asyncio
+
+@asynoio.coroutine
+def py34_coro():
+    """Generator-based coroutine, older syntax"""
+    yield from stuff()
+
+async def py35_coro():
+    """Native coroutine, modern syntax"""
+    await stuff()
+
+```
+
+generator-based coroutine은 Python 3.10에 제거될 예정이다.
+
+```py
+#!/usr/bin/env python3
+# rand.py
+
+import asyncio
+import random
+
+# ANSI colors
+c = (
+    '\033[0m',   # End of color
+    '\033[36m',  # Cyan
+    '\033[91m',  # Red
+    '\033[35m',  # Magenta
+)
+
+async def randint(a: int, b: int) -> int:
+    return random.randint(a, b)
+
+async def makerandom(idx: int, threshold: int = 6) -> int:
+    print(c[idx + 1] + f'Initiated makerandom({idx}).')
+    i = await randint(0, 10)
+    while i <= threshold:
+        print(c[idx + 1] + f'makerandom({idx}) == {i} too low; retrying.')
+        await asyncio.sleep(idx + 1)
+        i = await randint(0, 10)
+    print(c[idx + 1] + f'---> Finished: makerandom({idx}) == {i}' + c[0])
+    return i
+
+async def main():
+    res = await asyncio.gather(*(makerandom(i, 10 - i - 1) for i in range(3)))
+    return res
+
+if __name__ == "__main__":
+    random.seed(444)
+    r1, r2, r3 = asyncio.run(main())
+    print()
+    print(f'r1: {r1}, r2: {r2}, r3: {r3}')
+```
+
+이 프로그램은 makerandm() coroutine을 사용하고, 3개의 다른 입력을 동시에 실행한다.
+
+대부분의 프로그램은 작고 모듈화 된 coroutine과 작은 coroutine들을 연결하기 위핸 wrapper function으로 구성된다.
+
+main()은 iterable이나 pool을 통해 메인 coroutine에 매핑하는 task를 모으는 역할을 한다.
+
+예제 코드에서 pool은 range(3)이다.
+
+randint()는 asyncio의 예제로 좋은 선택은 아니다. 이것은 CPU-bounded task다. asyncio.sleep()이 IO-bounded task로 좀 더 적합한다.
+
+asyncio.sleep()은 두 client간에 메시지를 주고 받는 것 같은 작업을 대체한다고 볼 수 있다.
+
+## Async IO Design Patterns
+
+### Chaining Coroutines
+
+coroutine의 핵심 기능은 chain이다. coroutine object는 awaitable하다. 그래서 다른 coroutine의 실행을 기다릴 수 있다. 그러므로 프로그램을 더 작고, manageable하고, 재사용 가능한 coroutine으로 쪼갤 수 있다.
+
+```py
+#!/usr/bin/env python
+# chaind_async.py
+
+
+import asyncio
+import random
+import time
+
+
+async def randint(a: int, b: int) -> int:
+    return random.randint(a, b)
+
+
+async def part1(n: int) -> str:
+    i = await randint(0, 10)
+    print(f'prat1 ({n}) sleeping for {i} seconds.')
+    await asyncio.sleep(i)
+    result = f'result{n}-1'
+    print(f'Returning part1({n}) == {result}.')
+    return result
+
+
+async def part2(n: int, arg: str) -> str:
+    i = await randint(0, 10)
+    print(f' part2{n, arg} sleeping for {i} seconds.')
+    await asyncio.sleep(i)
+    result = f'result{n}-2 derived from {arg}'
+    print(f'Returing part2{n, arg} == {result}.')
+    return result
+
+
+async def chain(n: int) -> None:
+    start = time.perf_counter()
+    p1 = await part1(n)
+    p2 = await part2(n, p1)
+    end = time.perf_counter() - start
+    print(f'Chained result{n} => {p2} (took {end:0.2f} seconds).')
+
+
+async def main(*args):
+    await asyncio.gather(*(chain(n) for n in args))
+
+
+if __name__ == '__main__':
+    import sys
+    random.seed(444)
+    args = [1, 2, 3] if len(sys.argv) == 1 else map(int, sys.argv[1:])
+    start = time.perf_counter()
+    asyncio.run(main(*args))
+    end = time.perf_counter() - start
+    print(f'Program finished in {end:0.2f} seconds.')
+```
+
+part1()이 sleep하는 중에 part2()가 동작하기 시작한다.
+
+main()의 동작 시간은 가장 동작 시간이 긴 task 의 동작 시간과 동일하다.

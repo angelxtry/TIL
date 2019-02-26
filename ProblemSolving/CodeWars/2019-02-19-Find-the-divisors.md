@@ -34,7 +34,7 @@ best practice를 찾아보니 나와 비슷하게 만든 코드가 있었는데 
 ```py
 def divisors(integer):
     dividers = set()
-    for i in range(2, int(integer ** 2) + 1):
+    for i in range(2, int(integer ** 0.5) + 1):
         div, mod = divmod(integer, i)
         if mod == 0:
             dividers.add(i)

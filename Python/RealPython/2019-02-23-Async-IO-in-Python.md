@@ -351,3 +351,22 @@ if __name__ == '__main__':
 part1()이 sleep하는 중에 part2()가 동작하기 시작한다.
 
 main()의 동작 시간은 가장 동작 시간이 긴 task 의 동작 시간과 동일하다.
+
+### Using a Queue
+
+asyncio package는 queue class들을 제공한다. 이 class들은 queue module의 class와 비슷한다.
+
+chain_async.py에서는 queue가 필요하지 않았다. 각 작업은 coroutine의 chain으로 구성되어 있고 각 chain은 입력 값이 통과하는 것을 기다렸다.
+
+async IO를 이용하는 다른 방식의 구조가 있다. 대표적인 예가 숫자 생성기다. 숫자 생성기가 여러 개가 있고 각 생성기는 서로 연관성이 없다. 각 생성기는 queue에 다수의 item을 각기 다른 시점에 추가할 수 있다. cousumer들은 어떤 신호를 기다리지 않고 queue에서 item을 가져온다.
+
+이런 디자인에서는 producer와 consumer간의 chain은 의미가 없다. comsumer는 producer의 갯수도 모르고, 얼마나 item이 누적되어 있는지도 모른다.
+
+thread를 사용하는 프로그램에서 종종 queue를 사용한다. 왜냐하면 queue.Queue()는 thread-safty하기 때문이다. 하지만 async IO를 사용하면 thread safety를 고민하지 않아도 된다.
+
+synchronous 버전은 아주 음침해보인다. blocking producer의 그룹은 queue에 순차적으로 item을 넣는다. 모든 producer가 동작을 완료한 후에 consumer가 item을 처리한다. 이런 디자인은 많은 지연이 발생한다. item은 queue에 앉아 대기하게 된다.
+
+asynchronous 버전인 asyncq.py가 아래에 있다. 이 workflow에서는 comsumer에서 item을 처리하라고 신호를 보내야 한다. 그렇게 처리하지 않으면 queue의 item을 다 소비한 후에 await q.get()이 hang에 걸린다.
+
+```py
+```s 

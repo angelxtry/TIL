@@ -332,3 +332,72 @@ class my_file_reader():
 with my_file_reader('TheZenOfPython.txt') as reader:
     pass
 ```
+
+다음 예를 보자.png 파일을 읽을 때 매번 header를 parsing해야 한다. 다음과 같이 코드를 만들어두면 header를 파싱하는 과정을 생략할 수 있다.
+
+```py
+class PngReader():
+    # Every .png file contains this in the header. Use it to verify.
+    # the file is indeed a .png.
+    _expected_magic = b'\x89PNG\r\n\x1a\n'
+
+    def __init__(self, file_path):
+        # Ensure the file has the right extension
+        if not file_path.endswith('.png'):
+            raise NameError("File must be a '.png' extension.")
+        self.__path = file_path
+        self.__file_object = None
+
+    def __enter__(self):
+        self.__file_object = open(self.__path, 'rb')
+
+        magic = self.__file_object.read(8)
+        if magic != self._expected_magic:
+            raise TypeError("The file is not a properly formatted .png file!")
+        return self
+
+    def __exit__(self, type, val, tb):
+        self.__file_object.close()
+
+    def __iter__(self):
+        # This and __next__() are used to create a custom iterator.
+        return self
+
+    def __next__(self):
+        # Read the file in Chunks
+
+        initial_data = self.__file_object.read(4)
+
+        # The file hasn't been opened or reached EOF. This means we
+        # can't go any further so stop the iteration by rasing the
+        # StopIteration.
+
+        if self.__file_object is None or initial_data == b'':
+            raise StopIteration
+        else:
+            # Each chunk has a len, type, data (based on len) and crc
+            # Grab these values and return then as a tuple
+            chunk_len = int.from_bytes(initial_data, byteorder='big')
+            chunk_type = self.__file_object.read(4)
+            chunk_data = self.__file_object.read(chunk_len)
+            chunk_crc = self.__file_object.read(4)
+            return chunk_len, chunk_type, chunk_data, chunk_crc
+
+
+if __name__ == '__main__':
+    with PngReader('./jack_russell.png') as reader:
+        for l, t, d, c in reader:
+            print(f'{l:05}, {t}, {c}')
+
+```
+
+## Don’t Re-Invent the Snake
+
+파일 처리에 직면했을 때 흔히 마주칠 수 있는 상황이다. .csv, .json 등의 파일을 다룰 때 이미 만들어져 있는 module을 사용하자.
+
+built-in library에는 다음과 같은 것들이 있다.
+
+- tarfile
+- zipfile
+- configparser: easilt create and parse configuration files
+- msilib: read and write Microsoft Installer files

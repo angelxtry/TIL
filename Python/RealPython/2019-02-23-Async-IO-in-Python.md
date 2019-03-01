@@ -369,4 +369,4 @@ synchronous 버전은 아주 음침해보인다. blocking producer의 그룹은 
 asynchronous 버전인 asyncq.py가 아래에 있다. 이 workflow에서는 comsumer에서 item을 처리하라고 신호를 보내야 한다. 그렇게 처리하지 않으면 queue의 item을 다 소비한 후에 await q.get()이 hang에 걸린다.
 
 ```py
-```s 
+```

@@ -124,3 +124,91 @@ class Post(models.Model):
 ```
 
 클래스 선언 시 ​models는 Post가 django의 모델인 것을 의미한다. 이 코드 때문에 django가 Post 클래스가 DB에 저장되는 것을 알게된다.
+
+```cmd
+python manage.py makemigrations blog
+
+python manage.py migrate blog
+```
+
+makemigrations와 migrate 명령으로 DB(sqlite3)에 Post table이 생성되었다.
+
+해당 내용을 admin page에서 쉽게 활용할 수 있도록 admin에 등록한다.
+
+```py
+# blog/admin.py
+
+
+from django.contrib import admin
+from .models import Post
+
+
+admin.site.register(Post)
+```
+
+admin page에 접속하기 위해서는 superuser를 생성해야 한다.
+
+```cmd
+python manange.py createsuperuser
+```
+
+`http://127.0.0.1:8000/admin`에 접속하여 id/pw를 입력하면 admin page에 접속할 수 있다.
+
+## url 추가
+
+mysite/urls.py 파일에서 blog/urls.py를 불러온다.
+
+```py
+# mysite/urls.py
+
+from django.contrib import admin
+from django.urls import path, include
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('blog/urls')),
+]
+```
+
+`path('', include('blog/urls')),` 이 코드의 의미는 `http://127.0.0.1:8000`으로 들어오는 모든 요청을 blog/urls로 보내서 처리한다는 의미다.
+
+blog/urls로 요청을 보냈으니 해당 앱에서 요청을 처리해보자.
+
+```py
+# blog/urls.py
+
+from django.urls import path
+from . import views
+
+
+urlpatterns = [
+    path('', views.post_list, name='post_list'),
+]
+```
+
+views.post_list라는 view를 root url에 매핑했다.
+이 url 패턴은 빈 문자열에 매핑된다. django url resolver는 전체 URL 경로에서 prefix에 해당되는 도메인 이름(`http://127.0.0.1:8000`)을 무시하고 그 이후 문자열을 받아들인다. 빈 문자열이기 때문에 root url로 접근하면 post_list view를 출력한다.
+
+`name='post_list'`는 url에 이름을 붙인 것으로 view를 식별한다.
+
+view는 로직을 넣는 곳이다. view는 model에서 필요한 정보를 받아와서 template에 전달하는 역할을 한다.
+
+blog/views.py 파일을 추가한다.
+
+```py
+# blog/views.py
+
+from django.shortcuts import render
+
+
+def post_list(request):
+    return render(request, 'blog/post_list.html', {})
+```
+
+이제 template을 생성하자.
+
+blog/templates/blog 폴더 구조를 만들자.
+폴더 구조가 복잡해 질 때를 대비하여 관습적으로 이렇게 만든다.
+해당 폴더에 post_list.html 이라는 이름으로 빈 파일을 만든다.
+여기까지만 진행하고 python manage.py runserver를 실행해보면 root url로 접속했을 때 에러가 발생하지 않고 빈 화면이 출력된다.

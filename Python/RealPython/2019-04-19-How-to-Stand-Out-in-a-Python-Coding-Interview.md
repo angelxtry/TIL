@@ -25,3 +25,54 @@ FizzBuzz 문제를 살펴보자.
 2.5로 나누어 떨어지는 수는 buzz
 3.3 또는 5로 나누어 떨어지는 수는 fizzbuzz
 
+```py
+numbers = [5, 3, 2, 1, 15, 4]
+
+
+for i, num in enumerate(numbers):
+    if num % 3 == 0 and num % 5 == 0:
+        numbers[i] = 'fizzbuzz'
+        continue
+    if num % 3 == 0:
+        numbers[i] = 'fizz'
+        continue
+    if num % 5 == 0:
+        numbers[i] = 'buzz'
+        continue
+`
+```
+
+## Use List Comprehensions Instead of map() and filter()
+
+```py
+numbers = [1, 2, 3, 4, 5,]
+
+def squre(x):
+    return x**2
+
+list(map(squre, numbers))
+
+
+[squre(num) for num in numbers]
+```
+
+list comprehension이 더 읽기 쉽다.
+
+```py
+def is_odd(x):
+    return bool(x % 2)
+
+list(filter(odd, numbers))
+
+[x for x in numbers if odd(num)]
+```
+
+## Debug With breakpoint() Instead of print()
+
+Python 3.7을 사용한다면 아무것도 import 하지 않아도 코드 어디에서든 breakpoint()를 호출할 수 있다.
+
+3.6 이하 버전을 사용하다면 다음과 같이 호출해야 한다.
+
+```py
+import pdb; pdb.set_trace()
+```

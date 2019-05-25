@@ -123,7 +123,7 @@ console.log(obj.key1.key2() === obj.key1);
   -> 새로 생성된 객체
 
 ```js
-class Car() {
+class Car {
   constructor (brand, name) {
     this.brand = brand;
     this.name = name;

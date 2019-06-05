@@ -17,3 +17,19 @@ const total_quantity = products => go(
   map(p => p.quantity),
   reduce((a, b) => a + b));
 log(total_quantity(products));
+
+const sum = (f, iter) => go(
+  iter,
+  map(f),
+  reduce(add));
+
+log(sum(p => p.quantity, products));
+log(sum(p => p.quantity * p.price, products));
+
+const total_age = sum(
+  u => u.age, [
+    { name: 'a', age: 10 },
+    { name: 'b', age: 20 },
+    { name: 'c', age: 30 },
+  ]);
+log(total_age);

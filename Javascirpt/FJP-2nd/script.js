@@ -12,36 +12,82 @@ const sum = curry((f, iter) => go(
   reduce(add)));
 
 
-const range = l => {
-  let i = -1;
-  let res = [];
-  while (++i < l) {
-    res.push(i);
-  }
-  return res;
-};
-
 // var list = range(5);
 // log(list);
 // log(reduce(add, range(5)));
-
-const L = {};
-L.range = function *(l) {
-  let i = -1;
-  while (++i < l) {
-    yield i;
-  }
-};
 
 // var list = L.range(5);
 // log(list);
 // log(reduce(add, list));
 
-function test(name, time, f) {
-  console.time(name);
-  while(time--) f();
-  console.timeEnd(name);
-}
+// function test(name, time, f) {
+//   console.time(name);
+//   while(time--) f();
+//   console.timeEnd(name);
+// }
 
-test('L.range', 10, () => reduce(add, L.range(1000000)));
-test('range', 10, () => reduce(add, range(1000000)));
+// test('L.range', 10, () => reduce(add, L.range(1000000)));
+// test('range', 10, () => reduce(add, range(1000000)));
+
+// console.time('');
+// go (
+//   range(100000),
+//   take(5),
+//   reduce(add),
+//   log
+// );
+// console.timeEnd('');
+
+// console.time('');
+// go (
+//   L.range(100000),
+//   take(5),
+//   reduce(add),
+//   log
+// );
+// console.timeEnd('');
+
+// console.time('');
+// go (
+//   L.range(Infinity),
+//   take(5),
+//   reduce(add),
+//   log
+// );
+// console.timeEnd('');
+
+// let it = L.map(a => a + 10, [1, 2, 3]);
+// log([...it]);
+// log(L.map(a => a + 10, [1, 2, 3]));
+// log(L.map(a => a + 10, [1, 2, 3]).next());
+// log(L.map(a => a + 10, [1, 2, 3]).next().value);
+
+L.filter = function *(f, iter) {
+  for (const a of iter) if (f(a)) yield a;
+};
+
+var it = L.filter(a => a % 2, [1, 2, 3, 4]);
+log(it.next());
+log(it.next());
+log(it.next());
+log(it.next());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

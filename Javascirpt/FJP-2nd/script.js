@@ -12,36 +12,31 @@ const sum = curry((f, iter) => go(
   reduce(add)));
 
 
-const range = l => {
-  let i = -1;
-  let res = [];
-  while (++i < l) {
-    res.push(i);
-  }
-  return res;
-};
-
 // var list = range(5);
 // log(list);
 // log(reduce(add, range(5)));
-
-const L = {};
-L.range = function *(l) {
-  let i = -1;
-  while (++i < l) {
-    yield i;
-  }
-};
 
 // var list = L.range(5);
 // log(list);
 // log(reduce(add, list));
 
-function test(name, time, f) {
-  console.time(name);
-  while(time--) f();
-  console.timeEnd(name);
-}
+// function test(name, time, f) {
+//   console.time(name);
+//   while(time--) f();
+//   console.timeEnd(name);
+// }
 
-test('L.range', 10, () => reduce(add, L.range(1000000)));
-test('range', 10, () => reduce(add, range(1000000)));
+// test('L.range', 10, () => reduce(add, L.range(1000000)));
+// test('range', 10, () => reduce(add, range(1000000)));
+
+go(range(10),
+  map(n => n + 10),
+  filter(n => n % 2),
+  take(2),
+  log);
+
+go(L.range(10),
+  L.map(n => n + 10),
+  L.filter(n => n % 2),
+  take(2),
+  log);

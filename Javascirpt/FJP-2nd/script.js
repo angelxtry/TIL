@@ -29,14 +29,66 @@ const sum = curry((f, iter) => go(
 // test('L.range', 10, () => reduce(add, L.range(1000000)));
 // test('range', 10, () => reduce(add, range(1000000)));
 
-go(range(10),
-  map(n => n + 10),
-  filter(n => n % 2),
-  take(2),
-  log);
 
-go(L.range(10),
-  L.map(n => n + 10),
-  L.filter(n => n % 2),
-  take(2),
-  log);
+// console.time('');
+// go (
+//   range(100000),
+//   take(5),
+//   reduce(add),
+//   log
+// );
+// console.timeEnd('');
+
+// console.time('');
+// go (
+//   L.range(100000),
+//   take(5),
+//   reduce(add),
+//   log
+// );
+// console.timeEnd('');
+
+// console.time('');
+// go (
+//   L.range(Infinity),
+//   take(5),
+//   reduce(add),
+//   log
+// );
+// console.timeEnd('');
+
+// let it = L.map(a => a + 10, [1, 2, 3]);
+// log([...it]);
+// log(L.map(a => a + 10, [1, 2, 3]));
+// log(L.map(a => a + 10, [1, 2, 3]).next());
+// log(L.map(a => a + 10, [1, 2, 3]).next().value);
+
+L.filter = function *(f, iter) {
+  for (const a of iter) if (f(a)) yield a;
+};
+
+var it = L.filter(a => a % 2, [1, 2, 3, 4]);
+log(it.next());
+log(it.next());
+log(it.next());
+log(it.next());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -95,4 +95,12 @@ package.json 파일을 자동으로 생성해준다.
 
 ## ESLint 설치
 
+```sh
+npm i --save-dev eslint
+```
 
+## jest 설치
+
+```sh
+npm i --save-dev jest
+```

@@ -5,21 +5,13 @@ const add = (a, b) => a + b;
 const curry = f =>
   (a, ..._) => _.length ? f(a, ..._) : (..._) => f(a, ..._);
 
-const map = curry((f, iter) => {
-  let res = [];
-  for (const p of iter) {
-    res.push(f(p));
-  }
-  return res;
-});
-
-const filter = curry((f, iter) => {
-  let res = [];
-  for (const p of iter) {
-    if (f(p)) res.push(p);
-  }
-  return res;
-});
+// const map = curry((f, iter) => {
+//   let res = [];
+//   for (const p of iter) {
+//     res.push(f(p));
+//   }
+//   return res;
+// });
 
 const take = curry((l, iter) => {
   let res = [];
@@ -41,6 +33,9 @@ const reduce = curry((f, acc, iter) => {
   return acc;
 });
 
+const join = curry((sep = ',', iter) =>
+  reduce((a, b) => `${a}${sep}${b}`, iter));
+
 const go = (...args) => reduce((a, f) => f(a), args);
 
 const pipe = (f, ...fs) => (...as) => go(f(...as), ...fs);
@@ -55,6 +50,11 @@ const range = l => {
 };
 
 const L = {};
+
+L.entries = function *(obj) {
+  for (const k in obj) yield [k, obj[k]];
+};
+
 L.range = function *(l) {
   let i = -1;
   while (++i < l) {
@@ -75,3 +75,22 @@ L.filter = curry(function *(f, iter) {
     }
   }
 });
+
+const takeAll = take(Infinity);
+
+const map = curry(pipe(L.map, takeAll));
+
+const filter = curry(pipe(L.filter, takeAll));
+
+const find = curry((f, iter) => go(
+  iter,
+  L.filter(f),
+  take(1),
+  ([a]) => a
+));
+
+const queryStr = pipe(
+  L.entries,
+  L.map(([k, v]) => `${k}=${v}`),
+  join('&')
+);

@@ -15,7 +15,6 @@ const sum = curry((f, iter) => go(
 
 // log(filter(a => a % 2, range(10)));
 
-const isIterable = a => a && a[Symbol.iterator];
 
 // L.flatten = function *(iter) {
 //   for (const a of iter) {
@@ -26,29 +25,67 @@ const isIterable = a => a && a[Symbol.iterator];
 //   }
 // };
 
-L.flatten = function *(iter) {
-  for (const a of iter) {
-    if (isIterable(a)) yield *a;
-    else yield a;
-  }
-};
+log(flatMap(map(a => a * a), [[1, 2], [3, 4], [5, 6, 7]]));
 
-var it = L.flatten([[1, 2], 3, 4, [5, 6], [7, 8, 9]]);
-log(take(5, it));
+const arr = [
+  [1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [9, 10]
+];
 
-const flatten = pipe(L.flatten, takeAll);
-log(flatten([[1, 2], 3, 4, [5, 6], [7, 8, 9]]));
+go(arr,
+  flatten,
+  filter(a => a % 2),
+  log);
 
-L.deepFlat = function *f(iter) {
-  for (const a of iter) {
-    if (isIterable(a)) yield *f(a);
-    else yield a;
-  }
-};
+go(arr,
+  L.flatten,
+  L.filter(a => a % 2),
+  take(3),
+  log);
 
-var it = L.deepFlat([1, [2, [3, [4], [5, 6]]]]);
-log(...it);
+var users = [
+  { name: 'a', age: 21, family: [
+    { name: 'a1', age: 53 }, { name: 'a2', age: 47 },
+    { name: 'a3', age: 16 }, { name: 'a4', age: 15 },
+  ] },
+  { name: 'b', age: 24, family: [
+    { name: 'b1', age: 58 }, { name: 'b2', age: 51 },
+    { name: 'b3', age: 19 }, { name: 'b4', age: 22 },
+  ] },
+  { name: 'c', age: 31, family: [
+    { name: 'c1', age: 64 }, { name: 'c2', age: 62 },
+  ] },
+  { name: 'd', age: 20, family: [
+    { name: 'd1', age: 42 }, { name: 'd2', age: 42 },
+    { name: 'd3', age: 11 }, { name: 'd4', age: 7 },
+  ] },
+];
 
-log([[1, 2], [3, 4], [5, 6, 7]].flatMap(a => a.map(a => a * a)));
-log(flatten([[1, 2], [3, 4], [5, 6, 7]].map(a => a.map(a => a * a))));
+go(users,
+  L.map(u => u.family),
+  takeAll,
+  log);
 
+go(users,
+  L.map(u => u.family),
+  L.flatten,
+  L.filter(u => u.age < 20),
+  takeAll,
+  log);
+
+go(users,
+  L.map(u => u.family),
+  L.flatten,
+  L.filter(u => u.age < 20),
+  L.map(u => u.name),
+  take(3),
+  log);
+
+go(users,
+  L.flatMap(u => u.family),
+  L.filter(u => u.age < 20),
+  L.map(u => u.name),
+  take(3),
+  log);

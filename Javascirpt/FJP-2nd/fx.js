@@ -94,3 +94,24 @@ const queryStr = pipe(
   L.map(([k, v]) => `${k}=${v}`),
   join('&')
 );
+
+const isIterable = a => a && a[Symbol.iterator];
+
+L.flatten = function *(iter) {
+  for (const a of iter) {
+    if (isIterable(a)) yield *a;
+    else yield a;
+  }
+};
+
+const flatten = pipe(L.flatten, takeAll);
+
+L.deepFlat = function *f(iter) {
+  for (const a of iter) {
+    if (isIterable(a)) yield *f(a);
+    else yield a;
+  }
+};
+
+L.flatMap = curry(pipe(L.map, L.flatten));
+const flatMap = curry(pipe(L.map, flatten));

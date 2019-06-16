@@ -47,12 +47,20 @@ const sum = curry((f, iter) => go(
 // var d = c.then(a => a - 5);
 // d.then(log);
 
-const go1 = (a, f) => a instanceof Promise ? a.then(f) : f(a);
-const add5 = a => a + 5;
-const delay1000 = a => new Promise(resolve =>
-  setTimeout(() => resolve(a), 1000));
+// const go1 = (a, f) => a instanceof Promise ? a.then(f) : f(a);
+// const add5 = a => a + 5;
+// const delay1000 = a => new Promise(resolve =>
+//   setTimeout(() => resolve(a), 1000));
 
-const n1 = 10;
-go1(go1(n1, add5), log);
-const n2 = delay1000(10);
-go1(go1(n2, add5), log);
+// const n1 = 10;
+// go1(go1(n1, add5), log);
+// const n2 = delay1000(10);
+// go1(go1(n2, add5), log);
+
+go(1,
+  a => a + 10,
+  a => Promise.resolve(a + 100),
+  a => a + 1000,
+  a => a + 10000,
+  log
+)

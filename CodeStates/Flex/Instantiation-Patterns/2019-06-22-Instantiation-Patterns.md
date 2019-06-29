@@ -39,6 +39,7 @@ const Car = function(position) {
   var someInstance = {
     position: position,
   };
+  
   return someInstance;
 };
 

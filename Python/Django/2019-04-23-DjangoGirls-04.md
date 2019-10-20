@@ -14,4 +14,3 @@ static files는 CSS와 이미지 파일 등을 의미한다.
 blog app 안에 static 이라는 새 폴더를 만든다.
 
 blog/static/css/blog.css 파일을 생성한다.
-

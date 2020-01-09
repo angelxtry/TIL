@@ -129,7 +129,6 @@ export class ExerciseAbleDays {
 
 ExerciseAbleDays 테이블과 연결된 User 테이블의 ableDays라는 컬럼도 실제로는 존재하지 않는 컬럼이다.
 
-
 ## 조회
 
 데이터를 조회해보자.

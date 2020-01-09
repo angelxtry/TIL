@@ -11,4 +11,3 @@ yarn add -D @types/node
 yarn add -g typeorm
 
 typeorm init --database mysql
-

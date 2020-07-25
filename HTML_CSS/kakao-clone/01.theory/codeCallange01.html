@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kokoa Tribe</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="src/styles.css" />
+    <style>
+      body {
+        font-family: sans-serif;
+        height: 1500px;
+        border: 0;
+        margin: 0;
+      }
+
+      .header-container {
+        position: relative;
+        height: 100px;
+        width: 100%;
+      }
+
+      header {
+        display: block;
+        position: fixed;
+        height: 100px;
+        width: 100%;
+        background-color: #ff7979;
+      }
+
+      main {
+        display: inline-block;
+        width: calc(100% - 300px);
+        height: 1400px;
+        background-color: #7fd6df;
+        padding: 50px;
+      }
+
+      span {
+        display: inline;
+        color: white;
+        font-size: 50px;
+      }
+
+      aside {
+        display: inline-block;
+        box-sizing: border-box;
+        position: fixed;
+        height: 1400px;
+        right: 0;
+        background-color: #ffcc01;
+        border: 5px solid gray;
+        width: 300px;
+      }
+
+      .green-box {
+        position: absolute;
+        width: 100px;
+        height: 25px;
+        left: -50px;
+        top: -13px;
+        background-color: greenyellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header-container">
+      <header></header>
+    </div>
+    <main>
+      <span>This is day one</span>
+    </main>
+    <aside>
+      <div class="green-box"></div>
+    </aside>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    input {
+      border: 5px solid rosybrown;
+    }
+    input[type="password"] {
+      font-size: 2em;
+      color: blueviolet;
+      background-color: coral;
+    }
+    input[type="submit"] {
+      background-color: cornflowerblue;
+    }
+    .box {
+      height: 200px;
+      width: 100%;
+      border: 5px solid rosybrown;
+    }
+    /* .box:first-child {
+      background-color: greenyellow;
+    } */
+    /* .box:nth-child(2) {
+      background-color: pink;
+    } */
+    /* .box:last-child {
+      background-color: saddlebrown;
+    } */
+    .box:nth-child(2n+1) {
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box input">
+      <input type="password">
+      <input type="submit"></input>
+    </div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div> 
+</body>
+</html>

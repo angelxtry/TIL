@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .outline {
+      /* border: 1px solid blueviolet; */
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      border-bottom: 1px solid gray;
+    }
+    footer {
+      border-top: 1px solid gray;
+      padding: 20px;
+      text-align: center;
+    }
+    .content {
+      display: flex;
+    }
+    .content nav {
+      border-right: 1px solid gray;
+    }
+    .content aside {
+      border-left: 1px solid gray;
+    }
+    nav, aside {
+      flex-basis: 200px;
+      flex-shrink: 0;
+    }
+    .content main {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container outline">
+    <header class="outline">
+      <h1>MakeHabit</h1>
+    </header>
+    <section class="content outline">
+      <nav>
+        <ul>
+          <li>html</li>
+          <li>css</li>
+          <li>javascript</li>
+        </ul>
+      </nav>
+      <main>뭘 하든 아쉬움을 안 남기려고 노력한다. 아쉽다는 감정은 일종의 미련인데 이건 최선을 다하지 않았을 때 주로 생기는 마음이다. 정말 열심히 했다면 결과가 안 좋아도 그런 감정이 크지 않다. 실제로 미친 듯이 노력했던 프로젝트들은 실패했어도 다시 돌아가 재도전하고 싶다는 느낌이 들지 않았다.
+
+        중요한 결정을 할 때면 항상 이 관점에서 살펴본다. 내가 최선을 다한 결정인지. 지금도 이게 내 한계다 싶으면 그냥 지른다. 그래서 많이 실패한다. 노력만큼 보상이 있으면 좋겠지만, 생각만큼 잘 안 될 때가 많다. 그래도 이렇게 사니 후회는 안 남는다. 이건 어떤 결과와 상관없이 내 삶의 기본 태도다.
+        
+        항상 최선을 다해야 한다. 단순히 높은 성과를 올리기 위해서가 아니라 미련 없이 살기 위해 최선을 다하라는 거다. 어디서 뭘 하든 실패는 피할 수 없다. 도전하는 사람에게 실패는 숙명이다. 하지만 그 실패를 거름 삼아 더 크게 성장하려면 최선을 다해야 한다. 대충 노력하다 실패한 경험에선 어떤 것도 배울 수 없다.</main>
+      <aside>AD</aside>
+    </section>
+    <footer class="outline">
+      <a href="http://google.com">Google</a>
+    </footer>
+  </div>
+</body>
+</html>

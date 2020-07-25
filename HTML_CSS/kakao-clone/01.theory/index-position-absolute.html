@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        height: 400%;
+        background-color: coral;
+      }
+      #box-one {
+        height: 300px;
+        width: 300px;
+        background-color: cornflowerblue;
+        position: relative;
+      }
+      #box-absolute {
+        height: 50px;
+        width: 50px;
+        background-color: darkorchid;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box-one">
+      <div class="box-child">one</div>
+      <div id="box-absolute">
+        <div class="box-child">two</div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive</title>
+</head>
+<body>
+  <!-- <style>
+    details > summary { transition: color 1s; color: black; }
+    details[open] > summary { color: red }
+  </style>
+  <details open>
+    <summary>Loading...</summary>
+    <p>이미지 다운로드 중...</p>
+    <p>사운드 다운로드 완료</p>
+  </details> -->
+
+  <button id="open-button" type="button">Dialog 열기</button>
+  <dialog>
+    <h1>Add to cart</h1>
+    <p>주문하신 상품은 이것이 맞습니까?</p>
+    <button id="close-button">Dialog 닫기</button>
+  </dialog>
+
+  <script>
+    const openButton = document.querySelector('#open-button');
+    const closeButton = document.querySelector('#close-button');
+    const dialog = document.querySelector('dialog');
+
+    openButton.addEventListener('click', (event) => {
+      dialog.showModal();
+    });
+
+    closeButton.addEventListener('click', (event) => {
+      dialog.close();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form</title>
+</head>
+<body>
+  <form action="">
+    <fieldset>
+      <legend>유저 정보</legend>
+      <div>
+        <label for="uid">아이디</label>
+        <input id="uid" type="text" autocomplete="username" required>
+      </div>
+      <div>
+        <label for="upw">비밀번호</label>
+        <input id="upw" type="password" autocomplete="new-password" required>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>배달 정보</legend>
+      <div>
+        <label for="tel">전화번호</label>
+        <input id="tel" type="tel" autocomplete="tel" required>
+      </div>
+      <div>
+        <label for="add">주소</label>
+        <input id="add" type="text" autocomplete="street-address" required>
+      </div>
+      <div>
+        <h2>사이즈 선택</h2>
+        <input type="radio" id="small" name="size" value="small" checked>
+        <label for="small">small</label>
+        <input type="radio" id="medium" name="size" value="medium">
+        <label for="medium">medium</label>
+        <input type="radio" id="large" name="size" value="large">
+        <label for="large">large</label>
+      </div>
+      <div>
+        <h2>토핑 추가</h2>
+        <input type="checkbox" id="cheese" name="topping" value="cheese">
+        <label for="cheese">치즈 추가</label>
+        <input type="checkbox" id="tomato" name="topping" value="tomato">
+        <label for="tomato">토마토 추가</label>
+        <input type="checkbox" id="mushroom" name="topping" value="mushroom">
+        <label for="mushroom">버섯 추가</label>
+      </div>
+      <div>
+        <label for="requirement">추가 요청 사항</label>
+        <textarea id="requirement"></textarea>
+      </div>
+    </fieldset>
+    <button type="submit">주문하기</button>
+    <button type="button">취소하기</button>
+  </form>
+</body>
+</html>

@@ -2,4 +2,4 @@ example.py
 FileName.txt
 .vscode
 .ipynb_checkpoints
-
+**/*.DS_Store

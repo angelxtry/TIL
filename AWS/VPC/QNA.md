@@ -6,6 +6,8 @@ Virtual Private Cloud
 
 ## VPC의 사용 목적은 무엇일까요?
 
+AWS 내에서 private ip를 사용하여 private network을 만들 수 있는 서비스.
+
 네트워크를 격리하여 리소스를 안전하게 사용할 수 있는 환경을 만드는 것.
 
 ## VPC는 RFCOOOO 규격에 따라 Private IPv4 주소 범위에 속하는 CIDR 블록을 지정하는 것이 좋습니다.
@@ -31,6 +33,13 @@ VPC 내부에서 격리된 실제 리소스 그룹을 배치할 수 있는 네�
 ## 서브넷을 나누는 목적은 무엇일까요?
 
 서브넷 마다 Available Zone을 다르게 하여 물리적으로 리소스 그룹을 격리할 수 있는 등 관리에 용이합니다. 다른 이유는 또 없을까?
+
+## 라우터와 라우트 테이블을 설명해주세요.
+
+- VPC가 생성되면 라우트 테이블이 자동으로 생성됩니다.
+- 라우트 테이블은 서브넷과 연결되어 있는 리소스 입니다.
+- 서브넷에서 네트워크를 이용할 때 라우트 테이블을 이용하여 목적지를 찾게 됩니다.
+- 
 
 ---
 
@@ -58,3 +67,18 @@ https://brunch.co.kr/@topasvga/233
 
 https://aws.amazon.com/ko/certification/certified-cloud-practitioner/
 
+vpc - 개발, 운영환경 세팅 Bastion, NAT(3) - VPC 설정 후 외부에서 접속 가능하도록 bastion
+
+https://nerd-mix.tistory.com/45?category=855097
+
+AWS VPC를 디자인해보자(1) - Multi AZ와 Subnet을 활용한 고가용성
+
+https://bluese05.tistory.com/45
+
+Terraform으로 AWS VPC 생성하기
+
+https://blog.outsider.ne.kr/1301
+
+Dissecting AWS’s Virtual Private Cloud (VPC)
+
+https://www.simplilearn.com/tutorials/aws-tutorial/aws-vpc

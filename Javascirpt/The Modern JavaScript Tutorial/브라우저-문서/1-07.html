@@ -6,30 +6,14 @@
   <title>Document</title>
 </head>
 <body>
-  <style>
-    .alert {
-      padding: 15px;
-      border: 1px solid #d6e9c6;
-      border-radius: 4px;
-      color: #3c763d;
-      background-color: #dff0d8;
-    }
-  </style>
-  <ol id="ol">
-    <li>0</li>
-    <li>1</li>
-    <li>2</li>
-  </ol>
+  <div class="first">First</div>
+  <div class="second">Second</div>
 
   <script>
-    const olElem = document.querySelector('ol');
-    olElem.before('prepend');
-    olElem.after('after');
+    const first = document.querySelector('.first');
+    const second = document.querySelector('.second');
 
-    const liFirst = document.createElement('li');
-    liFirst.innerHTML = '-1';
-    olElem.prepend(liFirst);
-    
+    second.after(first);
   </script>
 </body>
 </html>
